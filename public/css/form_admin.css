@@ -1,0 +1,381 @@
+/* CSS Document */
+
+:root {
+    font-size:16px;
+
+/*	--color-headline-text	:#8d8d8d;*/
+
+    --color-headline-text	:#555;
+    --color-headline-bg		:#dcdcdc;
+    --color-table-border	:#8d8d8d;
+
+    --color-main-bg			:#fff;
+
+    --color-input-text-sample	:#999;
+
+    --color-attention		:#c00;
+
+    --color-ui-bg			:#009996;
+    --color-ui-shadow		:transparent;
+
+    --color-ui-mono-bg		:#a5a5a5;
+    --color-ui-mono-shadow	:transparent;
+
+    --color-ui-text			:#fff;
+}
+
+/* adjust 4 all */
+
+label, button, select, input[type=submit] {
+    cursor:pointer;
+}
+
+ul.attention li {
+    list-style: none;
+}
+
+.attention li:before {
+    content: "※";
+    color:var(--color-attention);
+}
+
+ul.attention.form {
+    margin:0 auto;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+table {
+/*    
+    width:880px;
+    max-width:100%;
+*/
+    border-collapse:collapse;
+    margin: 1rem auto;
+}
+
+table[data-group="-1"] {
+    display: none;
+}
+
+table, table tr, table th, table td {
+    border:1px solid var(--color-table-border);
+}
+
+table th {
+    width: 14em;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.774rem;
+    font-weight:normal;
+    text-align: left;
+    
+    color:var(--color-headline-text);
+    background-color: var(--color-headline-bg);
+}
+
+table td {
+    padding: 0.25rem;
+    background-color: var(--color-main-bg);
+}
+
+#wrap_event_tables {
+    /*	max-width: 43em;*/
+    
+    width:880px;
+    margin:0 auto;
+}
+
+h3.text-left {
+    width:880px;
+    margin: 0 auto;
+}
+
+.input_note {
+    font-size: 0.75rem;
+}
+
+.input_note span {
+    display: inline-block;
+}
+
+
+@media screen and (max-width:1014px) {
+
+    #header {
+        width:100%;
+/*        height: calc(100vw / 1000 * 360);*/
+    }
+
+    h1 img {
+        width: 100%;
+    }
+
+    #main, #tw_area {
+        width:calc(100% - 2rem);
+        margin:0 1rem;
+    }
+
+    #tweet {
+        float:right;
+        margin:calc(-21px + -1em) 1em 0;
+    }
+
+    #tweet:after {
+        content:"";
+        display: block;
+        clear: both;
+        height: 0;
+        line-height:0;
+    }
+}
+
+@media screen and (max-width:calc(911px)) {
+
+    table,
+    #wrap_event_tables,
+    h3.text-left
+    {
+        width:100%;
+    }
+}
+
+@media screen and (max-width:calc(650px)) {
+
+    table tr, table th, table td {
+        display:block;
+        width:100%;
+        border:none;
+    }
+
+    table th {
+        margin-top: 1rem;
+    }
+
+    table tr:first-child th {
+        margin-top: 0;
+    }
+
+    .input_note span {
+        display: inline;
+    }
+    
+}
+
+
+/* detail of view */
+
+ul.attention.form {
+    max-width:43em;
+}
+
+.check ul.attention.form {
+    max-width:57em;
+}
+
+h2.topic_title {
+    display: table;
+    margin: 1em auto;
+}
+
+
+#error_list {
+    font-size: 0.774rem;
+    width: 30em;
+    margin: 1em auto 0;
+}
+
+#error_list li {
+    color:var(--color-attention);
+    font-weight:bold;
+}
+
+.input_must {
+    color:var(--color-attention);
+    font-size:88%;
+    font-weight:bold;
+}
+
+.input_free {
+    color:#555;
+    font-size:88%;
+    font-weight:bold;
+}
+
+
+body.form th:after {
+    content:"（あれば）";
+/*	color:var(--color-attention);*/
+    font-size:0.7rem;
+}
+
+body.form tr.necessary th:before {
+    content:"※";
+    color:var(--color-attention);
+    font-size:0.774rem;
+}
+
+body.form tr.necessary th:after {
+    content:"";
+}
+
+
+td label,
+input, select, textarea, button {
+    padding: 0.33em 0.5em;
+}
+
+input, select, textarea, button {
+    border:1px solid #999;
+    border-radius:0.25em;
+}
+
+td label {
+    cursor:pointer;
+    
+    display: inline-block;
+    margin-right: 0.5em;
+    
+    color:var(--color-ui-bg);
+    background-color: #fff;
+    border: 1px solid var(--color-ui-bg);
+    border-radius: 0.25em;
+    /* box-shadow: 1px 1px 0 rgba(0,0,0,0.2); */
+}
+
+input [type="submit"], button {
+    color:#fff;
+    background-color: var(--color-ui-bg);
+    border: 1px solid var(--color-ui-bg);
+}
+
+label, input, select, textarea, button {
+    font-size:0.875rem;
+}
+
+textarea {
+    min-height:7.5em;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color:var(--color-input-text-sample);
+}
+
+.width_full {
+/*	width:calc(100% - 2.4em);*/
+    width:100%;
+}
+
+
+
+
+hr {
+    border:none;
+    border-top:1px dotted #ccc;
+    margin-bottom:2em;
+}
+
+button.btn_send,
+button.btn_back {
+
+    line-height: 2.5;
+
+    margin-bottom: 1rem;
+    padding: 0 1.5rem;
+    border:none;
+/*    border-radius: 0.25rem;*/
+    
+    font-size: 0.875rem;
+    font-weight: bold;
+    
+    color: var(--color-ui-text);
+    background-color: var(--color-ui-bg);
+    box-shadow:0.1rem 0.1rem 0 var(--color-ui-shadow);
+}
+
+button.btn_back {
+    background-color: var(--color-ui-mono-bg);
+    box-shadow:0.1rem 0.1rem 0 var(--color-ui-mono-shadow);
+}
+
+#add_ui button {
+    padding: 0 0.8em;
+}
+
+div.text-center form {
+    display:inline-block;
+    margin: 0 0.5rem;
+}
+
+.wrap_button {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+
+
+th.wrap_checkbox {
+    width:2em;
+    padding:0;
+    text-align:center;
+}
+
+th.wrap_checkbox label {
+    display:block;
+    width:100%;
+    height:100%;
+
+    text-align:center;
+}
+
+th.wrap_checkbox label input {
+    display:inline-block;
+    vertical-align:middle;
+}
+/*
+td {
+    font-size:1rem;
+    color: #222;
+}
+*/
+tr.event {
+    font-size:0.875rem;
+    color: #448;
+}
+
+tr.petit {
+    font-size:0.875rem;
+    color: #484;
+}
+
+td.event i,
+td.petit i {
+    font-style:normal;
+    color:#ccc;
+}
+
+tr.status0 td {
+    background-color:#ffc;
+}
+
+tr.status1 td {
+    background-color:#fff;
+}
+
+tr.status2 td {
+    background-color:#ccc;
+}
+
+tr.status-1 td {
+    background-color:#fcf;
+}

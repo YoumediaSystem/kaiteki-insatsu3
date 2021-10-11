@@ -1,0 +1,18 @@
+
+[name]　ご担当者様
+
+現時点での快適印刷さん受注状況を
+お知らせいたします。
+
+[order_detail]
+
+詳細は管理サイト　受注管理ページをご覧ください。
+[site_url]/admin/order
+
+
+
+================================
+快適印刷さん Online入稿
+order@kaitekiinsatsu.com
+https://kaitekiinsatsu.com/
+================================

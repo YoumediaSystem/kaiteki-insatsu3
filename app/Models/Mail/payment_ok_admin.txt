@@ -1,0 +1,22 @@
+
+[client_name]　ご担当者様
+
+快適印刷さんOnlineです。
+
+弊社システムに以下発注の入金連絡がありました。
+入稿データをご確認の上、印刷開始または不備対応を
+よろしくお願い致します。
+
+
+■受注ID　　　　　[order_id]
+
+■作品タイトル　　[print_title]
+
+■入稿セット名　　[product_set_name]
+
+■合計部数　　　　[print_number_all]
+
+■入金日　　　　　[payment_date]
+
+詳細ページ：
+[admin_url]

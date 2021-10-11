@@ -1,0 +1,18 @@
+
+決済処理で問題が発生しました。
+以下内容を確認の上、決済代行システム内容の確認や
+データ修正などを行ってください。
+
+[alert_detail]
+
+
+詳細は管理サイト　決済詳細ページをご覧ください。
+[site_url]/admin/payment_detail?[query]
+
+
+
+================================
+快適印刷さん Online入稿
+order@kaitekiinsatsu.com
+https://kaitekiinsatsu.com/
+================================
