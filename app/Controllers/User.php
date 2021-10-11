@@ -56,7 +56,7 @@ class User extends BaseController
         $view_file = ($Config->isRealOpen())
         ? 'user/index' : 'user/index_soon';
 
-        return view('user/index', $this->param);
+        return view($view_file, $this->param);
     }
 
     public function index_ph2()
