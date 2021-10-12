@@ -32,10 +32,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => 'localhost',
-        'username' => '',
-        'password' => '',
-        'database' => 'print',
+        'hostname' => 'mysql108.xbiz.ne.jp',
+        'username' => 'kaitekihonya_prt',
+        'password' => 'GBD9Skf97kmkKze6',
+        'database' => 'kaitekihonya_print',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,
@@ -116,14 +116,14 @@ class Database extends Config
         // Ensure that we always set the database group to 'tests' if
         // we are currently running an automated test suite, so that
         // we don't overwrite live data on accident.
-/*        
-        if (ENVIRONMENT === 'testing'
-        ||  strpos($_SERVER['SERVER_NAME'], 'xsvx2010092.xsrv.jp') !== false
+
+        if (ENVIRONMENT === 'development'
+        &&  strpos($_SERVER['SERVER_NAME'], 'xsvx2010092.xsrv.jp') !== false
         ){
             $this->defaultGroup = 'tests';
         }
-*/
-        if (ENVIRONMENT === 'development'
+
+        elseif (ENVIRONMENT === 'development'
 //        ||  strpos($_SERVER['SERVER_NAME'], 'print.l') !== false
         ){
             $this->defaultGroup = 'local';
