@@ -1,9 +1,14 @@
+<?php
 
+$Config = new \App\Models\Service\Config();
+$index = ($Config->isRealOpen()) ? '/' : '/index_test';
+
+?>
 <footer id="footer">
 	<div class="inner">
 		<div id="info" class="grid">
 			<div class="logo">
-				<a href="/"><?= $site['name'] ?><!--<span>Your Company Slogan</span>--></a>
+				<a href="<?= $index ?>"><?= $site['name'] ?><!--<span>Your Company Slogan</span>--></a>
 			</div>
 			<div class="info" style="display:none">
 				<p class="tel"><span>電話:</span> <?= $site['tel'] ?></p>

@@ -127,13 +127,13 @@ class Config
     private $hash_key_4_payment = [
         'local' => '',
         'test'  => 'otXhcy9GMa8B',
-        'real'  => 'otXhcy9GMa8B'
+        'real'  => '4L0gRBvuYQc0'
     ];
 
     private $merchant_id = [
         'local' => 99999,
         'test'  => 48741,
-        'real'  => 99999
+        'real'  => 57291
     ];
 
     private $fix_params_strings_4_payment = 

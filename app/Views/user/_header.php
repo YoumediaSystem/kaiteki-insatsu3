@@ -1,11 +1,16 @@
+<?php
 
+$Config = new \App\Models\Service\Config();
+$index = ($Config->isRealOpen()) ? '/' : '/index_test';
+
+?>
 <div id="wrap_header">
 
 <header id="header" role="banner" class="user">
 
     <div class="logo">
         <h1>
-            <a href="/">
+            <a href="<?= $index ?>">
                 <img src="/img/logo.png" width="210" height="100" alt="<?= $site['name'] ?>" class="pc_only">
                 <img src="/img/logo_mid.png" width="290" height="100" alt="" class="mid_only">
                 <img src="/img/logo_sp.png" width="210" height="90" alt="" class="sp_only">
@@ -64,7 +69,7 @@ $DT = new \Datetime($testdate);
         <div class="panel">
 
             <ul>
-                <li><a href="/"><strong>トップ</strong><span>Top</span></a></li>
+                <li><a href="<?= $index ?>"><strong>トップ</strong><span>Top</span></a></li>
                 <!--
                 <li>
                     <a href="sample.html"><strong>ごあいさつ</strong><span>Greeting</span></a>
