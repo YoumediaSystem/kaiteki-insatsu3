@@ -64,7 +64,7 @@ class User extends BaseController
         if ($this->check_mente()) return redirect()->to('/mente');
 
         $this->setCommonViews();
-        return view('user/index_soon', $this->param);
+        return view('user/index', $this->param);
     }
 
     public function index_ph2()
