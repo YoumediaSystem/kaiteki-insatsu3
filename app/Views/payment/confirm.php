@@ -2,6 +2,15 @@
 
 const PAGE_NAME = '決済内容確認・ポイント利用';
 
+$Config = new \App\Models\Service\Config();
+$point_ratio = $Config->getPointRatio();
+$not_kaiteki_point_ratio = $Config->getNotKaitekiPointRatio();
+$use_point_ratio = $Config->getUsePointRatio();
+
+$max_userable_points = $Config->getMaxUserablePoints();
+$max_give_points = $Config->getMaxGivePoints();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -114,6 +123,7 @@ ul.list_numeric li {
 <li>ATM決済番号発行後や、コンビニ決済番号発行後はメモまたはスクリーンショットを取り、お早めにお支払いください。戻って他の決済方法に変更しないでください。</li>
 <li>途中でタブを閉じた場合や決済方法変更した場合、入金確認にお時間がかかったり発注をお受けできない場合がございます。</li>
 <li>表記のポイントは全て快適印刷ポイントです。快適本屋ポイントはアカウント情報確認後、別途付与いたします。</li>
+<li>一度に獲得できるポイントは最大<?= number_format($max_give_points) ?>ポイントとなります。</li>
 <li>獲得ポイントは決済完了後に付与されます。</li>
 <li>利用ポイントは決済開始後すぐに消費されます。</li>
 </ul>
@@ -147,12 +157,16 @@ foreach($order_list as $order):
     
     $total += $order['price'];
 
-    $ratio = 0.01;
-    if (strpos($order['product_set']['name_en'],'ondemand') !== false
+    $ratio = $point_ratio; // 0.01
+    if (
+//        strpos($order['product_set']['name_en'],'ondemand') !== false
+        empty($order['b_overprint_kaiteki'])
     &&  empty($order['number_kaiteki'])
-    )   $ratio = 0.5;
+    )   $ratio = $not_kaiteki_point_ratio * $point_ratio;// 50 * 0.01
 
     $add_point = (int)round($order['price'] * $ratio);
+
+    if ($max_give_points < $add_point) $add_point = $max_give_points;
 
     $point_total += $add_point;
 ?>
@@ -182,7 +196,7 @@ foreach($order_list as $order):
 <hr><!-- －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－ -->
 
 
-<h4>快適印刷ポイント利用（<?= $use_point_ratio ?>ポイント ＝ 1円、端数切り捨て）</h4>
+<h4>快適印刷ポイント利用（<?= $use_point_ratio ?>ポイント ＝ 1円、端数切り捨て、最大<?= $max_userable_points ?>ptまで利用可）</h4>
 
 <p id="wrap_point">所持快適印刷ポイント：<?= $point ?>pt
 
@@ -198,6 +212,8 @@ foreach($order_list as $order):
 $amount = $total + $payment_fee;
 //$point_get = (int)round($total * $give_point_ratio, 0);
 $point_get = $point_total;
+
+if ($max_give_points < $point_get) $point_get = $max_give_points;
 ?>
 
 <tr>
@@ -252,8 +268,11 @@ var global = global || {};
 
 global.total = <?= $total ?? 0 ?>;
 global.point = <?= $point ?? 0 ?>;
+global.ratio = <?= $ratio ?? 1 ?>;
 global.give_ratio = <?= $give_point_ratio ?? 0.01 ?>;
 global.use_ratio = <?= $use_point_ratio ?? 1 ?>;
+global.max_userable_points = <?= $max_userable_points ?>;
+global.max_give_points = <?= $max_give_points ?>;
 global.fee = <?= $payment_fee ?? 0 ?>;
 
 $('#point_use').on('input', function(){
@@ -271,6 +290,8 @@ function mod_use_points() {
 
     if (isNaN(n) || n < 0) n = 0;
     if (global.point < n) n = global.point+0;
+    if (global.max_userable_points < n) n = global.max_userable_points+0;
+
     if (global.total < n * global.use_ratio) n = global.total * global.use_ratio;
     $('#point_use').val(n);
 
@@ -280,13 +301,14 @@ function mod_use_points() {
     if (nn == 0) fee = 0;
     nn += fee;
 
-//    point_get = Math.floor((global.total - n_used) * global.give_ratio, 0);
+    point_get = Math.floor((global.total - n_used) * global.ratio, 0);
+    if (global.max_give_points < point_get) point_get = global.max_give_points + 0;
 
     $('#price_total').text( nn.toLocaleString() );
-//    $('#point_get_view').text( point_get );
+    $('#point_get_view').text( point_get );
 
     $('#amount').val(nn);
-//    $('#point_get').val(point_get);
+    $('#point_get').val(point_get);
     $('#fee').val(fee);
 }
 

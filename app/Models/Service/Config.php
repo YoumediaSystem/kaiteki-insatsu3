@@ -15,15 +15,24 @@ class Config
 
     protected $tax_per = 10;
 
+//    protected $give_point_ratio = 0.3; // DB化？
     protected $give_point_ratio = 0.01;
 
-    protected $use_point_ratio = 10;
+    protected $not_kaiteki_point_ratio = 30;
+
+    protected $use_point_ratio = 1;
 
     protected $payment_fee = 550;
 
     protected $signup_point = 1000;
     
     protected $point_expire_days = 365;
+
+    protected $max_userable_points = 30000;
+
+    protected $max_give_points = 30000;
+
+
 
     protected $send_magazine_default_hour = 18;
     
@@ -51,6 +60,10 @@ class Config
 
     function getUsePointRatio() {
         return (int)$this->use_point_ratio;
+    }
+
+    function getNotKaitekiPointRatio() {
+        return (int)$this->not_kaiteki_point_ratio;
     }
 
     function getTaxRatio() {
@@ -87,6 +100,14 @@ class Config
 
     function getPointExpireDays() {
         return (int)$this->point_expire_days;
+    }
+
+    public function getMaxUserablePoints() {
+        return (int)$this->max_userable_points;
+    }
+
+    public function getMaxGivePoints() {
+        return (int)$this->max_give_points;
     }
 
     public function site_params()

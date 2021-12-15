@@ -83,6 +83,46 @@ class User extends BaseController
         return view('user/guide', $this->param);
     }
 
+    public function data_format()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/data_format', $this->param);
+    }
+
+    public function data_format_()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/data_format_', $this->param);
+    }
+
+    public function data_format_1()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/data_format_1', $this->param);
+    }
+
+    public function data_format_2()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/data_format_2', $this->param);
+    }
+
+    public function data_format_3()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/data_format_3', $this->param);
+    }
+
     public function limits()
     {
         if ($this->check_mente()) return redirect()->to('/mente');

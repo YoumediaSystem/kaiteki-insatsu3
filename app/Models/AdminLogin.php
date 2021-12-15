@@ -11,6 +11,7 @@ class AdminLogin {
         'id' => 0
         ,'name' => ''
         ,'role' => ''
+        ,'client_code' => ''
         ,'log' => ''
     ];
 
@@ -70,9 +71,10 @@ class AdminLogin {
 
             $b_auth = true;
             $admin = [
-                'id'    => $session->get('admin_id'),
-                'name'  => $session->get('admin_name'),
-                'role'  => $session->get('admin_role')
+                'id'            => $session->get('admin_id'),
+                'name'          => $session->get('admin_name'),
+                'role'          => $session->get('admin_role'),
+                'client_code'   => $session->get('admin_client_code')
             ];
         }
 
@@ -126,15 +128,17 @@ class AdminLogin {
 
         // 認証情報
         if ($b_auth) $this->admin = [
-            'id'        => $admin['id']
-            ,'name'     => $admin['name']
-            ,'role'     => $admin['role']
+            'id'            => $admin['id']
+            ,'name'         => $admin['name']
+            ,'role'         => $admin['role']
+            ,'client_code'  => $admin['client_code']
         ];
 
         if ($b_auth && !$session->has('admin_id')) {
-            $session->set('admin_id',    $admin['id']);
-            $session->set('admin_name',  $admin['name']);
-            $session->set('admin_role',  $admin['role']);
+            $session->set('admin_id',           $admin['id']);
+            $session->set('admin_name',         $admin['name']);
+            $session->set('admin_role',         $admin['role']);
+            $session->set('admin_client_code',  $admin['client_code']);
         }
 
         if (!empty($log)) $session->set('log', $log);
@@ -190,9 +194,10 @@ class AdminLogin {
             setcookie('admin_token', '', 0);
 
             $this->admin = [
-                'id'        => 0
-                ,'name'     => ''
-                ,'role'     => ''
+                'id'            => 0
+                ,'name'         => ''
+                ,'role'         => ''
+                ,'client_code'  => ''
             ];
 
             $session->destroy();

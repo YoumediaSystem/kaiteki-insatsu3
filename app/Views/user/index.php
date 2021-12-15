@@ -1,6 +1,7 @@
 <?php
 
 $Product = new \App\Models\DB\ProductSet();
+$LimitDate = new \App\Models\Service\LimitDate();
 
 $p_offset = $Product->getFromID(1);
 $p_ondemand = $Product->getFromID(2);
@@ -10,6 +11,15 @@ unset($Product);
 $rest_offset   = $p_offset['max_order'] - $p_offset['ordered'];
 
 $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
+
+$Config = new \App\Models\Service\Config();
+$point_ratio = $Config->getPointRatio();
+$give_point_ratio = $point_ratio;
+$not_kaiteki_point_ratio = $Config->getNotKaitekiPointRatio();
+$use_point_ratio = $Config->getUsePointRatio();
+
+$limit_date_text = $LimitDate->getLimitText4outline();
+
 
 ?><!DOCTYPE html>
 <html lang="ja">
@@ -343,8 +353,8 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
         <div id="main_header_sp">
 
             <p>
-                <b class="color_green">快適印刷さんOnline</b>は、
-                同人誌印刷会社、同人誌イベント団体、コスプレ団体、同人関連の企画・制作会社の方々とコラボして、お得な印刷セット・パックをご提供し、皆様の<b class="color">創作活動</b>が、<b>もっと楽しく、もっとお得に、もっと豊かに、もっと</b><b class="color">快適に</b><b>なるお手伝い</b>をさせていただく同人誌入稿サイトです。<b>ご入稿はすべてOnlineで承ります。</b>
+                <b class="color_green">快適印刷さんonline β版</b>は、
+                同人誌印刷会社、同人誌イベント団体、コスプレ団体、同人関連の企画・制作会社の方々とコラボして、お得な印刷セット・パックをご提供し、皆様の<b class="color">創作活動</b>が、<b>もっと楽しく、もっとお得に、もっと豊かに、もっと</b><b class="color">快適に</b><b>なるお手伝い</b>をさせていただく同人誌入稿サイトです。<b>ご入稿はすべてOnlineで承ります。</b>快適印刷さんonlineはβ版となります。皆さまのご意見やご感想をお待ちしております。
             </p>
 
         </div>
@@ -373,7 +383,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
                     
                     <p class="text-center limited_dates">
                     <img src="/img/headline/h_limited.png" width="240" alt="期間限定販売"><br>
-                    <b>2021/10/1～2021/11/30</b>
+                    <b>2021/12/16～2022/1/31</b>
                     </p>
 <!--
                     <p class="rest_products"><span><?=
@@ -388,7 +398,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
                     </h3>
 
                     <p>
-                        <strong>水曜日午前10時〆→金曜日発送</strong>
+                        <strong><?= $limit_date_text ?>→金曜日発送</strong>
                     </p>
 
                     <p>
@@ -409,7 +419,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
                     <h3>
                         <img src="/img/headline/h3_offset_2.png" width="100%" style="max-width:440px" alt="さらに1">
-                        <span>無料増刷</span>
+                        <span>無料増刷＆らくらく通信販売</span>
                     </h3>
 
                     <p>
@@ -419,7 +429,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
                     </p>
 
                     <ul>
-                        <li>さらに、委託手数料無料！通販売上は全てお支払い！</li>
+                        <li>さらに、無料増刷分の委託手数料無料！</li>
                         <li>しかも、100部以上の発注なら審査なしで販売開始します</li>
                         <li>無料増刷プレゼントは、オフセット印刷された方が快適本屋さんの通販の委託申込をされる方にのみ提供されるサービスです。</li>
                     </ul>
@@ -428,7 +438,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
                     <h3 class="after_text">
                         <img src="/img/headline/h3_offset_3.png" width="100%" style="max-width:440px" alt="さらに2">
-                        <span>無料納品</span>
+                        <span>全国どこでも無料納品</span>
                     </h3>
 
                     <p>
@@ -445,35 +455,35 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
                     <h3 class="after_text">
                         <img src="/img/headline/h3_offset_4.png" width="100%" style="max-width:440px" alt="さらに3">
-                        <span>同人誌即売会ご招待</span>
+                        <span>同人誌即売会1SPご招待</span>
                     </h3>
 
-                    <p><strong>スタジオYOU主催など、<br>
+                    <p><strong>スタジオYOU主催イベントなど、<br>
                     全国の同人誌即売会にご招待</strong></p>
 
                     <ul>
                         <li>サークル参加１SP無料</li>
-                        <li>無料ご招待イベントは<a href="/outline_offset">詳細ページ</a>でご確認ください</li>
-
+                        <li>ご招待イベントの参加規定は、<a href="/outline_offset">詳細ページ</a>でご確認ください</li>
                     </ul>
 
                     <!-- －－－－－－－－－－－－－－－－ -->
 
                     <h3 class="after_text">
                         <img src="/img/headline/h3_offset_5.png" width="100%" style="max-width:440px" alt="もっと">
-                        <span>他書店専売の方に！</span>
+                        <span>通販希望されない方にもプレゼント</span>
                     </h3>
 
                     <p>快適本屋さんへの通販を希望されない方限定<br>
-                        <strong><span>快適印刷ポイント 何と50倍進呈!</span></strong>
+                        <strong><span>快適印刷ポイント 何と<?= $not_kaiteki_point_ratio ?>倍進呈!</span></strong>
                     </p>
 
                     <ul>
-                        <li>通常　快適印刷ポイントは1%進呈<br>
-                        <i>例：入稿料10,000円の場合、100ポイント進呈</i></li>
-                        <li>特典適用の場合は<strong>50倍！</strong><br>
-                        <i>例：入稿料10,000円の場合、5,000ポイント進呈</i></li>
-                        <li>快適印刷10ポイント＝1円</li>
+                        <li>通常　快適印刷ポイントは<?= $point_ratio * 100 ?>%進呈<br>
+                        <i>例：印刷代金10,000円の場合、<?= number_format(10000 * $point_ratio) ?>ポイント進呈</i></li>
+                        <li>特典適用の場合は<strong><?= $not_kaiteki_point_ratio ?>倍！</strong><br>
+                        <i>例：印刷代金10,000円の場合、<?=
+                        number_format(10000 * $point_ratio * $not_kaiteki_point_ratio) ?>ポイント進呈</i></li>
+                        <li>快適印刷<?= $use_point_ratio ?>ポイント＝1円</li>
                         <li>快適印刷ポイントは次回発注分から使用できます。<br>
                         <li>快適印刷ポイントは、快適本屋ポイントに移行して「快適本屋さんOnline」で同人誌購入することもできます。</li>
                     </ul>
@@ -502,7 +512,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
                     
                     <p class="text-center limited_dates">
                     <img src="/img/headline/h_limited.png" width="240" alt="期間限定販売"><br>
-                    <b>2021/10/1～2021/11/30</b>
+                    <b>2021/12/16～2022/1/31</b>
                     </p>
 <!--
                     <p class="rest_products"><span><?=
@@ -517,7 +527,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
                     </h3>
 
                     <p>
-                    <strong>水曜日午前10時〆→金曜日発送</strong>
+                    <strong><?= $limit_date_text ?>→金曜日発送</strong>
                     </p>
 
                     <p>
@@ -551,7 +561,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
                     <h3 class="after_text">
                         <img src="/img/headline/h3_ondemand_3.png" width="100%" style="max-width:440px" alt="さらに2">
-                        <span>無料納品</span>
+                        <span>全国どこでも無料納品</span>
                     </h3>
 
                     <p><strong>全国どこでも納品1カ所送料無料です</strong>
@@ -567,37 +577,37 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
                     <h3 class="after_text">
                         <img src="/img/headline/h3_ondemand_4.png" width="100%" style="max-width:440px" alt="さらに3">
-                        <span>同人誌即売会ご招待</span>
+                        <span>同人誌即売会1SPご招待</span>
                     </h3>
 
                     <p>
-                        <strong>スタジオYOU主催など、<br>
+                        <strong>スタジオYOU主催イベントなど、<br>
 全国の同人誌即売会にご招待</strong>
                     </p>
 
                     <ul>
                         <li>サークル参加１SP無料</li>
-                        <li>無料ご招待イベントは<a href="/outline_ondemand">詳細ページ</a>でご確認ください</li>
-                        <li>ご招待特典を希望されない場合は、入稿料の5%分の快適印刷ポイントをプレゼント</li>
+                        <li>ご招待イベントの参加規定は、<a href="/outline_ondemand">詳細ページ</a>でご確認ください</li>
                     </ul>
 
                     <!-- －－－－－－－－－－－－－－－－ -->
 
                     <h3 class="after_text">
                         <img src="/img/headline/h3_ondemand_5.png" width="100%" style="max-width:440px" alt="もっと">
-                        <span>他書店専売の方に！</span>
+                        <span>通販希望されない方にもプレゼント</span>
                     </h3>
 
                     <p>快適本屋さんへの通販を希望されない方限定<br>
-                        <strong><span>快適印刷ポイント 何と50倍進呈!</span></strong>
+                        <strong><span>快適印刷ポイント 何と<?= $not_kaiteki_point_ratio ?>倍進呈!</span></strong>
                     </p>
 
                     <ul>
-                        <li>通常　快適印刷ポイントは1%進呈<br>
-                        <i>例：入稿料10,000円の場合、100ポイント進呈</i></li>
-                        <li>特典適用の場合は<strong>50倍！</strong><br>
-                        <i>例：入稿料10,000円の場合、5,000ポイント進呈</i></li>
-                        <li>快適印刷10ポイント＝1円</li>
+                        <li>通常　快適印刷ポイントは<?= $point_ratio * 100 ?>%進呈<br>
+                        <i>例：印刷代金10,000円の場合、<?= number_format(10000 * $point_ratio) ?>ポイント進呈</i></li>
+                        <li>特典適用の場合は<strong><?= $not_kaiteki_point_ratio ?>倍！</strong><br>
+                        <i>例：印刷代金10,000円の場合、<?=
+                        number_format(10000 * $point_ratio * $not_kaiteki_point_ratio) ?>ポイント進呈</i></li>
+                        <li>快適印刷<?= $use_point_ratio ?>ポイント＝1円</li>
                         <li>快適印刷ポイントは次回発注分から使用できます。<br>
                         <li>快適印刷ポイントは、快適本屋ポイントに移行して「快適本屋さんOnline」で同人誌購入することもできます。</li>
                     </ul>
@@ -649,7 +659,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
             </p>
 
             <p>入稿には一般のオンラインストレージサービスをお使いいただくことで、
-            短納期（たとえば、すご盛セット/パックは水曜10時締切）での受付も可能となっております。FTPソフト設定などの面倒な作業は不要です！</p>
+            短納期（たとえば、すご盛セット/パックは水曜10時締切）での受付も可能となっております。FTPソフト設定などの面倒な作業は不要で、しかも大きいイベント直前によくある「FTP接続できない」「FTPアップロードが完了できない」心配も無用です！</p>
 
             <p><small>※当サービスは全てオンラインによる入稿のみ受付しております。原稿用紙や物理メディアでの入稿はできません。</small></p>
 
@@ -668,7 +678,7 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
             <dl>
             <dt>
-            <h4>2021.3.3</h4></dt>
+            <h4>2021.10.28</h4></dt>
             <dd>
                 快適印刷さんサイトオープン！2つのセットから選んでオンライン入稿できます。
             </dd>

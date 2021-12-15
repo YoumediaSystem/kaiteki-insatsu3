@@ -30,6 +30,7 @@ class Price
         $param['print_number_all'] = $param['print_number_all'] ?? '0冊';
         $param['print_size'] = $param['print_size'] ?? '';
         $param['print_page'] = $param['print_page'] ?? '';
+        $param['nonble_from'] = $param['nonble_from'] ?? '3p始まり';
         $param['print_direction'] = $param['print_direction'] ?? '';
         $param['cover_paper'] = $param['cover_paper'] ?? '';
         $param['cover_color'] = $param['cover_color'] ?? '';
@@ -370,9 +371,11 @@ class Price
         $select['sex_type'] = [
             '男','女','未回答'];
         
+        $select['nonble_from'] = ['3p始まり','1p始まり'];
+        
         $select['print_direction'] = [
             '右綴じ','左綴じ'];
-        
+    
         if ($b_offset) {
             $select['cover_paper'] = [
                 'アートポスト180kg'];

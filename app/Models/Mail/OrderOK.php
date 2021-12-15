@@ -12,7 +12,7 @@ class OrderOK extends SendMail
 
     private $subject_admin = '';
 
-    private $subject_customer = '印刷開始のお知らせ';
+    private $subject_customer = '';
 
     private $admin_template_file = '';
 
@@ -50,6 +50,9 @@ class OrderOK extends SendMail
         $param['order_id'] = $param['id'];
         $param['product_set_name'] = $param['product_set']['name'] ?? '';
 
+        $this->subject_customer = '【'.$Config->getServiceName().'】'
+            .$Config->getSaltSubject();
+
         return $param;
     }
 
@@ -58,6 +61,40 @@ class OrderOK extends SendMail
 
         $data = $this->getMaildata($param);
         $this->addMailBuffer($data);
+    }
+
+    function getTextByStatus($status = 150) {
+
+        if (!in_array($status, [50,60,150,160])) return [
+            'subject' => '',
+            'order_step' => '',
+            'order_step_next' => '',
+            'order_step_notice' => ''
+        ];
+
+        $a = [];
+        $CR = (string)$this->CR;
+
+        if (in_array($status, [50,150])) {
+            $a['subject'] = $this->subject_customer.'受付開始のお知らせ';
+            $a['order_step'] = 'ダウンロード確認';
+            $a['order_step_next'] = 'これより、順次データチェックを行います。';
+
+            $a['order_step_notice']  = '※原稿データに不具合が発見された場合、'.$CR;
+            $a['order_step_notice'] .= '　連絡を差し上げる可能性がございます。'.$CR;
+            $a['order_step_notice'] .= '　何卒ご了承ください。';
+        }
+
+        if (in_array($status, [60,160])) {
+            $a['subject'] = $this->subject_customer.'印刷開始のお知らせ';
+            $a['order_step'] = '原稿データ精査';
+            $a['order_step_next'] = 'これより、印刷を開始いたします。';
+
+            $a['order_step_notice']  = '※以後納品まで印刷内容は変更できません。'.$CR;
+            $a['order_step_notice'] .= '　あらかじめご理解ご了承ください。';
+        }
+
+        return $a;
     }
 
     // 顧客メール内容取得
@@ -76,6 +113,8 @@ class OrderOK extends SendMail
 
         $body = file_get_contents(__DIR__.'/'.$this->customer_template_file);
 
+        $param += $this->getTextByStatus($param['status']);
+
         foreach($param as $key=>$val)
             if(!in_array($key, $this->parse_ignore_keys) && !is_array($val))
                 $body = str_replace('['.$key.']', $val, $body);
@@ -84,7 +123,7 @@ class OrderOK extends SendMail
             'from'		=> $mail['admin_mail_address']
             ,'to'		=> $param['mail_address']
             ,'bcc'		=> $mail['bcc_mail_address_2user']
-            ,'subject'	=> $subject
+            ,'subject'	=> $param['subject']
             ,'body'		=> $body
         ];
         return $data;

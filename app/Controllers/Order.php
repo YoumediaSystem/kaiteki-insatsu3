@@ -114,7 +114,9 @@ class Order extends BaseController
             $this->param['user_id'] = $this->param['user']['id'];
             $this->param['product_set_id'] = $this->param['id'];
             $this->param['payment_limit'] =
-            (new \app\Models\DB\LimitDateList())->getDateFromPrintUp($this->param);
+                str_replace('/','-', $this->param['payment_limit']);
+//            $this->param['payment_limit'] =
+//            (new \app\Models\DB\LimitDateList())->getDateFromPrintUp($this->param);
             $this->param['status'] = 10;
             unset($this->param['id']);
 

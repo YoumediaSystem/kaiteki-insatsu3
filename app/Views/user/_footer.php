@@ -30,3 +30,5 @@ $index = ($Config->isRealOpen()) ? '/' : '/index_test';
 </footer>
 
 <p id="copyright">Copyright(c) <?= $site['since'] ?> <?= $site['name'] ?> All Rights Reserved. Design by <a href="http://f-tpl.com" target="_blank" rel="nofollow">http://f-tpl.com</a></p><!-- ←クレジット表記を外す場合はシリアルキーが必要です http://f-tpl.com/credit/ -->
+
+<script type="text/javascript" src="/js/auto_update.js"></script>

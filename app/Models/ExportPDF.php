@@ -64,6 +64,8 @@ class ExportPDF {
 
         $CR = "\n";
 
+        $lib = new \App\Models\CommonLibrary();
+
         // 注文バージョン
         $param['order_version'] = 2;
         $b_offset =
@@ -100,6 +102,16 @@ class ExportPDF {
             ];
         }
 
+        // 本文◯P始まりの値を設定
+        $nonble_from = 3; // default
+        if (!empty($param['nonble_from'])) {
+
+            $nonble_from = preg_replace(
+                "/p始まり/",'',
+                $param['nonble_from']
+            );
+        }
+
         if (!empty($param['number_home'])) {
 
             $text = '';
@@ -107,7 +119,7 @@ class ExportPDF {
                 $text .= '《無料納品対象》'.$CR;
                 $b_first_not_kaiteki = false;
             }
-            $text .= $param['userdata']['zipcode'];
+            $text .= $lib->getYubinCode($param['userdata']['zipcode']);
             $text .= ' '.$param['userdata']['address1'];
             $text .= ' '.($param['userdata']['address2'] ?? '');
             $text .= $CR;
@@ -162,7 +174,7 @@ class ExportPDF {
                         $text .= '《無料納品対象》'.$CR;
                         $b_first_not_kaiteki = false;
                     }
-                    $text .= ($row['zipcode'] ?? '').$CR;
+                    $text .= $lib->getYubinCode($row['zipcode']).$CR;
                     $text .= ' '.($row['real_address_1'] ?? '');
                     $text .= ' '.($row['real_address_2'] ?? '');
                     $text .= $CR;
@@ -310,7 +322,7 @@ class ExportPDF {
         // 本文◯P始まり
         $x = 60;	$y = 60.5;
         $w = 12;	$h = 11;
-        $p['text']  = '3';
+        $p['text']  = $nonble_from;
         $this->putText($PDF, $p, $x, $y, $w, $h);
 
         // 部数
@@ -463,7 +475,7 @@ class ExportPDF {
         $x = 98;	$y = 216.5;
         $w = 80;	$h = 20;
         $p['text'] =
-            $param['userdata']['zipcode'].' '
+            $lib->getYubinCode($param['userdata']['zipcode']).' '
             .$param['userdata']['address1'].' '
             .$param['userdata']['address2'];
         $this->putText($PDF, $p, $x, $y, $w, $h);

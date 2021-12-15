@@ -132,6 +132,27 @@ table {
 </tr>
 
 <tr>
+    <th>ダウンロードパスワード</th>
+    <td>
+        <input type="hidden" name="print_data_password" value="<?= $print_data_password ?? '' ?>">
+
+        <?php
+        $b1 = !empty($print_data_password);
+        $b2 = !empty($org['print_data_password']);
+        $b3 = ($b1 && $b2 && $print_data_password != $org['print_data_password']);
+
+        if($b1 != $b2 || $b3): ?>
+            <?= $org['print_data_password'] ?? '' ?>
+            → <strong><?= $print_data_password ?? '' ?></strong>
+
+        <?php else: ?>
+            <?= $org['print_data_password'] ?? '' ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+<tr>
     <th>管理備考</th>
     <td>
         <input type="hidden" name="note" value="<?= $note ?? '' ?>">
@@ -168,7 +189,10 @@ table {
     <td>
         <input type="hidden" name="price_text" value="<?= $price['price_text'] ?? '' ?>">
 
-        <?php if($price['price_text'] != $org['price_text']): ?>
+        <?php if(
+            preg_replace("/\s/","",$price['price_text'])        
+        !=  preg_replace("/\s/","",$org['price_text'])
+        ): ?>
             <pre><?= $org['price_text'] ?? '' ?></pre>
             ↓<br>
             <pre><strong><?= $price['price_text'] ?? '' ?></strong></pre>
@@ -207,6 +231,22 @@ table {
 
         <?php else: ?>
             <?= $org['print_page'] ?? '' ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+<tr>
+<th>本文始まりページ数</th>
+    <td>
+        <input type="hidden" name="nonble_from" value="<?= $nonble_from ?? '' ?>">
+
+        <?php if($nonble_from != $org['nonble_from']): ?>
+            <?= $org['nonble_from'] ?? '' ?>
+            → <strong><?= $nonble_from ?? '' ?></strong>
+
+        <?php else: ?>
+            <?= $org['nonble_from'] ?? '' ?>
 
         <?php endif; ?>
     </td>
@@ -398,7 +438,7 @@ table {
 
 
 <?php
-if(count($number_delivery)):
+if(!empty($number_delivery) && count($number_delivery)):
 
     foreach($number_delivery as $i=>$val):
 ?>

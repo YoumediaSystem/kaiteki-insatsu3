@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 
 class LimitDateList extends Model
 {
+    protected $limit_hour = 12;
+
     protected $statusName = [
          0 => '有効'
        ,-1 => '削除'
@@ -49,6 +51,9 @@ class LimitDateList extends Model
 
     private $salt = 'youclub1211';
 
+    public function getLimitHour() {
+        return (int)$this->limit_hour;
+    }
 
     public function getFromID($id) {
 
@@ -69,6 +74,7 @@ class LimitDateList extends Model
 
             $data = $this
             ->where('client_code', $client_code)
+            ->orderBy('print_up_date','DESC')
             ->findAll();
         }
 
@@ -90,6 +96,8 @@ class LimitDateList extends Model
         ->where('client_code',      $param['client_code'])
         ->where('print_up_date >=', $param['date_from'])
         ->where('print_up_date <=', $param['date_to'])
+        ->where('status = 0')
+        ->orderBy('print_up_date','ASC')
         ->findAll();
 
         return $data;
@@ -175,7 +183,7 @@ class LimitDateList extends Model
         )   $param['limit_date'] = 
             $param['limit_date_y'].'-'.
             $param['limit_date_m'].'-'.
-            $param['limit_date_d'].' 10:00:00';
+            $param['limit_date_d'].' '.$this->limit_hour.':00:00';
 
         return $param;
     }

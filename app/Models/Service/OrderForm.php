@@ -46,10 +46,13 @@ class OrderForm
         // 発注仕様
 
         ,'print_data_url'		=> '原稿データURL'
+        ,'print_data_password'	=> '原稿データパスワード'
+
         ,'print_title'			=> '本のタイトル'
         ,'print_number_all'		=> '冊数'
         ,'print_size'			=> '仕上がりサイズ'
         ,'print_page'			=> 'ページ数'
+        ,'nonble_from'			=> '本文始まりページ数'
         ,'print_direction'		=> 'とじ方向'
 
         ,'cover_paper'					=> '表紙・用紙'
@@ -133,11 +136,13 @@ class OrderForm
     // 発注仕様
     
        ,'print_data_url'
+       ,'print_data_password'
     
        ,'print_title'
        ,'print_number_all'
        ,'print_size'
        ,'print_page'
+       ,'nonble_from'
        ,'print_direction'
     
        ,'cover_paper'

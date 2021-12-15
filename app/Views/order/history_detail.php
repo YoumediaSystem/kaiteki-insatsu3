@@ -196,7 +196,11 @@ if (!in_array($order['status_name'], ['印刷開始済','返金済'])):
 
 <tr>
     <th>原稿データURL</th>
-    <td><a href="<?= $order['print_data_url'] ?? '' ?>" target="_blank"><?= $order['print_data_url'] ?? '' ?></a></td>
+    <td><a href="<?= $order['print_data_url'] ?? '' ?>" target="_blank"><?= $order['print_data_url'] ?? '' ?></a><?=
+    !empty($order['print_data_password'])
+    ? '（パスワード：'.$order['print_data_password'].'）'
+    : ''
+    ?></td>
 </tr>
 
 <tr>
@@ -207,6 +211,11 @@ if (!in_array($order['status_name'], ['印刷開始済','返金済'])):
 <tr>
     <th>ページ数</th>
     <td><?= $order['print_page'] ?? '' ?></td>
+</tr>
+
+<tr>
+    <th>本文始まりページ数</th>
+    <td><?= $order['nonble_from'] ?? '3p始まり' ?></td>
 </tr>
 
 <tr>

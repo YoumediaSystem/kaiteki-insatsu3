@@ -37,6 +37,7 @@ class ModOrderHistory extends Model
     ];
 
     protected $protectedFields = [
+        'print_data_password',
     ];
 
     protected $exFields = [
@@ -59,7 +60,8 @@ class ModOrderHistory extends Model
         'price_text',
         'number_home',
         'number_kaiteki',
-        'b_overprint_kaiteki'
+        'b_overprint_kaiteki',
+        'nonble_from'
     ];
 
     protected $dateFields = [
@@ -184,6 +186,15 @@ class ModOrderHistory extends Model
 
         $Crypt = new \App\Models\Crypt();
 
+        $a = [];
+        foreach($this->protectedFields as $key)
+            if (isset($param[$key]))
+                $a[$key] = $param[$key];
+        
+        if (!empty($a))
+            $param['protect'] =
+                $Crypt->encryptWithIV(json_encode($a));
+
         $param['ex'] = $param['ex'] ?? [];
         foreach($this->exFields as $key)
             if (isset($param[$key]))
@@ -196,6 +207,15 @@ class ModOrderHistory extends Model
     }
 
     function parseData($param) {
+
+        $Crypt = new \App\Models\Crypt();
+
+        if (!empty($param['protect'])) {
+            $j = $Crypt->decryptWithIV($param['protect']);
+            $a = json_decode($j, true);
+            $param = array_merge($param, $a);
+            unset($a, $param['protect']);
+        }
 
         if (!empty($param['ex']) && $param['ex'] != '{}') {
             $a = json_decode($param['ex'], true);

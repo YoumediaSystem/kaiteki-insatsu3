@@ -74,9 +74,9 @@ $DT = new \Datetime($testdate);
 
                 <li><a href="/admin/limit"><strong>締切管理</strong><span>Limit</span></a></li>
 
+<?php if(!empty($admin['role']) && $admin['role'] == 'master'): ?>
                 <li><a href="/admin/mail_template"><strong>メール管理</strong><span>Mail</span></a></li>
 
-<?php if(!empty($admin['role']) && $admin['role'] == 'master'): ?>
                 <li><a href="/admin/admin"><strong>システム管理</strong><span>Admin</span></a></li>
 <?php endif; ?>
 

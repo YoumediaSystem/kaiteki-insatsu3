@@ -11,13 +11,17 @@ class OrderHistory extends Model
          10 => '未入金'
         ,11 => '入金待ち'
         ,40 => '入金済'
-        ,50 => '不備あり'
+        ,41 => '一次不備'
+        ,50 => '仮受付'
+        ,51 => '二次不備'
         ,60 => '印刷開始済'
         ,90 => '期限切れ'
 
         ,110 => '未入金（通知未発送）'
         ,140 => '入金済（通知未発送）'
-        ,150 => '不備あり（通知未発送）'
+        ,141 => '一次不備（通知未発送）'
+        ,150 => '仮受付（通知未発送）'
+        ,151 => '一次不備（通知未発送）'
         ,160 => '印刷開始済（通知未発送）'
         ,190 => '期限切れ（通知未発送）'
 
@@ -56,6 +60,7 @@ class OrderHistory extends Model
         'address2',
         'tel',
         'tel_range',
+        'print_data_password',
     ];
 
     protected $exFields = [
@@ -78,7 +83,8 @@ class OrderHistory extends Model
         'number_kaiteki',
         'delivery_divide',
         'price_text',
-        'b_overprint_kaiteki'
+        'b_overprint_kaiteki',
+        'nonble_from'
     ];
 
     protected $dateFields = [
@@ -152,7 +158,8 @@ class OrderHistory extends Model
         ,'birthday_m'		=> 2
         ,'birthday_d'		=> 2
         
-        ,'print_data_url'	=> 2048
+        ,'print_data_url'	    => 2048
+        ,'print_data_password'	=> 16
         ,'print_title'		=> 100
         ,'print_number_all'	=> 5
         ,'print_page'		=> 5
@@ -323,7 +330,7 @@ class OrderHistory extends Model
 
         $data = $this
         ->where('user_id', $user_id)
-        ->whereIn('order_history.status', [10,11,40,50,110,140,150])
+        ->whereIn('order_history.status', [10,11,40,50,60,110,140,150,160])
         ->findAll();
 
         return (!empty($data) && count($data));
@@ -633,6 +640,11 @@ class OrderHistory extends Model
                 $error[] = $this->key2name[$key].'に送信できない文字が含まれています。';
         }
 
+        // URL入力チェック
+        $key = 'print_data_url';
+        if(!empty($param[$key]) && !$lib->is_url($param[$key]))
+            $error[] = $this->key2name[$key].'がURL形式か確認してください。';
+
         $DT_now = new \Datetime();
         
 //        $DT_border = new \Datetime('next wednesday');
@@ -781,6 +793,11 @@ class OrderHistory extends Model
                 $t = '直接搬入1のイベント開催日は '.$DT_up_border->format('Y/n/j').' 以降に限ります。';
                 $error[] = $t;
             }
+
+            if ($DT_event < $DT_up) {
+                $t = '直接搬入1のイベント開催日は '.$DT_up->format('Y/n/j').' 以降に限ります。';
+                $error[] = $t;
+            }
 /*
             // 早期締切対象
             if (in_array($param['event_1_date'], $early_limit_event)) {
@@ -810,6 +827,11 @@ class OrderHistory extends Model
     
             if ($DT_event < $DT_up_border) {
                 $t = '直接搬入2のイベント開催日は '.$DT_up_border->format('Y/n/j').' 以降に限ります。';
+                $error[] = $t;
+            }
+
+            if ($DT_event < $DT_up) {
+                $t = '直接搬入2のイベント開催日は '.$DT_up->format('Y/n/j').' 以降に限ります。';
                 $error[] = $t;
             }
 /*

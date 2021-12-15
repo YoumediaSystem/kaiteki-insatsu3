@@ -80,6 +80,8 @@ $DT = new \Datetime($testdate);
                 </li>
                 -->
                 <li><a href="/guide"><strong>ご利用ガイド</strong><span>HowToUse</span></a></li>
+
+                <li><a href="/data_format"><strong>原稿形式</strong><span>Format</span></a></li>                
 <!--
                 <li><a href="/limits"><strong>締切情報</strong><span>Limits</span></a></li>
 -->

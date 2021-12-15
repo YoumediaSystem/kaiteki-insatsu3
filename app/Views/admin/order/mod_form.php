@@ -181,8 +181,10 @@ endif;
 </tr>
 
 <tr>
-    <th>ダウンロードURL</th>
-    <td><input type="text" name="print_data_url" value="<?= $print_data_url ?? '' ?>"></td>
+    <th>ダウンロードURL・パスワード</th>
+    <td><input type="text" name="print_data_url" value="<?= $print_data_url ?? '' ?>"><br>
+        <input type="text" name="print_data_password" value="<?= $print_data_password ?? '' ?>">
+</td>
 </tr>
 
 <tr>
@@ -236,6 +238,20 @@ endif;
         </select>
 
         <span class="attention" style="display:inline-block">表紙4ページを含む</span>
+
+    </td>
+</tr>
+
+<tr>
+    <th>本文始まりページ数</th>
+    <td>
+
+        <select id="nonble_from" name="nonble_from">
+            <?php foreach($select['nonble_from'] as $val):
+                $prop = ($val == $nonble_from) ? $selected : ''; ?>
+                <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
 
     </td>
 </tr>

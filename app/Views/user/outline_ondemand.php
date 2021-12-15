@@ -4,6 +4,7 @@ const PAGE_NAME = '印刷セットのご案内（オンデマンド）';
 const TYPE = 'パック';
 
 $Product = new \App\Models\DB\ProductSet();
+$LimitDate = new \App\Models\Service\LimitDate();
 
 $product_data = $Product->getFromID(2);
 
@@ -13,6 +14,14 @@ $rest_product = $product_data['max_order'] - $product_data['ordered'];
 
 $sample_page = '16p';
 $sample_number = '30冊';
+
+$Config = new \App\Models\Service\Config();
+$point_ratio = $Config->getPointRatio();
+$not_kaiteki_point_ratio = $Config->getNotKaitekiPointRatio();
+$use_point_ratio = $Config->getUsePointRatio();
+
+$limit_date_text = $LimitDate->getLimitText4outline();
+
 
 ?><!DOCTYPE html>
 <html lang="ja">
@@ -34,7 +43,7 @@ $sample_number = '30冊';
 
 	<?= $view['header'] ?>
 
-	<div id="wrapper">
+	<div id="wrapper" style="padding-top:0">
 
 <!--	<section id="main"> -->
 
@@ -384,7 +393,7 @@ section.content .wrap_bonus_info h3 {
 
 </style>
 
-<article class="post">
+<article class="post" style="padding-top:0">
 
     <h2 style="border-bottom:none;">
         <img src="/img/headline/title_detail_ondemand.png" alt="オンデマンド印刷
@@ -406,10 +415,23 @@ section.content .wrap_bonus_info h3 {
         </h3>
 
         <table>
+        
         <tr>
             <th>印刷仕様</th>
-            <td>表紙（フルカラー）＋本文（モノクロ）＋製本（無線綴じ）</td>
+            <td>
+                仕上がりサイズ：A6（文庫）・B6・A5・B5から1種を選択<br>
+                表紙：オンデマンド4色フルカラー ＋
+                アートポスト180kg
+                ・マットポスト180kg
+                ・Mr.Bスーパーホワイト180kg
+                ・ミニッツGAスノーホワイト170kg
+                ・シャインフェイスゴールド180kg
+                ・シャインフェイスシルバー180kgから選択<br>
+                本文：オンデマンド スミ刷り ＋ 上質70kg・上質90kg・書籍用紙90kgの中から1種選択<br>
+                製本：無線綴じ
+            </td>
         </tr>
+
         <tr>
             <th><small style="font-size:0.774rem;">オンデマンド</small><br>すご盛特典</th>
             <td>
@@ -444,7 +466,7 @@ section.content .wrap_bonus_info h3 {
             <th>入稿・印刷・発送</th>
             <td>
                 <ol>
-                    <li>水曜日午前10時〆→金曜日発送</li>
+                    <li><?= $limit_date_text ?>→金曜日発送</li>
                     <li>表紙・本文同時入稿</li>
                 </ol>
             </td>
@@ -485,7 +507,7 @@ section.content .wrap_bonus_info h3 {
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_3.png"><i>無料納品</i><small style="font-weight: normal; font-size: 0.774rem;">（送料無料）</small><i>快適本屋さんへの納品も無料</i></h3>
+    <h3><img src="/img/headline/h3_icon_ondemand_3.png"><i>らくらく無料納品</i><small style="font-weight: normal; font-size: 0.774rem;">（送料無料）</small><i>快適本屋さんへの納品も無料</i></h3>
 
         <div class="bonus_detail">
 
@@ -554,7 +576,7 @@ section.content .wrap_bonus_info h3 {
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_4.png">スタジオYOU主催イベントに<i>サークル参加ご招待</i></h3>
+    <h3><img src="/img/headline/h3_icon_ondemand_4.png">スタジオYOU主催イベントに<i>サークル1SP参加ご招待</i></h3>
 
 
 <div class="bonus_detail">
@@ -575,8 +597,16 @@ section.content .wrap_bonus_info h3 {
     </li>
     <li>スタジオYOU主催イベントへのお申込は「オンラインYOU」でのみ「ご招待コード」を使用できます。</li>
     <li>「ご招待コード」は、入稿されたご本人以外使用できません（入稿者名と参加者名の一致が必要です）。</li>
-    <li>「ご招待コード」の有効期限は、発行後6カ月となっています。</li>
+    <li>「ご招待コード」の有効期限は、発行後6カ月となっています。期限内にご利用ください。</li>
     <li>「ご招待コード」は１回限り有効です。</li>
+
+
+    <h4 style="margin-top:2em">ご招待イベント申込み時のご注意</h4>
+
+<ol>
+    <li>ご招待イベントの受付は、各イベント先着30名様までとなっております。30名様のお申込みに達しましたら、締切日前でもそのイベントの受付は終了とさせていただきます。</li>
+    <li>受付終了イベントは、当ページにてご確認ください。</li>
+    <li>ご招待イベントは、決定次第続々、掲載いたします。ご招待期間内にお好きなイベントをお選びください。</li>
 </ol>
 
 </div><!-- wrap_text -->
@@ -590,41 +620,10 @@ section.content .wrap_bonus_info h3 {
 
 
 
-<div id="bonus_event_list">
+<div id="bonus_event_list" style="margin-top:2em">
     <h4>ご招待同人誌イベント一覧</h4>
 
-<table>
-
-<tr>
-    <th scope="vertical" class="date">日時</th>
-    <th scope="vertical" class="place">会場</th>
-    <th scope="vertical" class="name">イベント名</th>
-    <th scope="vertical" class="genre">ジャンル</th>
-</tr>
-
-<tr>
-    <td class="date">2021/12/22(日)</th>
-    <td class="place">東京ビッグサイト</th>
-    <td class="name">サンプルイベント名</th>
-    <td class="genre">ジャンル名　○○x■■</th>
-</tr>
-
-<tr>
-    <td class="date">2021/12/22(日)</th>
-    <td class="place">東京ビッグサイト</th>
-    <td class="name">サンプルイベント名</th>
-    <td class="genre">ジャンル名　○○x■■</th>
-</tr>
-
-<tr>
-    <td class="date">2021/12/22(日)</th>
-    <td class="place">東京ビッグサイト</th>
-    <td class="name">サンプルイベント名</th>
-    <td class="genre">ジャンル名　○○x■■</th>
-</tr>
-
-</table>
-
+<?php include_once(__DIR__.'/_event_list.php'); ?>
 
 </div><!-- bonus_event_list -->
 
@@ -638,22 +637,23 @@ section.content .wrap_bonus_info h3 {
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他書店で専売されている方に好評な特典です</i></small></h3>
+    <h3><img src="/img/headline/h3_icon_ondemand_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他店で委託販売されている方に好評な特典です</i></small></h3>
 
 
         <div class="bonus_detail">
 
             <p>
-                <strong>快適印刷ポイント 何と50倍進呈!</strong>
+                <strong>快適印刷ポイント 何と<?= $not_kaiteki_point_ratio ?>倍進呈!</strong>
             </p>
 
             <ul>
-                <li>通常　快適印刷ポイントは1%進呈<br>
-                <i>例：入稿料10,000円の場合、100ポイント進呈</i><br>
+                <li>通常　快適印刷ポイントは<?= $point_ratio * 100 ?>%進呈<br>
+                <i>例：印刷代金10,000円の場合、<?= number_format(10000 * $point_ratio) ?>ポイント進呈</i><br>
                 （ポイント利用なしの場合、決済手数料除く）</li>
-                <li>特典適用の場合は<strong>50倍！</strong><br>
-                <i>例：入稿料10,000円の場合、5,000ポイント進呈</i></li>
-                <li>快適印刷10ポイント＝1円</li>
+                <li>特典適用の場合は<strong><?= $not_kaiteki_point_ratio ?>倍！</strong><br>
+                <i>例：印刷代金10,000円の場合、<?=
+                        number_format(10000 * $point_ratio * $not_kaiteki_point_ratio) ?>ポイント進呈</i></li>
+                <li>快適印刷<?= $use_point_ratio ?>ポイント＝1円</li>
                 <li>快適印刷ポイントは次回発注分から使用できます。<br>
                 <li>快適印刷ポイントは、快適本屋ポイントに移行して「快適本屋さんOnline」で同人誌購入することもできます。</li>
             </ul>
@@ -757,20 +757,24 @@ section.content .wrap_bonus_info h3 {
 
 <p>大陽出版様が快適印刷さんだけの「特別印刷価格」を組んで提供してくださいました。</p>
 
-<p>それに、「快適印刷さん」がスタジオYOU様、運送会社の皆様、グループの快適本屋さんにお願いして、同人活動が楽しく快適になる、どこにもない大変お得なパックができあがりました。</p>
+<p>そして、「快適印刷さん」がスタジオYOU様、グループの快適本屋さん等にお願いして、同人活動が楽しく快適になる、どこにもない大変お得なパックができあがりました。</p>
 
 <p>当パックは、期間を限定して入稿受付させていただきます。</p>
 
-<p>今回、大陽出版様が印刷してくださいますので、ご入稿、ご入金先も大陽出版様となり、発送・納品も同様となります。</p>
+<p>当パックは、大陽出版様が印刷してくださいますので、ご入稿、ご入金先も大陽出版様となり、発送・納品も同様となります。</p>
   
 <p>
     入稿された原稿に「不備」などがありましたら、大陽出版さまからご連絡が入ります。<br>
     予め、ご承諾いただけますようお願いいたします。
 </p>
- 
+
+<!--
 <p>また、入稿時期、仕様変更、印刷後の手直し等、印刷料金に過不足が出た場合も、大陽出版様から連絡が入ります。</p>
 
 <p>万一、新たなお支払いが生じた場合、大陽出版様にお支払いください。</p>
+-->
+
+<p>発注入金後、ご登録頂いた内容に誤り（ページ数の数え間違い等）があり差額が発生した場合、大陽出版にお支払いください。</p>
 
 <p>快適印刷さんでは、今後も様々な同人誌印刷、イベント、企画会社とコラボして、皆様の同人活動がより快適に、より楽しくなるお手伝いや応援をいたします。</p>
 
@@ -785,23 +789,23 @@ section.content .wrap_bonus_info h3 {
 
         <div class="after_notes_text">
 
-<p>イベントご招待につきましては、スタジオYOU様等のお好きなイベントに参加できます。</p>
+<p>イベントご招待につきましては、スタジオYOU様開催イベント等のご希望のイベントに参加できます。</p>
 
 <p>「ご招待コード」が送信されますので、お申込みの際、お忘れのないようご記入ください。</p>
 
-<p>スタジオYOU様以外のイベントご招待につきましては、決まり次第、当サイト「ご招待同人誌イベント一覧表」にてお知らせいたします。</p>
+<p>スタジオYOU様以外のイベントご招待につきましては、当サイト「ご招待同人誌イベント一覧表」にてお知らせしています。</p>
 
         </div><!-- after_notes_text -->
 
 
 
-        <h5>無料通販提供：快適本屋さん</h5>
+        <h5>委託手数料無料らくらく通販提供：快適本屋さん</h5>
 
         <div class="after_notes_text">
 
-<p>無料増刷や委託の通信販売は、快適グループの快適本屋さんが担当いたします。</p>
+<p>無料増刷や委託の通信販売は、快適本屋さんが担当いたします。</p>
 
-<p>快適本屋さんは、同人誌通販サイトです。ご入稿された方が快適本さんに委託販売の申込をされますと、様々な特典を得ることが出来ます。</p>
+<p>同人誌通販サイトでご入稿された方が快適本屋さんに委託販売の申込をされますと、様々な特典を得ることが出来ます。</p>
 
 <p>快適本屋さんは、ご購入される皆様はもとより、委託作品をお預いただいたサークルの皆様が喜んでいただける様々なサービスを提供いたします。</p>
 
@@ -823,8 +827,10 @@ section.content .wrap_bonus_info h3 {
     </li>
 
     <li>イベント搬入をご希望の場合も、必ず入稿・印刷された印刷会社様の指定する連絡期日までにご連絡をお願いします。</li>
-
+<!--
     <li>分納以外のオプション申込につきましても同様に、印刷された印刷会社の規定や料金が適用されます。</li>
+-->
+<li>当セットは、印刷会社様が他セット・商品で提供されているオプションにはご利用頂けません。</li>
 
 </ul>
 

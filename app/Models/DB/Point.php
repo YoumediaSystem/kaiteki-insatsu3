@@ -7,6 +7,8 @@ use CodeIgniter\Model;
 
 class Point extends Model
 {
+    protected $maxUserablePoints = 1000;
+
     protected $statusName = [
         0 => '有効'
        ,-1 => '無効'
@@ -46,7 +48,13 @@ class Point extends Model
     protected $skipValidation     = false;    
 
     private $salt;
+/*
+    function __construct() {
 
+        $Config = new \App\Models\Service\Config();
+        $this->maxUserablePoints = $Config->getMaxUserablePoints();
+    }
+*/
     public function getStatusName() {
         return (array)$this->statusName;
     }

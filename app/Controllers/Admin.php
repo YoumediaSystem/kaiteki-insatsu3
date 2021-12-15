@@ -406,6 +406,7 @@ class Admin extends BaseController
         $Config = new \App\Models\Service\Config();
 
         $data = $Order->find($this->param['id']);
+        $status_before = $data['status'];
 
         if (!empty($this->param['ng_reason_other']))
             $this->param['ng_reason'] .= '（'
@@ -413,19 +414,48 @@ class Admin extends BaseController
 
         $a = explode('　',$data['note']);
         foreach($a as $key=>$val)
-            if ($val == '' || mb_strpos($val,'理由：',0,'UTF-8') !== false)
-                unset($a[$key]);
+            if ($val == ''
+            ||  mb_strpos($val,'理由：',0,'UTF-8') !== false
+            ||  mb_strpos($val,'理由1：',0,'UTF-8') !== false
+            ||  mb_strpos($val,'理由2：',0,'UTF-8') !== false
+            ) unset($a[$key]);
 
-        if (!empty($this->param['ng_reason']))
-            $a[] = $this->param['ng_reason'];
+        if (!empty($this->param['ng_reason'])) {
+            $ng_reason = (string)$this->param['ng_reason'];
+            $a[] = $ng_reason;
+
+            $status = (mb_strpos($ng_reason,'理由1',0,'UTF-8') !== false)
+            ? 41 // 一次不備
+            : 51;// 二次不備
+
+        } else {
+            $status = (in_array($status_before, [40,41]))
+            ? 50 // 仮受付
+            : 60;// 印刷開始
+        }
         
         $note = implode('　', $a);
         
         $Order->save([
             'id' => $this->param['id'],
-            'status' => (!empty($this->param['ng_reason'])) ? 150 : 160,
+            'status' => $status,
             'note' => $note
         ]);
+
+        $data = $Order->find($this->param['id']);
+        $data['mode'] = 'detail';
+        $data = $Order->parseData($data);
+
+        if (in_array($status, [41,51])) {
+            $Model = new \App\Models\Mail\OrderNG();
+            $data = $Model->adjust($data);
+            $Model->sendAutomail($data);
+
+        } elseif (in_array($status, [50,60])) {
+            $Model = new \App\Models\Mail\OrderOK();
+            $data = $Model->adjust($data);
+            $Model->sendAutomail($data);
+        }
 
         // 残り販売数を更新
         // $Product->updateOrderedCount($data['product_set_id']);
@@ -494,12 +524,14 @@ class Admin extends BaseController
 
         $org = $Order->find($this->param['id']);
         $org = $Order->parseData($org);
+        $dest = $Order->makeData($this->param); // protect
 
         $Order->save([ // 受発注データは以下3項目のみ更新、他はmodレコードを更新
             'id'            => $this->param['id'],
             'print_title'   => $this->param['print_title'],
             'status'        => $this->param['status'],
-            'note'          => $this->param['note']
+            'note'          => $this->param['note'],
+            'protect'       => $dest['protect']
         ]);
 
         $mod_data = (array)$this->param;

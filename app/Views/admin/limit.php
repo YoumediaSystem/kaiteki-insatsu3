@@ -14,6 +14,8 @@ $select_y = range($now_y - 100, $now_y + 1);
 $select_m = range(1,12);
 $select_d = range(1,31);
 
+$b_client_select = (!empty($client_list) && 1 < count($client_list));
+
 ?><!DOCTYPE html>
 <html lang="ja">
 
@@ -29,6 +31,10 @@ $select_d = range(1,31);
     <link rel="stylesheet" type="text/css" media="all" href="/css/form_admin.css">
 
 <style>
+
+.text-center {
+    text-align:center;
+}
 
 .text-right {
     text-align:right;
@@ -95,16 +101,26 @@ th.pass {
 <table>
 
 <tr>
-    <th>クライアント</th>
+    <th>業者コード</th>
     <th>納品日</th>
     <th>入稿締切日</th>
 </tr>
 
 <tr>
-    <td>
-        <select name="client_code">
-            <option value="taiyou">taiyou</option>
-        </select>
+    <td class="text-center">
+<?php if ($b_client_select): ?>
+
+    <select name="client_code">
+        <?php foreach($client_list as $item): ?>
+            <option value="<?= $item ?>"><?= $item ?></option>
+        <?php endforeach; ?>
+    </select>
+
+<?php else: ?>
+    <input type="hidden" name="client_code" value="<?= $admin['client_code'] ?? '' ?>">
+    <?= $admin['client_code'] ?? '' ?>
+
+<?php endif; ?>
     </td>
 
 
@@ -210,7 +226,7 @@ $limit_date_d = $limit_date_d ?? 1;
 
 <tr>
     <th style="width:2em">ID</th>
-    <th>クライアント</th>
+    <th>業者コード</th>
     <th>納品日</th>
     <th>入稿締切日</th>
     <th style="width:5em">状態</th>
@@ -230,10 +246,22 @@ $limit_date_d = $limit_date_d ?? 1;
     <td class="text-center">
         <input type="hidden" name="id" value="<?= $data['id'] ?? '' ?>"><?= $data['id'] ?? '' ?>
     </td>
-    <td>
+    
+    <td class="text-center">
+    <?php if ($b_client_select): ?>
+
         <select name="client_code">
-            <option value="taiyou">taiyou</option>
+            <?php foreach($client_list as $item):
+                $prop = ($item == $data['client_code']) ? $selected : ''; ?>
+                <option value="<?= $item ?>"<?= $prop ?>><?= $item ?></option>
+            <?php endforeach; ?>
         </select>
+
+        <?php else: ?>
+        <input type="hidden" name="client_code" value="<?= $admin['client_code'] ?? '' ?>">
+        <?= $admin['client_code'] ?? '' ?>
+
+        <?php endif; ?>
     </td>
 
 
@@ -322,7 +350,7 @@ $limit_date_d = $data['limit_date_d'] ?? 1;
                 $prop = ($status == $data['status'])
                 ? $selected : '';
                 ?>
-            <option <?= $prop ?>><?= $s_name ?></option>
+            <option value="<?= $status ?>" <?= $prop ?>><?= $s_name ?></option>
             <?php endforeach; ?>
         </select>
     </td>

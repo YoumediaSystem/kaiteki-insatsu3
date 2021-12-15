@@ -110,7 +110,7 @@ $DT_now   = new \Datetime();
             <tr>
             <th>
                 <label>
-                <input type="checkbox" name="payment_order[]" value="<?= $order['id'] ?>" data-client="<?= $order['client_code'] ?>">
+                <input type="radio" name="payment_order[]" value="<?= $order['id'] ?>" data-client="<?= $order['client_code'] ?>">
                 </label>
             </th>
             <td>no.<?= $order['id'] ?>　<?= $order['print_title'] ?></td>
@@ -151,7 +151,7 @@ $DT_now   = new \Datetime();
 
 <script>
 
-$('input[type=checkbox]').on('input', function(){
+$('input[type=radio]').on('input', function(){
 
     var client = $(this).data('client');
     var b = false;

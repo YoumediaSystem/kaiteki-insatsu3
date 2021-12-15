@@ -59,7 +59,10 @@ class OrderNG extends SendMail
         $a = explode('　',$param['note']);
         if (count($a))
             foreach ($a as $val)
-                if (mb_strpos($val, '理由：', 0, 'UTF-8') !== false)
+                if (mb_strpos($val, '理由：', 0, 'UTF-8') !== false
+                ||  mb_strpos($val, '理由1：', 0, 'UTF-8') !== false
+                ||  mb_strpos($val, '理由2：', 0, 'UTF-8') !== false
+                )
                     $param['ng_reason'] = '（'.$val.'）';
 
         return $param;

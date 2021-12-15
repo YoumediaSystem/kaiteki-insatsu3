@@ -4,6 +4,7 @@ const PAGE_NAME = '入稿フォーム';
 
 $DT = new \Datetime();
 $now_y = (int)$DT->format('Y');
+unset($DT);
 
 $lib = new \App\Models\CommonLibrary();
 $a = $lib->getSelectItemsYMD();
@@ -25,6 +26,7 @@ $select = $Price->getFormSelector(
 );
 
 $LimitDate = new \App\Models\Service\LimitDate();
+$limit_list = $LimitDate->getLimitList4OrderForm($client_code);
 
 $upload_border_date = $LimitDate->getUploadBorderDate();
 $payment_limit = $payment_limit ?? $LimitDate->getPaymentLimitDate();
@@ -42,6 +44,19 @@ $early_limit = (new \App\Models\DB\LimitDateList())
         'date_from'     => $border_event_date,
         'date_to'       => $border_later_date
     ]);
+
+$DT1 = new \Datetime($border_event_date);
+
+if (empty($print_up_date_y))
+    $print_up_date_y = (int)$DT1->format('Y');
+
+if (empty($print_up_date_m))
+    $print_up_date_m = (int)$DT1->format('m');
+
+if (empty($print_up_date_d))
+    $print_up_date_d = (int)$DT1->format('d');
+
+unset($DT1);
 
 
 $checked	= ' checked="checked"';
@@ -103,10 +118,6 @@ table {
 
 <body>
 
-<!--
-<?= print_r($price_format, true) ?>
--->
-
 <?= $view['header'] ?>
 
 <div id="wrapper">
@@ -165,53 +176,79 @@ table {
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
 <dl>
-<dt>
-<h4>入稿・入金締切</h4></dt>
-<dd>
-    <input type="hidden" name="data_limit" value="<?= $data_limit ?? '' ?>">
-    <input type="hidden" name="payment_limit" value="<?= $payment_limit ?? '' ?>">
-    <input type="hidden" name="border_event_date" value="<?= $border_event_date ?? '' ?>">
-    <input type="hidden" name="border_later_date" value="<?= $border_later_date ?? '' ?>">
-
-    <p><em><?= $upload_border_date ?? '' ?>(水) 10時まで</em></p>
-
-<?php if (isset($early_limit) && count($early_limit)): ?>
-
-    <p>ただし以下納品日は入稿件数が多いため、上記入稿締切よりも早い締切日が適用されます。</p>
-
-    <ul class="attention">
-        <?php foreach ($early_limit as $row):
-            
-            $DT1 = new \Datetime($row['print_up_date']);
-            $DT2 = new \Datetime($row['limit_date']); ?>
-
-            <li>納品日 <?= $DT1->format('Y/n/j').$youbi[$DT1->format('w')] ?>の場合、
-            入稿締切は <b><?= $DT2->format('Y/n/j H:i').$youbi[$DT2->format('w')] ?></b></li>
-
-        <?php endforeach; ?>
-    </ul>
-
-<?php endif; ?>
-
-</dd>
-</dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
-
-<dl>
 <dt><?php
 
 $key = 'print_up_date';
 
-
-
 ?>
+
 <h4>納品希望日</h4></dt>
 <dd>
     <div class="ec-select">
+        <input type="hidden" id="print_up_date_y" name="print_up_date_y" value="<?= $print_up_date_y ?? '' ?>">
+        <input type="hidden" id="print_up_date_m" name="print_up_date_m" value="<?= $print_up_date_m ?? '' ?>">
+        <input type="hidden" id="print_up_date_d" name="print_up_date_d" value="<?= $print_up_date_d ?? '' ?>">
 
+        <select id="print_up_date" name="print_up_date">
+<?php
+$datetext  = $print_up_date_y.'-';
+$datetext .= $print_up_date_m.'-';
+$datetext .= $print_up_date_d;
+
+$DT = new \Datetime($datetext);
+$print_up_date = $DT->format('Y-m-d');
+
+foreach($limit_list as $datekey=>$dateval):
+
+    $datetext = str_replace('_','-',$datekey);
+    $DT = new \Datetime($datetext);
+
+    $prop = ($print_up_date == str_replace('_','-',$datekey)) ? $selected : '';
+
+    $a = explode('_', $datekey);
+?>
+            <option value="<?= $datetext ?>" data-limit="<?= $dateval ?>"<?= $prop ?>>
+                <?= str_replace('-','/',$datetext).$youbi[$DT->format('w')] ?>
+            </option>
+<?php endforeach; ?>
+        </select>
+
+        <strong style="font-weight:bold; color:#c00"><?= $border_event_date ?? '' ?>以降～<?= $border_later_date ?? '' ?>まで</strong>
+
+<script>
+
+$('#print_up_date').on('change', function(){ mod_print_up_date() });
+
+function mod_print_up_date() {
+
+    var t = $('#print_up_date').val();
+    
+    if (typeof t == 'undefined' || t == '') return;
+
+    var a = t.split('-');
+    var key = a.join('_');
+
+    $('#print_up_date_y').val(parseInt(a[0]));
+    $('#print_up_date_m').val(parseInt(a[1]));
+    $('#print_up_date_d').val(parseInt(a[2]));
+
+    var date = $('#print_up_date option[value="'+ t +'"]').attr('data-limit');
+    if (typeof date == 'undefined' || date == '') return;
+
+    var a2 = date.split('-').join('/').split(' ');
+
+    $('#upload_border_date').text(a2[0]);
+    $('#payment_limit').val(a2[0]+' '+a2[1]);
+}
+
+</script>
+
+<!--
         <?php $kkey = $key.'_y'; ?>
         <select id="<?= $kkey ?>" name="<?= $kkey ?>" class="digit-6">
             <option value="">-</option>
             <?php foreach($select_y as $val):
+                if ($val < $now_y) continue;
                 $prop = ($val == $$kkey) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
@@ -234,12 +271,52 @@ $key = 'print_up_date';
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+-->
 
-        <strong style="font-weight:bold; color:#c00"><?= $border_event_date ?? '' ?>(土)以降～<?= $border_later_date ?? '' ?>まで</strong>
+
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
+
+<dl>
+<dt>
+<h4>入稿・入金締切</h4></dt>
+<dd>
+    <input type="hidden" name="data_limit" value="<?= $data_limit ?? '' ?>">
+    <input type="hidden" id="payment_limit" name="payment_limit" value="<?= $payment_limit ?? '' ?>">
+    <input type="hidden" name="border_event_date" value="<?= $border_event_date ?? '' ?>">
+    <input type="hidden" name="border_later_date" value="<?= $border_later_date ?? '' ?>">
+
+    <p><em><span id="upload_border_date"><?= $upload_border_date ?? '' ?></span>　12時まで</em></p>
+
+<?php if (isset($early_limit) && count($early_limit)): ?>
+
+    <p>ただし以下納品日は入稿件数が多いため、通常よりも早い締切日が適用されます。</p>
+
+    <ul class="attention">
+        <?php foreach ($early_limit as $row):
+            
+            $DT1 = new \Datetime($row['print_up_date']);
+            $DT2 = new \Datetime($row['limit_date']); ?>
+
+            <li>納品日 <?= $DT1->format('Y/n/j').$youbi[$DT1->format('w')] ?>の場合、
+            入稿締切は <b><?= $DT2->format('Y/n/j').$youbi[$DT2->format('w')] ?>　12時まで</b></li>
+
+        <?php endforeach; ?>
+    </ul>
+
+<?php endif; ?>
+
+<script>
+    
+mod_print_up_date();
+
+</script>
+
+</dd>
+</dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
+
 
 </div><!-- ec-borderedDefs -->
 
@@ -256,12 +333,15 @@ $key = 'print_up_date';
 <dd>
     <div class="ec-input">
         <input type="text" name="print_data_url" value="<?= htmlspecialchars($print_data_url ?? '', ENT_QUOTES) ?>" class="width_full" placeholder="原稿データをダウンロードできるURL（オンラインストレージ等）をご入力ください">
-
         <br>
-        <span>オンラインストレージサービスは
-            <a href="https://firestorage.jp/" target="_blank">firestorage</a>、
-            <a href="https://gigafile.nu/" target="_blank">GigaFile便</a> 等をご利用ください。 
-        </span>
+        <input type="text" name="print_data_password" value="<?= htmlspecialchars($print_data_password ?? '', ENT_QUOTES) ?>" class="digit-8" placeholder="パスワード">
+
+        <ul class="attention">
+            <li>原稿データは<a href="/data_format" target="_blank">原稿形式ページ</a>に記載のサイズ・解像度になっていることをご確認のうえ、zip圧縮してオンラインストレージにアップしてください。</li>
+            <li>オンラインストレージは
+            <a href="https://gigafile.nu/" target="_blank">GigaFile便</a>を推奨します。ダウンロード期間は入金期限より1～2日以上先の日数でご登録ください。</li>
+            <li>ダウンロードにパスワードが必要な場合は、2番目の欄にご入力ください。</li>
+        </ul>
 
     </div>
 </dd>
@@ -331,6 +411,22 @@ $key = 'print_up_date';
         </select>
 
         <span class="attention" style="display:inline-block">表紙4ページを含むページ数をご選択ください</span>
+
+    </div>
+</dd>
+</dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
+
+<dl>
+<dt><h4>本文始まりページ数</h4></dt>
+<dd>
+    <div class="ec-input">
+
+        <select id="nonble_from" name="nonble_from">
+            <?php foreach($select['nonble_from'] as $val):
+                $prop = ($val == $nonble_from) ? $selected : ''; ?>
+                <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
 
     </div>
 </dd>
@@ -612,11 +708,67 @@ $h3_text = !empty($b_not_trust) ? '（無料印刷分を含む）' : '';
 <h4>直接搬入1・イベント開催日</h4></dt>
 <dd>
     <div class="ec-select">
+        <input type="hidden" id="event_1_date_y" name="event_1_date_y" value="<?= $event_1_date_y ?? '' ?>">
+        <input type="hidden" id="event_1_date_m" name="event_1_date_m" value="<?= $event_1_date_m ?? '' ?>">
+        <input type="hidden" id="event_1_date_d" name="event_1_date_d" value="<?= $event_1_date_d ?? '' ?>">
 
+        <select id="event_1_date" name="event_1_date">
+<?php
+$datetext  = $event_1_date_y.'-';
+$datetext .= $event_1_date_m.'-';
+$datetext .= $event_1_date_d;
+
+$DT = new \Datetime($datetext);
+$event_1_date = $DT->format('Y-m-d');
+
+foreach($limit_list as $datekey=>$dateval):
+
+    $datetext = str_replace('_','-',$datekey);
+    $DT = new \Datetime($datetext);
+
+    $prop = ($event_1_date == str_replace('_','-',$datekey)) ? $selected : '';
+
+    $a = explode('_', $datekey);
+?>
+            <option value="<?= $datetext ?>"<?= $prop ?>>
+                <?= str_replace('-','/',$datetext).$youbi[$DT->format('w')] ?>
+            </option>
+<?php endforeach; ?>
+        </select>
+
+        <strong style="font-weight:bold; color:#c00">納品希望日～<?= $border_later_date ?>まで</strong>
+
+
+
+<script>
+
+$('#event_1_date').on('change', function(){ mod_event_1_date() });
+
+function mod_event_1_date() {
+
+    var t = $('#event_1_date').val();
+    
+    if (typeof t == 'undefined' || t == '') return;
+
+    var a = t.split('-');
+
+    $('#event_1_date_y').val(parseInt(a[0]));
+    $('#event_1_date_m').val(parseInt(a[1]));
+    $('#event_1_date_d').val(parseInt(a[2]));
+}
+
+mod_event_1_date();
+
+</script>
+
+
+
+<!--
         <?php $kkey = $key.'_y'; $fullkey2 = $k.$kkey; ?>
         <select id="<?= $fullkey2 ?>" name="<?= $fullkey2 ?>" class="digit-6">
             <option value="">-</option>
             <?php foreach($select_y as $val):
+                if ($val < $now_y) continue;
                 $prop = ($val == $$fullkey2) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
@@ -639,8 +791,7 @@ $h3_text = !empty($b_not_trust) ? '（無料印刷分を含む）' : '';
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
-
-        <strong style="font-weight:bold; color:#c00">～<?= $border_later_date ?>まで</strong>
+-->
 
     </div>
 </dd>
@@ -723,11 +874,67 @@ $h3_text = !empty($b_not_trust) ? '（無料印刷分を含む）' : '';
 <h4>直接搬入2・イベント開催日</h4></dt>
 <dd>
     <div class="ec-select">
+        <input type="hidden" id="event_2_date_y" name="event_2_date_y" value="<?= $event_2_date_y ?? '' ?>">
+        <input type="hidden" id="event_2_date_m" name="event_2_date_m" value="<?= $event_2_date_m ?? '' ?>">
+        <input type="hidden" id="event_2_date_d" name="event_2_date_d" value="<?= $event_2_date_d ?? '' ?>">
 
+        <select id="event_2_date" name="event_2_date">
+<?php
+$datetext  = $event_2_date_y.'-';
+$datetext .= $event_2_date_m.'-';
+$datetext .= $event_2_date_d;
+
+$DT = new \Datetime($datetext);
+$event_2_date = $DT->format('Y-m-d');
+
+foreach($limit_list as $datekey=>$dateval):
+
+    $datetext = str_replace('_','-',$datekey);
+    $DT = new \Datetime($datetext);
+
+    $prop = ($event_2_date == str_replace('_','-',$datekey)) ? $selected : '';
+
+    $a = explode('_', $datekey);
+?>
+            <option value="<?= $datetext ?>"<?= $prop ?>>
+                <?= str_replace('-','/',$datetext).$youbi[$DT->format('w')] ?>
+            </option>
+<?php endforeach; ?>
+        </select>
+
+        <strong style="font-weight:bold; color:#c00">納品希望日～<?= $border_later_date ?>まで</strong>
+
+
+
+<script>
+
+$('#event_2_date').on('change', function(){ mod_event_2_date() });
+
+function mod_event_2_date() {
+
+    var t = $('#event_2_date').val();
+    
+    if (typeof t == 'undefined' || t == '') return;
+
+    var a = t.split('-');
+
+    $('#event_2_date_y').val(parseInt(a[0]));
+    $('#event_2_date_m').val(parseInt(a[1]));
+    $('#event_2_date_d').val(parseInt(a[2]));
+}
+
+mod_event_2_date();
+
+</script>
+
+
+
+<!--
         <?php $kkey = $key.'_y'; $fullkey2 = $k.$kkey; ?>
         <select id="<?= $fullkey2 ?>" name="<?= $fullkey2 ?>" class="digit-6">
             <option value="">-</option>
             <?php foreach($select_y as $val):
+                if ($val < $now_y) continue;
                 $prop = ($val == $$fullkey2) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
@@ -750,8 +957,7 @@ $h3_text = !empty($b_not_trust) ? '（無料印刷分を含む）' : '';
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
-
-        <strong style="font-weight:bold; color:#c00">～<?= $border_later_date ?? '' ?>まで</strong>
+-->
 
     </div>
 </dd>
@@ -928,7 +1134,9 @@ warning_freemail(array_target); // フリーメールドメインが入力され
 $('select').each(function(){
 
     if ($('option',this).length == 1) {
-        $(this).attr('disabled','disabled');
+        $(this)
+        .attr('disabled','disabled')
+        .parent().parent().parent().addClass('disable_input');
     }
 });
 
@@ -976,6 +1184,14 @@ global.delivery_discount = <?= $b_delivery_discount ? 'true' : 'false' ?>;
 $('select[name="print_number_all"], .wrap_input_number input')
     .on('input', function(){ mod_number() });
 
+function fix_number_input(id) {
+
+    var j = $('#'+id);
+    var val = j.val();
+
+    if (typeof val == 'undefined' || isNaN(val) || val == '') j.val(0);
+}
+
 function mod_number() {
 
     var num_ratio = <?= !empty($b_not_trust) ? 1.1 : 1 ?>;
@@ -987,6 +1203,12 @@ function mod_number() {
     var t = '';
 
     $('#number_all').text(num_all);
+
+    fix_number_input('number_home');
+    fix_number_input('number_event_1');
+    fix_number_input('number_event_2');
+    fix_number_input('number_other');
+    fix_number_input('number_kaiteki');
 
     var number_home		= parseInt($('#number_home').val());
     var number_event_1	= parseInt($('#number_event_1').val());

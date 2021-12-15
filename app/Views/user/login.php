@@ -90,6 +90,10 @@ const PAGE_NAME = 'ログイン';
 
 </div><!-- text-center -->
 
+<p class="text-center">
+    <a href="/signup_auth">会員登録まだの方はこちら</a>
+</p>
+
 
 
 </form>
@@ -97,11 +101,11 @@ const PAGE_NAME = 'ログイン';
 
 
 <p class="text-right">
-    <a href="/user/forget_pass">パスワードを忘れた方はこちら</a>
+    <a href="/user/forget_pass">パスワードを忘れた方はこちら＞＞</a>
 </p>
 
 <p class="text-right">
-    <a href="/user/forget_mail">メールアドレスを忘れた方はこちら</a>
+    <a href="/user/forget_mail">メールアドレスを忘れた方はこちら＞＞</a>
 </p>
 
 

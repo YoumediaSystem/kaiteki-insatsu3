@@ -150,7 +150,7 @@ $org_price_text = !empty($order['org_price'])
 <th>作業依頼書</th>
 <td><?php
 
-if (in_array($order['status'],[60,160])): ?>
+if (in_array($order['status'],[40,41,50,51,60,140,141,150,151,160])): ?>
 
     <?php if($b_order_sheet): ?>
 　<a href="/pdf/order_sheet/<?= $client_dir ?>/<?= $order_sheet_file ?>?d=<?= $DT_now->format('U') ?>" target="_blank">作業依頼書PDF</a>
@@ -245,7 +245,11 @@ function reload() {
 
 <tr>
     <th>原稿データURL</th>
-    <td><a href="<?= $order['print_data_url'] ?? '' ?>" target="_blank"><?= $order['print_data_url'] ?? '' ?></a></td>
+    <td><a href="<?= $order['print_data_url'] ?? '' ?>" target="_blank"><?= $order['print_data_url'] ?? '' ?></a><?=
+    !empty($order['print_data_password'])
+    ? '（パスワード：'.$order['print_data_password'].'）'
+    : ''
+    ?></td>
 </tr>
 
 <tr>
@@ -256,6 +260,11 @@ function reload() {
 <tr>
     <th>ページ数</th>
     <td><?= $order['print_page'] ?? '' ?></td>
+</tr>
+
+<tr>
+    <th>本文始まりページ数</th>
+    <td><?= $order['nonble_from'] ?? '3p始まり' ?></td>
 </tr>
 
 <tr>
@@ -440,7 +449,7 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
 </table>
 
 
-<?php if(in_array($order['status'],[40,50,60])):
+<?php if(in_array($order['status'],[40,41,50,51,60])):
     
     $b_ok = ($order['status'] == 60); ?>
 
@@ -454,20 +463,32 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
 
     <p>
         <select name="ng_reason">
-            <?php if(!$b_ok): ?>
-            <option value="">内容OK</option>
+
+            <?php if($order['status'] != 60): ?>
+            <option value="">内容OK（<?= 
+                in_array($order['status'], [50,51])
+                ? '印刷開始する'
+                : '仮受付する'
+                ?>）</option>
             <?php endif; ?>
-            <option value="理由：ダウンロード不可">不備（ダウンロード不可）</option>
-            <option value="理由：ファイル不備">不備（ファイル不備）</option>
-            <option value="理由：表紙内容">不備（表紙内容）</option>
-            <option value="理由：本文内容">不備（本文内容）</option>
-            <option value="理由：納品先">不備（納品先）</option>
-            <option value="理由：その他">不備（その他）</option>
+
+            <?php if(in_array($order['status'], [40,41,50,51,60])): ?>
+            <option value="理由1：ダウンロード不可">一次不備（ダウンロード不可）</option>
+            <option value="理由1：ファイル不備">一次不備（ファイル不備）</option>
+            <?php endif; ?>
+
+            <?php if(in_array($order['status'], [50,51,60])): ?>
+            <option value="理由2：表紙内容">二次不備（表紙内容）</option>
+            <option value="理由2：本文内容">二次不備（本文内容）</option>
+            <option value="理由2：納品先">二次不備（納品先）</option>
+            <option value="理由2：その他">二次不備（その他）</option>
+            <?php endif; ?>
+
         </select>
     </p>
 
     <p>
-        <textarea name="ng_reason_other" placeholder="不備（その他）の場合は、詳細を入力"></textarea>
+        <textarea name="ng_reason_other" placeholder="二次不備（その他）の場合は、詳細を入力"></textarea>
     </p>
 
     <p>

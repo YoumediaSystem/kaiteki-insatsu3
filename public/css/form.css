@@ -583,9 +583,22 @@ ul.list_numeric li {
 
 select:disabled {
 	opacity: 1;
-	color: #00ad8d;
+/*	color: #00ad8d;*/
+    color:#999;
 	border: 1px solid #eee;
 	cursor: default;
+}
+
+dl.disable_input {
+    height: 1px;
+    opacity:0.01;
+    overflow-y:hidden;
+}
+
+dl.disable_input,
+dl.disable_input * {
+    margin:0;
+    padding:0;
 }
 
 #early_limit_list th,

@@ -234,4 +234,17 @@ class CommonLibrary {
         ];
         return $pager;
     }
+
+    function getYubinCode($zipcode = '') {
+
+        if (empty($zipcode) || !is_numeric($zipcode)) return $zipcode;
+
+        if (!is_string($zipcode)) $zipcode = (string)$zipcode;
+
+        if (strlen($zipcode) < 7) $zipcode = substr('000000'.$zipcode, -7, 7);
+
+        $yubin = '〒'.substr($zipcode,0,3).'-'.substr($zipcode,3,4);
+
+        return $yubin;
+    }
 }
