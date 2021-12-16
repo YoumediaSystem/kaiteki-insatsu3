@@ -1,7 +1,8 @@
 # Disable directory browsing
 Options All -Indexes
 
-# SetEnv CI_ENVIRONMENT development
+# Enable it if debug in real server.
+SetEnv CI_ENVIRONMENT development
 
 # ----------------------------------------------------------------------
 # Rewrite engine
