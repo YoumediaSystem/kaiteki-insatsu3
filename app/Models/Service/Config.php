@@ -135,9 +135,9 @@ class Config
     ];
 
     private $return_url = [
-        'local' => 'http://print.l/user/mypage?payment_result=1',
-        'test'  => 'https://xsvx2010092.xsrv.jp/user/mypage?payment_result=1',
-        'real'  => 'https://kaitekiinsatsu.com/user/mypage?payment_result=1'
+        'local' => 'http://print.l/user/mypage_?payment_result=1',
+        'test'  => 'https://xsvx2010092.xsrv.jp/user/mypage_?payment_result=1',
+        'real'  => 'https://kaitekiinsatsu.com/user/mypage_?payment_result=1'
     ];
 
     private $stop_return_url = [

@@ -451,15 +451,18 @@ class User extends BaseController
         return view('user/login_do', $this->param);
     }
 
-    public function mypage()
+    public function mypage_() // 決済代行サイトからの戻り
     {
         if ($this->check_mente()) return redirect()->to('/mente');
 
-        if (!empty($this->param['payment_result']))
-            $this->check_login();
+        $this->setCommonViews();
+        return view('user/member/mypage_', $this->param);
+    }
 
-        elseif (!$this->check_login())
-            return redirect()->to('/login');
+    public function mypage()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+        if (!$this->check_login()) return redirect()->to('/login');
 
         $id = (int)$this->param['user']['id'];
 
