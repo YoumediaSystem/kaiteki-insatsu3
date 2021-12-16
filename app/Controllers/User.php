@@ -454,7 +454,12 @@ class User extends BaseController
     public function mypage()
     {
         if ($this->check_mente()) return redirect()->to('/mente');
-        if (!$this->check_login()) return redirect()->to('/login');
+
+        if (!empty($this->param['payment_result']))
+            $this->check_login();
+
+        elseif (!$this->check_login())
+            return redirect()->to('/login');
 
         $id = (int)$this->param['user']['id'];
 
