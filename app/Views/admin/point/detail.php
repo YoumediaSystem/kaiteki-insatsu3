@@ -125,9 +125,9 @@ foreach($history as $data) {
 <form method="post" action="/admin/point_edit">
 
     <p>
-        現在のポイント　<?= number_format($point) ?>pt　有効期限：<?= str_replace('-','/',($expire_text ?? '')) ?>
+        現在のポイント　<?= number_format($point ?? 0) ?>pt　有効期限：<?= str_replace('-','/',($expire_text ?? '')) ?>
         
-        <input type="hidden" name="user_id" value="<?= $data['user_id'] ?>">
+        <input type="hidden" name="user_id" value="<?= $id ?>">
         <button>新規ポイント履歴追加</button>
     </p>
 
