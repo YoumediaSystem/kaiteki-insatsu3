@@ -188,7 +188,8 @@ class Payment extends BaseController
     }
 
     public function return() {
-        if (!$this->check_login()) return redirect()->to('/login');
+//        if (!$this->check_login()) return redirect()->to('/login');
+        $this->check_login();
 
         $Payment = new \App\Models\DB\Payment();
         $data = $Payment->getLastPaymentID($this->param['user']['id']);
@@ -234,6 +235,7 @@ class Payment extends BaseController
 
     public function stop() {
 //        if (!$this->check_login()) return redirect()->to('/login');
+        $this->check_login();
 
         if (!empty($this->param['payment_id'])) {
 

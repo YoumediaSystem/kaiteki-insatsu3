@@ -5,12 +5,14 @@ namespace App\Models\DB;
 use CodeIgniter\Model;
 //use CodeIgniter\Database\ConnectionInterface;
 
-//require('/home/xsvx2010092/paygent/module/vendor/autoload.php');
-require_once("/home/kaitekihonya/paygent/module/vendor/autoload.php");
+if (file_exists('/home/kaitekihonya/paygent/module/vendor/autoload.php')):
+    require('/home/kaitekihonya/paygent/module/vendor/autoload.php');
+
+elseif (file_exists('/home/xsvx2010092/paygent/module/vendor/autoload.php')):
+    require('/home/xsvx2010092/paygent/module/vendor/autoload.php');
+endif;
 
 use \PaygentModule\System\PaygentB2BModule;
-
-
 
 class PaymentResult extends Model
 {

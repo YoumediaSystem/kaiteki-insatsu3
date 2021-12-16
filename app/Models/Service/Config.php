@@ -6,7 +6,7 @@ class Config
 {
     protected $service_name = '快適印刷さん';
 
-    protected $b_real_open = true;
+    protected $b_real_open = false;
 
     protected $b_mente_admin = false;
 
@@ -22,7 +22,7 @@ class Config
 
     protected $use_point_ratio = 1;
 
-    protected $payment_fee = 550;
+    protected $payment_fee = 0;
 
     // 新規登録ポイント
     protected $signup_point = 0;

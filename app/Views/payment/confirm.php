@@ -183,13 +183,13 @@ foreach($order_list as $order):
 
 <?php endforeach; ?>
 
+<?php if(!empty($payment_fee)): ?>
 <tr>
     <td colspan="2">決済事務手数料</td>
     <td class="number"><?= number_format($payment_fee) ?? 0 ?></td>
     <td>&nbsp;</td>
 </tr>
-
-
+<?php endif; ?>
 
 </table>
 

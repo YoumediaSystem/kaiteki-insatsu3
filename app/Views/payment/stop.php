@@ -1,6 +1,6 @@
 <?php
 
-const PAGE_NAME = '入稿登録中';
+const PAGE_NAME = '決済手続中断';
 
 ?><!DOCTYPE html>
 <html lang="ja">
