@@ -24,7 +24,8 @@ class Config
 
     protected $payment_fee = 550;
 
-    protected $signup_point = 1000;
+    // 新規登録ポイント
+    protected $signup_point = 0;
     
     protected $point_expire_days = 365;
 

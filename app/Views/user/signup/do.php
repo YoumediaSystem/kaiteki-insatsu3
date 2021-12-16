@@ -22,29 +22,25 @@ const PAGE_NAME = '新規登録中';
 
 <p style="text-align:center">※お待ちください※</p>
 
-<form id="send_params" method="post" action="/user/signup_complete">
 
-    <?php
-    if (empty($error) || !count($error)): ?>
-        <input type="hidden" name="id" value="<?= $id ?? '' ?>">
-    <?php
-    
-    else:
-        foreach($param as $key):
-            if ($key != 'error'): ?>
-                <input type="hidden" name="<?= $key ?>" value="<?= $param[$key] ?>">
-    <?php
-            endif;
-        endforeach;
-        
-        foreach($error as $val): ?>
-            <input type="hidden" name="error[]" value="<?= $val ?>">
-    <?php
-        endforeach;
-    endif;
-    ?>
+    <?php if (empty($error) || !count($error)): ?>
 
-</form>
+    <form id="send_params" method="post" action="/user/signup_complete">
+        <input type="hidden" name="result" value="ok">
+    </form>
+
+    <?php else: ?>
+
+    <form id="send_params" method="post" action="/user/signup_form">
+
+        <?php foreach($error as $val): ?>
+        <input type="hidden" name="error[]" value="<?= $val ?>">
+        <?php endforeach; ?>
+
+    </form>
+
+    <?php endif; ?>
+
 
 <script>
     $('#send_params').submit();
