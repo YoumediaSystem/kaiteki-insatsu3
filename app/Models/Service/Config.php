@@ -164,19 +164,19 @@ class Config
     private $site_index_place = [
         'local' => 'C:\xampp\htdocs\print_local\public\index.php',
         'test'  => '/home/xsvx2010092/xsvx2010092.xsrv.jp/public/index.php',
-        'real'  => '/home/xsvx2010092/kaitekiinsatsu.com/public/index.php'
+        'real'  => '/home/kaitekihonya/kaitekiinsatsu.com/ci4/public/index.php'
     ];
 
     private $upload_place = [
         'local' => 'C:\xampp\htdocs\print_local\writable\uploads',
         'test'  => '/home/xsvx2010092/xsvx2010092.xsrv.jp/writable/uploads',
-        'real'  => '/home/xsvx2010092/kaitekiinsatsu.com/writable/uploads'
+        'real'  => '/home/kaitekihonya/kaitekiinsatsu.com/ci4/writable/uploads'
     ];
 
     private $order_sheet_place = [
         'local' => 'C:\xampp\htdocs\print_local\public\pdf\order_sheet',
         'test'  => '/home/xsvx2010092/xsvx2010092.xsrv.jp/public/pdf/order_sheet',
-        'real'  => '/home/xsvx2010092/kaitekiinsatsu.com/public/pdf/order_sheet'
+        'real'  => '/home/kaitekihonya/kaitekiinsatsu.com/ci4/public/pdf/order_sheet'
     ];
 
     private $site_url = [
@@ -279,11 +279,13 @@ class Config
         $array = [];
         $array['admin_mail_address'] = 'order@kaitekiinsatsu.com';
 
-        $array['bcc_mail_address'] = 'yamato@youyou.co.jp';
+//        $array['bcc_mail_address'] = 'yamato@youyou.co.jp';
+//        $array['bcc_mail_address_2admin'] = 'yamato@youyou.co.jp';
+//        $array['bcc_mail_address_2user'] = 'yamato@youyou.co.jp';
         
-        $array['bcc_mail_address_2admin'] = 'yamato@youyou.co.jp';
-        
-        $array['bcc_mail_address_2user'] = 'yamato@youyou.co.jp';
+        $array['bcc_mail_address'] = 'support@youmedia.net';
+        $array['bcc_mail_address_2admin'] = 'support@youmedia.net';
+        $array['bcc_mail_address_2user'] = 'support@youmedia.net';
         
         return $array;
 /*        
