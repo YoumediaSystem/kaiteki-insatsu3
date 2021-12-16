@@ -2,7 +2,7 @@
 Options All -Indexes
 
 # Enable it if debug in real server.
-SetEnv CI_ENVIRONMENT development
+# SetEnv CI_ENVIRONMENT development
 
 # ----------------------------------------------------------------------
 # Rewrite engine

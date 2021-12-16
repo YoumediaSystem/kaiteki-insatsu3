@@ -6,7 +6,7 @@ class Config
 {
     protected $service_name = '快適印刷さん';
 
-    protected $b_real_open = false;
+    protected $b_real_open = true;
 
     protected $b_mente_admin = false;
 
