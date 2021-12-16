@@ -8,7 +8,7 @@ use CodeIgniter\Model;
 //require('/home/xsvx2010092/paygent/module/vendor/autoload.php');
 require_once("/home/kaitekihonya/paygent/module/vendor/autoload.php");
 
-use PaygentModule\System\PaygentB2BModule;
+use \PaygentModule\System\PaygentB2BModule;
 
 
 
