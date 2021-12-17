@@ -22,6 +22,9 @@ $use_point_ratio = $Config->getUsePointRatio();
 
 $limit_date_text = $LimitDate->getLimitText4outline();
 
+$max_userable_points = $Config->getMaxUserablePoints();
+$max_give_points = $Config->getMaxGivePoints();
+
 
 ?><!DOCTYPE html>
 <html lang="ja">
@@ -634,6 +637,10 @@ section.content .wrap_bonus_info h3 {
                 <i>例：印刷代金10,000円の場合、<?=
                         number_format(10000 * $point_ratio * $not_kaiteki_point_ratio) ?>ポイント進呈</i></li>
                 <li>快適印刷<?= $use_point_ratio ?>ポイント＝1円</li>
+
+                <li>一度に獲得できるポイントは最大<?= number_format($max_give_points) ?>ポイントとなります。</li>
+                <li>一度に利用できるポイントは最大<?= number_format($max_userable_points) ?>ポイントとなります。</li>
+
                 <li>快適印刷ポイントは次回発注分から使用できます。<br>
                 <li>快適印刷ポイントは、快適本屋ポイントに移行して「快適本屋さんOnline」で同人誌購入することもできます。</li>
             </ul>
