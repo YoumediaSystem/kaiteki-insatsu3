@@ -692,7 +692,7 @@ $limit_date_text = $LimitDate->getLimitText4outline();
 
             <dl>
             <dt>
-            <h4>2021.10.28</h4></dt>
+            <h4>2021.12.16</h4></dt>
             <dd>
                 快適印刷さんサイトオープン！2つのセットから選んでオンライン入稿できます。
             </dd>

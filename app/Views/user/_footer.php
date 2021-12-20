@@ -24,6 +24,7 @@ $index = ($Config->isRealOpen()) ? '/' : '/index_test';
 				<li><a href="/faq">よくあるご質問</a></li>
 				<li><a href="/contact/">お問合せ</a></li>
                 <?php endif; ?>
+				<li><a href="https://twitter.com/kaitekiinsatsu" target="_blank">公式twitter</a></li>
 			</ul>
 		</div>
 	</div>
