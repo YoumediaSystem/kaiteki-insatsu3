@@ -547,7 +547,7 @@ class User extends BaseController
         $this->param['action'] = '/forget_pass_form';
         $this->param['auth_url'] = $AuthCommon->makeURL($this->param);
 
-        if (!(new \App\Models\Mail\Auth())->send($this->param)) {
+        if (!(new \App\Models\Mail\Auth())->sendAuth($this->param)) {
             $this->param['error'] = ['メール送信できませんでした。時間をおいて再度お試しください。'];
             return view('user/forget/pass', $this->param);
         }
