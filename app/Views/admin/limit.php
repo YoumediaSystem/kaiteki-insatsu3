@@ -14,7 +14,7 @@ $select_y = range($now_y - 100, $now_y + 1);
 $select_m = range(1,12);
 $select_d = range(1,31);
 
-$b_client_select = (!empty($client_list) && 1 < count($client_list));
+$b_client_select = (!empty($client_list) && $admin['role'] == 'master');
 
 ?><!DOCTYPE html>
 <html lang="ja">
