@@ -126,7 +126,7 @@ product_list : <?= print_r($product_list ?? '', true) ?>
 <table>
 
     <tr>
-    <th style="width:2em">ID</th>
+    <th style="width:2em">商品<br>no.</th>
     <th style="width:16em">商品名</th>
     <th>販売数 ／ 販売上限</th>
     <th style="width:5em">販売期間</th>

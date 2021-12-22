@@ -162,7 +162,7 @@ h4 {
 <table>
 
     <tr>
-    <th style="width:2em">ID</th>
+    <th style="width:2em">受注<br>no.</th>
     <th style="width:8.5em">納品希望日</th>
     <th>作品タイトル</th>
     <th>セット名</th>

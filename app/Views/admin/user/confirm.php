@@ -63,7 +63,7 @@ table {
 </tr>
 
 <tr>
-    <th>快適本屋さんID</th>
+    <th>快適本屋さん会員no.</th>
     <td>
         <input type="hidden" name="honya_id" value="<?= $honya_id ?? '' ?>">
         <?= $honya_id ?? '' ?>
@@ -71,7 +71,7 @@ table {
 </tr>
 
 <tr>
-    <th>YouClubサークルID</th>
+    <th>YouClubサークルno.</th>
     <td>
         <input type="hidden" name="youclub_id" value="<?= $youclub_id ?? '' ?>">
         <?= $youclub_id ?? '' ?>

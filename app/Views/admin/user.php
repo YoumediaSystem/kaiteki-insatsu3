@@ -143,7 +143,7 @@ h4 {
 <table>
 
     <tr>
-    <th style="width:2em">ID</th>
+    <th style="width:2em">会員<br>no.</th>
     <th style="width:16em">氏名（カナ）</th>
     <th>メールアドレス</th>
     <th style="width:5em">ステータス</th>

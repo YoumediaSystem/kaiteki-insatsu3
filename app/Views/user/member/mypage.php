@@ -113,10 +113,10 @@ $user_info = [];
 $user_info[] = '会員no.'.$user['id'];
 
 if (!empty($honya_id))
-    $user_info[] = '快適本屋さんID.'.$honya_id;
+    $user_info[] = '快適本屋さん会員no.'.$honya_id;
 
 if (!empty($youclub_id))
-    $user_info[] = 'YouClub登録ナンバー.'.$youclub_id;
+    $user_info[] = 'YouClubサークルno.'.$youclub_id;
 
 ?>
 

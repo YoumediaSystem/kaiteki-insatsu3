@@ -85,6 +85,7 @@ class Admin extends BaseController
     {
         if (!$this->check_login()
         ||  $this->check_mente()) return redirect()->to('/admin/login');
+		$this->noExpire();
 
         if (!empty($this->param['mode']) && $this->param['mode'] == 'search') {
             
@@ -99,6 +100,7 @@ class Admin extends BaseController
         }
 
         $this->setCommonViews();
+
         return view('admin/user', $this->param);
     }
 
@@ -1315,7 +1317,23 @@ class Admin extends BaseController
         return view('admin/logout', $this->param);
     }
 
-    // 
+    // キャッシュ期限無期限
+
+    private function noExpire() {
+
+        $DT = new \DateTime();
+        $DT->modify('+1 day');
+		
+		header('Expires: '.$DT->format('D, d M Y H:i:s T'));
+		header('Cache-Control: max-age=86400');
+//		header('Pragma:');
+
+//        $this->response->setHeader('Pragma', '');
+//        $this->response->setHeader('Expires', $DT->format('D, d M Y H:i:s T'));
+//        $this->response->setHeader('Cache-Control', 'max-age=86400');
+//        $this->response->setHeader('Cache-Control', 'max-age=-1');
+
+	}
 
     // ログインチェック
 

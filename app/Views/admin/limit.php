@@ -225,7 +225,7 @@ $limit_date_d = $limit_date_d ?? 1;
 <table>
 
 <tr>
-    <th style="width:2em">ID</th>
+    <th style="width:2em">締切<br>no.</th>
     <th>業者コード</th>
     <th>納品日</th>
     <th>入稿締切日</th>

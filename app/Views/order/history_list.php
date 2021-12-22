@@ -66,7 +66,7 @@ h4 {
 <table>
 
 <tr>
-<th>no.</th>
+<th>発注no.</th>
 <th>本のタイトル</th>
 <th>入金期限</th>
 <th>発注状況</th>

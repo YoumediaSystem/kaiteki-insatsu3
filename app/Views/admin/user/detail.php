@@ -96,11 +96,11 @@ td span + span {
     <th>関連ID</th>
     <td>
         <?php if(!empty($honya_id)): ?>
-            <span>快適本屋さんID：<?= $honya_id ?></span>
+            <span>快適本屋さん会員no.<?= $honya_id ?></span>
         <?php endif; ?>
 
         <?php if(!empty($youclub_id)): ?>
-            <span>YouClubサークルID：<?= $youclub_id ?></span>
+            <span>YouClubサークルno.<?= $youclub_id ?></span>
         <?php endif; ?>
     </td>
 </tr>
