@@ -8,6 +8,15 @@ $p_ondemand = $Product->getFromID(2);
 
 unset($Product);
 
+$DT_temp = new \DateTime($p_offset['close_date']);
+$DT_temp->setTimezone(new \DateTimeZone('Asia/Tokyo'));
+$p_offset['close_date_text'] = $DT_temp->format('Y/n/j');
+
+$DT_temp = new \DateTime($p_ondemand['close_date']);
+$DT_temp->setTimezone(new \DateTimeZone('Asia/Tokyo'));
+$p_ondemand['close_date_text'] = $DT_temp->format('Y/n/j');
+
+
 $rest_offset   = $p_offset['max_order'] - $p_offset['ordered'];
 
 $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
@@ -388,7 +397,7 @@ $limit_date_text = $LimitDate->getLimitText4outline();
                     
                     <p class="text-center limited_dates">
                     <img src="/img/headline/h_limited.png" width="240" alt="期間限定販売"><br>
-                    <b>2021/12/16～2022/1/31</b>
+                    <b>2021/12/16～<?= $p_offset['close_date_text'] ?></b>
                     </p>
 <!--
                     <p class="rest_products"><span><?=
@@ -521,7 +530,7 @@ $limit_date_text = $LimitDate->getLimitText4outline();
                     
                     <p class="text-center limited_dates">
                     <img src="/img/headline/h_limited.png" width="240" alt="期間限定販売"><br>
-                    <b>2021/12/16～2022/1/31</b>
+                    <b>2021/12/16～<?= $p_ondemand['close_date_text'] ?></b>
                     </p>
 <!--
                     <p class="rest_products"><span><?=
