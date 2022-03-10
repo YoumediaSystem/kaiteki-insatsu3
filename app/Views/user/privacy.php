@@ -8,43 +8,43 @@ const PAGE_NAME = '個人情報保護方針';
 <html lang="ja">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE">
-    <meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
-    <title><?= PAGE_NAME ?> | <?= $site['name'] ?></title>
+	<meta charset="UTF-8">
+	<meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE">
+	<meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
+	<title><?= PAGE_NAME ?> | <?= $site['name'] ?></title>
 
-    <link rel="profile" href="http://gmpg.org/xfn/11">
-    <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
-    <script src="/js/jquery.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/pagetop.js"></script>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+	<script src="/js/jquery.js"></script>
+	<script src="/js/script.js"></script>
+	<script src="/js/pagetop.js"></script>
 </head>
 
 <body>
 
-    <?= $view['header'] ?>
+	<?= $view['header'] ?>
 
-    <div id="wrapper">
+	<div id="wrapper">
 
 <!--		<section id="main"> -->
 
-            <section class="content">
+			<section class="content">
 
 <style>
 
 pre {
-    white-space:pre-wrap;
-    margin-bottom:1em;
+	white-space:pre-wrap;
+	margin-bottom:1em;
 }
 </style>
-            
-                <h3 class="heading">個人情報保護方針</h3>
-                <article class="post">
+			
+				<h3 class="heading">個人情報保護方針</h3>
+				<article class="post">
 <!--				
-                    <p class="dateLabel"><time datetime="2014-09-01">2014/09/01</time></p>
+					<p class="dateLabel"><time datetime="2014-09-01">2014/09/01</time></p>
 -->
-                    
-                    <h3>個人情報保護方針(プライバシーポリシー)</h3>
+					
+					<h3>個人情報保護方針(プライバシーポリシー)</h3>
 <p>
 当個人情報保護方針は、株式会社 Plus Colors(以下「弊社」と呼称)が運営する同人誌印刷、製本、一般商業印刷業務のインターネット印刷入稿サイト「快適印刷さんOnline」(以下「本サイト」と呼称) 及びその提供するサービス(以下「本サービス」と呼称) を利用されるお客様の個人情報の取り扱いについて定めたものです。</p>
 
@@ -134,21 +134,21 @@ pre {
 
 
 <pre style="text-align:right">
-制定：2021年3月●日
+制定：2021年12月17日
 株式会社Plus Colors
 代表取締役社長　宮里 日菜乃
 TEL：03-5816-1060
 </pre>
-                </article>
-            </section>
+				</article>
+			</section>
 
 <!--		</section> -->
 
-        <?php // $view['side'] ?>
+		<?php // $view['side'] ?>
 
-    </div><!-- wrapper -->
+	</div><!-- wrapper -->
 
-    <?= $view['footer'] ?>
+	<?= $view['footer'] ?>
 
 </body>
 </html>

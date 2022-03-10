@@ -35,7 +35,8 @@ input[name="address2"] {
     margin-top:1em;
 }
 
-td input.width_full {
+td input.width_full
+{
     width:calc(100% - 1.2em);
 }
 

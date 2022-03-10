@@ -25,6 +25,16 @@ $limit_date_text = $LimitDate->getLimitText4outline();
 $max_userable_points = $Config->getMaxUserablePoints();
 $max_give_points = $Config->getMaxGivePoints();
 
+$lib = new \App\Models\CommonLibrary();
+$youbi = $lib->getYoubiArray();
+$early_limit = (new \App\Models\DB\LimitDateList())
+    ->getList4OrderForm([
+        'client_code'   => 'taiyou',
+        'date_from'     => '2022-04-01',
+        'date_to'       => '2022-05-31'
+    ]);
+
+
 
 ?><!DOCTYPE html>
 <html lang="ja">
@@ -388,6 +398,12 @@ section.content .wrap_bonus_info h3 {
     .wrap_text_img {display:block;}
 }
 
+#early_limit_list td {
+    padding:1em 0.5em;
+    border-left:none;
+    border-right:none;
+}
+
 </style>
 
 <article class="post" style="padding-top:0">
@@ -457,15 +473,42 @@ section.content .wrap_bonus_info h3 {
             <th>入稿・印刷・発送</th>
             <td>
                 <ol>
-                    <li><?= $limit_date_text ?>→金曜日発送</li>
+                    <li><?= $limit_date_text ?>→金曜日発送※</li>
                     <li>表紙・本文同時入稿</li>
                     <li>発注部数の10％を無料増刷（快適本屋さんに納品する場合のみ）</li>
                 </ol>
+
+
             </td>
         </tr>
         </table>
 
     </div><!-- wrap_content_spec -->
+
+
+
+    <h3>※ゴールデンウィーク期間は入稿件数が多いため、入稿締切が前倒しとなります。</h3>
+
+<table id="early_limit_list" style="margin-bottom:6em">
+
+<tr>
+    <th>納品希望日</th>
+    <th>入稿締切日時</th>
+</tr>
+
+<?php foreach ($early_limit as $row):
+            
+$DT1 = new \Datetime($row['print_up_date']);
+$DT2 = new \Datetime($row['limit_date']); ?>
+
+<tr>
+<td><?= $DT1->format('Y/n/j').$youbi[$DT1->format('w')] ?></td>
+<td><b><?= $DT2->format('Y/n/j').$youbi[$DT2->format('w')] ?>　12時まで</b></td>
+</tr>
+
+<?php endforeach; ?>
+
+</table>
 
 
 

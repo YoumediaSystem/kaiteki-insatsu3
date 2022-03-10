@@ -10,6 +10,7 @@ class OrderHistory extends Model
     protected $statusName = [
          10 => '未入金'
         ,11 => '入金待ち'
+        ,12 => '入稿内容調整待ち'
         ,40 => '入金済'
         ,41 => '一次不備'
         ,50 => '仮受付'
@@ -84,7 +85,12 @@ class OrderHistory extends Model
         'delivery_divide',
         'price_text',
         'b_overprint_kaiteki',
-        'nonble_from'
+        'nonble_from',
+        'b_extra_order',
+        'basic_price',
+        'adjust_price',
+        'adjust_note_front',
+        'adjust_note_admin'
     ];
 
     protected $dateFields = [
@@ -330,7 +336,7 @@ class OrderHistory extends Model
 
         $data = $this
         ->where('user_id', $user_id)
-        ->whereIn('order_history.status', [10,11,40,50,60,110,140,150,160])
+        ->whereIn('order_history.status', [10,11,12,40,50,60,110,140,150,160])
         ->findAll();
 
         return (!empty($data) && count($data));

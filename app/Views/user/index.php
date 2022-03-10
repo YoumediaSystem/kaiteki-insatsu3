@@ -413,6 +413,7 @@ $limit_date_text = $LimitDate->getLimitText4outline();
 
                     <p>
                         <strong><?= $limit_date_text ?>→金曜日発送</strong>
+                        <small>（GW繁忙期を除く）</small>
                     </p>
 
                     <p>
@@ -545,7 +546,8 @@ $limit_date_text = $LimitDate->getLimitText4outline();
                     </h3>
 
                     <p>
-                    <strong><?= $limit_date_text ?>→金曜日発送</strong>
+                        <strong><?= $limit_date_text ?>→金曜日発送</strong>
+                        <small>（GW繁忙期を除く）</small>
                     </p>
 
                     <p>
