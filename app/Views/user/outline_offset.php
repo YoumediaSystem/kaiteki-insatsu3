@@ -487,7 +487,7 @@ section.content .wrap_bonus_info h3 {
 
 
 
-    <h3>※ゴールデンウィーク期間は入稿件数が多いため、入稿締切が前倒しとなります。</h3>
+    <h3>※ゴールデンウィーク期間合わせは繁忙期の為、入稿締切が前倒しとなります。</h3>
 
 <table id="early_limit_list" style="margin-bottom:6em">
 
