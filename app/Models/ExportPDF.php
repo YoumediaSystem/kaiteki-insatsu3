@@ -180,7 +180,7 @@ class ExportPDF {
                     $text .= $CR;
                     $text .= ($row['real_name'] ?? '');
                     $text .= '（'.($row['real_name_kana'] ?? '').'）';
-                    $text .= $CR.$CR;
+                    $text .= $CR;
                     $text .= 'TEL '.($row['tel'] ?? '');
         
                     $delivery[] = [
@@ -481,7 +481,7 @@ class ExportPDF {
         $this->putText($PDF, $p, $x, $y, $w, $h);
 
         // 電話番号
-        $x = 98;	$y = 231.5;
+        $x = 98;	$y = 227;
         $w = 50;	$h = 12;
         $p['text'] = $param['userdata']['tel'];
         $this->putText($PDF, $p, $x, $y, $w, $h);
