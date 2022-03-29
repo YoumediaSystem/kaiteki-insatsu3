@@ -61,7 +61,13 @@ class ModOrderHistory extends Model
         'number_home',
         'number_kaiteki',
         'b_overprint_kaiteki',
-        'nonble_from'
+        'nonble_from',
+        'b_extra_order',
+        'extra_order_note',
+        'basic_price',
+        'adjust_price',
+        'adjust_note_front',
+        'adjust_note_admin'
     ];
 
     protected $dateFields = [
@@ -135,6 +141,20 @@ class ModOrderHistory extends Model
         if (empty($data['id'])) return [];
 
         return $this->parseData($data);
+    }
+
+    public function getLatestPrice($order_id) {
+
+        if (empty($order_id)) return [];
+
+        $data = $this
+        ->where('org_id', $order_id)
+        ->orderBy('id','DESC')
+        ->first();
+
+        if (empty($data['price'])) return 0;
+
+        return $data['price'];
     }
 
     function adjustParam($param) {

@@ -74,7 +74,7 @@ ul.list_numeric li {
 
 <div id="form_area" class="text">
 
-	<p><b>入稿内容を登録しました。入金期限までにお支払いください。</b></p>
+	<p><b>入稿内容を登録しました。</b></p>
 
     <?php if(isset($order_list) && count($order_list)): ?>
 
@@ -92,20 +92,25 @@ ul.list_numeric li {
 $DT_now   = new \Datetime();
 
 foreach($order_list as $order):
-    
+
+	$b_extra = ($order['status'] == 12 || !empty($order['b_extra_order']));
+
     $DT_limit = new \Datetime($order['payment_limit']); ?>
 
 <tr>
 <td class="number"><?= $order['id'] ?></th>
 <td><!-- <a href="/order/detail?id=<?= $order['id'] ?>"> --><?= $order['print_title'] ?><!-- </a> --></td>
 <td><?= $DT_limit->format('Y/n/j H時まで'); ?></td>
-<td><?= $order['status_name'] ?? '' ?><?php
+<td><?= $order['status_name'] ?? '' ?>　<?php
 
 if ($order['status_name'] == '未入金'
 &&  $DT_now < $DT_limit
 ): ?>
 
-　<a href="/payment/form">お支払い手続きする＞＞</a>
+<a href="/payment/form">お支払い手続きする＞＞</a>
+
+<?php else: ?>
+<span class="attention">金額調整後に連絡します。お待ちください。</span>
 
 <?php endif; ?></td>
 </tr>

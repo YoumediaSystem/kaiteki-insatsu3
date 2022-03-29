@@ -87,6 +87,7 @@ class OrderHistory extends Model
         'b_overprint_kaiteki',
         'nonble_from',
         'b_extra_order',
+        'extra_order_note',
         'basic_price',
         'adjust_price',
         'adjust_note_front',
@@ -170,6 +171,7 @@ class OrderHistory extends Model
         ,'print_number_all'	=> 5
         ,'print_page'		=> 5
         ,'main_buffer_paper_detail'		=> 100
+        ,'extra_order_note'	=> 100
         
         ,'auth_key' => 256
     ];
@@ -362,6 +364,7 @@ class OrderHistory extends Model
         if (empty($user_id)) return [];
 
         $DT = new \Datetime();
+        $ModOrder = new \App\Models\DB\ModOrderHistory();
 
         $data = $this
         ->select('order_history.*, product_set.client_code, client.name as client_name')
@@ -378,8 +381,12 @@ class OrderHistory extends Model
         if (empty($data) || !count($data)) return [];
 
         $result = [];
-        foreach($data as $order)
-            $result[] = $this->parseData($order);
+        foreach($data as $order) {
+            $temp = $this->parseData($order);
+            $mod_price = $ModOrder->getLatestPrice($order['id']);
+            if ($mod_price) $temp['price'] = $mod_price;
+            $result[] = $temp;
+        }
 
         return $result;
     }
@@ -387,6 +394,8 @@ class OrderHistory extends Model
     public function getPaymentOrder($order_id_array) {
 
         if (empty($order_id_array) || !count($order_id_array)) return [];
+
+        $ModOrder = new \App\Models\DB\ModOrderHistory();
 
         $data = $this
         ->select('order_history.*, product_set.client_code, client.name as client_name')
@@ -400,8 +409,12 @@ class OrderHistory extends Model
         if (empty($data) || !count($data)) return [];
 
         $result = [];
-        foreach($data as $order)
-            $result[] = $this->parseData($order);
+        foreach($data as $order) {
+            $temp = $this->parseData($order);
+            $mod_price = $ModOrder->getLatestPrice($order['id']);
+            if ($mod_price) $temp['price'] = $mod_price;
+            $result[] = $temp;
+        }
 
         return $result;
     }
@@ -866,6 +879,12 @@ class OrderHistory extends Model
             $t = '納品日は '.$DT_up_border->format('Y/n/j').' 以降の日付を指定してください。';
             $error[] = $t;
             $b_border = false;
+        }
+
+        // 特注チェック＆内容
+        if (!empty($param['b_extra_order'])
+        &&  empty($param['extra_order_note'])) {
+            $error[] = '特注希望の場合は、希望内容を入力してください。';
         }
     
         return $error;

@@ -172,6 +172,7 @@ table {
     <th>料金</th>
     <td>
         <input type="hidden" name="price" value="<?= $price['total'] ?? '' ?>">
+        <input type="hidden" name="basic_price" value="<?= $price['basic_price'] ?? 0 ?>">
 
         <?php if($price['total'] != $org['price']): ?>
             <?= $org['price'] ?? '' ?>
@@ -418,6 +419,98 @@ table {
         <?php endif; ?>
     </td>
 </tr>
+
+
+<tr>
+<th>特注希望</th>
+    <td>
+        <input type="hidden" name="b_extra_order" value="<?= $b_extra_order ?? '' ?>">
+
+        <?php
+        $text_org  = !empty($org['b_extra_order'])
+        ? '特注希望あり' : '特注希望なし';
+
+        $text_dest = !empty($b_extra_order)
+        ? '特注希望あり' : '特注希望なし';
+        
+        if($text_org != $text_dest): ?>
+            <?= $text_org ?>
+            → <strong><?= $text_dest ?></strong>
+
+        <?php else: ?>
+            <?= $text_org ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+<tr>
+<th>調整金額</th>
+    <td>
+        <input type="hidden" name="adjust_price" value="<?= $adjust_price ?? 0 ?>">
+
+        <?php
+        $text_org  = ($org['adjust_price'] ?? 0);
+        $text_dest = ($adjust_price ?? 0);
+
+        if($text_org != $text_dest): ?>
+            <?= $text_org ?>
+            → <strong><?= $text_dest ?></strong>
+
+        <?php else: ?>
+            <?= $text_org ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+<tr>
+<th>調整コメント（顧客向け）</th>
+    <td>
+        <input type="hidden" name="adjust_note_front" value="<?= $adjust_note_front ?? '' ?>">
+
+        <?php
+        $text_org  = ($org['adjust_note_front'] ?? '');
+        $text_dest = ($adjust_note_front ?? '');
+
+        if($text_org != $text_dest): ?>
+            <?= $text_org ?>
+            → <strong><?= $text_dest ?></strong>
+
+        <?php else: ?>
+            <?= $text_org ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+<tr>
+<th>調整コメント（発注書用）</th>
+    <td>
+        <input type="hidden" name="adjust_note_admin" value="<?= $adjust_note_admin ?? '' ?>">
+
+        <?php
+        $text_org  = ($org['adjust_note_admin'] ?? '');
+        $text_dest = ($adjust_note_admin ?? '');
+
+        if($text_org != $text_dest): ?>
+            <?= $text_org ?>
+            → <strong><?= $text_dest ?></strong>
+
+        <?php else: ?>
+            <?= $text_org ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+
+
+
+
+
+
+
 
 
 <tr>

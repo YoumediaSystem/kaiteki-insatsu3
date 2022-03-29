@@ -528,6 +528,24 @@ class Admin extends BaseController
         $org = $Order->parseData($org);
         $dest = $Order->makeData($this->param); // protect
 
+        // 入稿内容調整待ち → 未入金
+        if ($this->param['status'] == 12) {
+
+            $org['mode'] = 'detail';
+            $temp = $Order->parseData($org);
+            $temp['adjust_detail_text'] =
+                '【合計金額　'.$this->param['price'].'円】'
+                .($this->param['adjust_note_front'] ?? '');
+            $temp['status'] = 10;
+
+            $OrderOK = new \App\Models\Mail\OrderOK();
+            $temp = $OrderOK->adjust($temp);
+            $OrderOK->sendAutoMail($temp);
+            unset($OrderOK, $temp);
+
+            $this->param['status'] = 10;
+        }
+
         $Order->save([ // 受発注データは以下3項目のみ更新、他はmodレコードを更新
             'id'            => $this->param['id'],
             'print_title'   => $this->param['print_title'],
@@ -565,7 +583,7 @@ class Admin extends BaseController
         $Order = new \App\Models\DB\OrderHistory();
         $Price = new \App\Models\Service\Price();
 
-        $data   = $Order->getFromID($this->param['id']);
+        $data   = $Order->getDetailFromID($this->param['id']);
 
         ini_set('memory_limit', '2G');
         ini_set("max_execution_time",6000);

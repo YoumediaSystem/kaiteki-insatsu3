@@ -63,9 +63,9 @@ class OrderOK extends SendMail
         $this->addMailBuffer($data);
     }
 
-    function getTextByStatus($status = 150) {
+    function getTextByStatus($status = 150, $adjust_detail_text = '') {
 
-        if (!in_array($status, [50,60,150,160])) return [
+        if (!in_array($status, [10,50,60,150,160])) return [
             'subject' => '',
             'order_step' => '',
             'order_step_next' => '',
@@ -74,6 +74,17 @@ class OrderOK extends SendMail
 
         $a = [];
         $CR = (string)$this->CR;
+
+        if (in_array($status, [10])) {
+            $a['subject'] = $this->subject_customer.'入稿内容調整のお知らせ';
+            $a['order_step'] = '入稿内容調整';
+            $a['order_step_next'] = '調整内容は以下となります。'.$CR;
+            $a['order_step_next'] .= $adjust_detail_text;
+
+            $a['order_step_notice']  = '※快適印刷さんサイトにログイン後'.$CR;
+            $a['order_step_notice'] .= '　入稿詳細ページ内容をご確認の上'.$CR;
+            $a['order_step_notice'] .= '　入金期限までにお支払いください。';
+        }
 
         if (in_array($status, [50,150])) {
             $a['subject'] = $this->subject_customer.'受付開始のお知らせ';
@@ -113,7 +124,7 @@ class OrderOK extends SendMail
 
         $body = file_get_contents(__DIR__.'/'.$this->customer_template_file);
 
-        $param += $this->getTextByStatus($param['status']);
+        $param += $this->getTextByStatus($param['status'], $param['adjust_detail_text']);
 
         foreach($param as $key=>$val)
             if(!in_array($key, $this->parse_ignore_keys) && !is_array($val))

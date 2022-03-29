@@ -103,6 +103,20 @@ $org_price_text = !empty($order['org_price'])
 </td>
 </tr>
 
+
+<?php if(!empty($order['adjust_note_front'])): ?>
+
+<tr>
+    <th>調整希望あり</th>
+    <td><?= $order['status'] == 12 ?
+    ($order['extra_order_note'] ?? '')
+:   ($order['adjust_note_front'] ?? '')
+?></td>
+</tr>
+
+<?php endif; ?>
+
+
 <tr>
 <th>入金期限</th>
 <td><?= $date_text ?></td>
@@ -157,6 +171,7 @@ if ($order['status_name'] == '入金待ち'
 
 </td>
 </tr>
+
 
 <?php if(in_array($order['status'],[40,50,60,140,150,160])): ?>
 

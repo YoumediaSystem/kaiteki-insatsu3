@@ -327,8 +327,37 @@ function reload() {
     <th>余部特典</th>
     <td>余部を快適本屋さんに委託する</td>
 </tr>
+<?php endif; ?>
+
+
+
+<?php if(!empty($order['b_extra_order'])): ?>
+
+<tr>
+    <th>特注希望</th>
+    <td><?= $order['extra_order_note'] ?? '' ?></td>
+</tr>
 
 <?php endif; ?>
+<?php if(!empty($order['b_extra_order']) || !empty($order['adjust_price'])): ?>
+
+<tr>
+    <th>調整金額</th>
+    <td><?= $order['adjust_price'] ?? 0 ?></td>
+</tr>
+
+<tr>
+    <th>調整コメント（顧客向け）</th>
+    <td><?= $order['adjust_note_front'] ?? '' ?></td>
+</tr>
+
+<tr>
+    <th>調整コメント（発注書用）</th>
+    <td><?= $order['adjust_note_admin'] ?? '' ?></td>
+</tr>
+<?php endif; ?>
+
+
 
 <tr>
     <th>その他備考</th>

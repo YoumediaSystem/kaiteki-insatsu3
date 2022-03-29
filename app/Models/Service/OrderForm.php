@@ -66,6 +66,8 @@ class OrderForm
         ,'binding'						=> '製本'
         ,'r18'							=> '対象年齢'
         ,'r18_check'					=> '18歳以上か'
+        ,'b_extra_order'				=> '特注希望'
+        ,'extra_order_note'				=> '特注希望内容'
 
         // 納品部数
 
@@ -156,6 +158,8 @@ class OrderForm
     
        ,'binding'
        ,'r18'
+       ,'b_extra_order'
+       ,'extra_order_note'
     
     // 納品部数
     

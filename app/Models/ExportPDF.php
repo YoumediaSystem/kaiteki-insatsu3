@@ -425,6 +425,10 @@ class ExportPDF {
                 : '無料印刷分('.$n.' 冊)は快適本屋さん通販に回す';
 */
         }
+
+        if ($param['b_extra_order'])
+            $a[] = '特注希望・'.($param['adjust_note_admin'] ?? '');
+
         $x = 25;	$y = 181.5;
         $w = 125;	$h = 30;
         $p['text']  = implode('　', $a);

@@ -156,6 +156,9 @@ endif;
             <?php endforeach; ?>
         </select>
 
+        <br>
+        <small class="attention">入稿内容調整待ちは自動で未入金に遷移します（変更不要）</small>
+
     </td>
 </tr>
 
@@ -397,6 +400,33 @@ endif;
         </select>
     <small class="attention">快適本屋さんに余部のみ納品する場合はカウント数に含めない</small>
 </td>
+</tr>
+
+<tr>
+    <th>特注希望</th>
+    <td>
+        <label>
+            <?php $prop = !empty($b_extra_order) ? $checked : ''; ?>
+            <input type="checkbox" name="b_extra_order" value="1"<?= $prop ?>>
+            特注希望あり
+        </label>
+    </td>
+</tr>
+
+<tr>
+    <th>調整金額</th>
+    <td><input type="text" name="adjust_price" value="<?= $adjust_price ?? 0 ?>"><br>
+        <small>※基本料金からの増減額を入力してください</small></td>
+</tr>
+
+<tr>
+    <th>調整コメント（顧客向け）</th>
+    <td><input type="text" name="adjust_note_front" value="<?= $adjust_note_front ?? '' ?>"></td>
+</tr>
+
+<tr>
+    <th>調整コメント（発注書用）</th>
+    <td><input type="text" name="adjust_note_admin" value="<?= $adjust_note_admin ?? '' ?>"></td>
 </tr>
 
 </table>

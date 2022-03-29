@@ -4,6 +4,8 @@ namespace App\Models\Service;
 
 class LimitDate
 {
+//    protected $limit_days = -5;// 2022.3.3 納品5日前12時ルールに変更
+
     protected $limit_weekday = 'tuesday';
     protected $limit_hms = '12:00:00';
     protected $saturday_gap = 0;
@@ -145,10 +147,15 @@ class LimitDate
                 $DT2 = new \Datetime(
                     $datetext
                     , new \DateTimezone('Asia/Tokyo'));
-    
+                    
                 $DT2->modify('-2days');
                 $DT2->modify('last '.$this->limit_weekday.' '.$this->limit_hms);
                 $limit_date = $DT2->format('Y-m-d H:i:s');
+/*
+                // 2022.3.3 納品5日前12時ルールに変更
+                $DT2->modify($this->limit_days.'days');
+                $limit_date = $DT2->format('Y-m-d ').$this->limit_hms;
+*/
             }
             $data[$key] = $limit_date;
 

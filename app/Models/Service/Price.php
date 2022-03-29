@@ -42,6 +42,8 @@ class Price
         $param['binding'] = $param['binding'] ?? '';
         $param['r18'] = $param['r18'] ?? '';
 
+        $param['b_extra_order'] = $param['b_extra_order'] ?? 0;
+
         return $param;
     }
     
@@ -252,7 +254,15 @@ class Price
             $a_price['total'] += $price;
         }
     
-        // 消費税
+        // 金額調整を適用
+        if (!empty($param['adjust_price'])) {
+            $a_price['detail'][] = $this->text_price(
+                '金額調整', $param['adjust_price']);
+            $a_price['basic_price'] = $a_price['total'];
+            $a_price['total'] += $param['adjust_price'];
+        }
+
+        // 消費税　★最後固定★
         if (!empty($data['tax_per'])) {
             $price = $a_price['total'] * $data['tax_per'];
             $a_price['detail'][] = $this->text_price(
@@ -260,9 +270,7 @@ class Price
             $a_price['total'] += $price;
         }
     
-        // 明細テキスト
         $a_price['price_text'] = $this->get_detail_text($a_price);
-    
         return $a_price;
     }
 

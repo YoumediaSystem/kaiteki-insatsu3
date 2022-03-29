@@ -117,13 +117,30 @@ class Order extends BaseController
                 str_replace('/','-', $this->param['payment_limit']);
 //            $this->param['payment_limit'] =
 //            (new \app\Models\DB\LimitDateList())->getDateFromPrintUp($this->param);
-            $this->param['status'] = 10;
+
+            // 特注希望ありの場合は決済抑止する
+            $this->param['b_extra_order'] =
+                !empty($this->param['b_extra_order']) ? 1 : 0;
+
+            $this->param['status'] =
+                !empty($this->param['b_extra_order']) ? 12 : 10;
+
             unset($this->param['id']);
 
+            // 書き込み
             $this->param['order_id'] = $OrderHistory->modify($this->param);
 
             $Delivery = new \App\Models\DB\Delivery();
             $Delivery->modifyFromOrder($this->param);
+
+            // 特注の場合はクライアント通知
+            if (!empty($this->param['b_extra_order'])) {
+                $data = $OrderHistory->getDetailFromID($this->param['order_id']);
+
+                $OrderExtra = new \App\Models\Mail\OrderExtra();
+                $data = $OrderExtra->adjust($data);
+                $OrderExtra->sendAutomail($data);
+            }
         }
 
         return view('order/do', $this->param);
