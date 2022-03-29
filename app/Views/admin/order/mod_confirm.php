@@ -422,37 +422,17 @@ table {
 
 
 <tr>
-<th>特注希望</th>
+<th>事前相談</th>
     <td>
         <input type="hidden" name="b_extra_order" value="<?= $b_extra_order ?? '' ?>">
 
         <?php
         $text_org  = !empty($org['b_extra_order'])
-        ? '特注希望あり' : '特注希望なし';
+        ? '事前相談済み' : 'なし';
 
         $text_dest = !empty($b_extra_order)
-        ? '特注希望あり' : '特注希望なし';
+        ? '事前相談済み' : 'なし';
         
-        if($text_org != $text_dest): ?>
-            <?= $text_org ?>
-            → <strong><?= $text_dest ?></strong>
-
-        <?php else: ?>
-            <?= $text_org ?>
-
-        <?php endif; ?>
-    </td>
-</tr>
-
-<tr>
-<th>調整金額</th>
-    <td>
-        <input type="hidden" name="adjust_price" value="<?= $adjust_price ?? 0 ?>">
-
-        <?php
-        $text_org  = ($org['adjust_price'] ?? 0);
-        $text_dest = ($adjust_price ?? 0);
-
         if($text_org != $text_dest): ?>
             <?= $text_org ?>
             → <strong><?= $text_dest ?></strong>
@@ -492,6 +472,26 @@ table {
         <?php
         $text_org  = ($org['adjust_note_admin'] ?? '');
         $text_dest = ($adjust_note_admin ?? '');
+
+        if($text_org != $text_dest): ?>
+            <?= $text_org ?>
+            → <strong><?= $text_dest ?></strong>
+
+        <?php else: ?>
+            <?= $text_org ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+
+<tr>
+<th>調整金額</th>
+    <td>
+        <input type="hidden" name="adjust_price" value="<?= $adjust_price ?? 0 ?>">
+
+        <?php
+        $text_org  = ($org['adjust_price'] ?? 0);
+        $text_dest = ($adjust_price ?? 0);
 
         if($text_org != $text_dest): ?>
             <?= $text_org ?>

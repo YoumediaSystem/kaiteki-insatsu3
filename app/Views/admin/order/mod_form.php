@@ -403,20 +403,14 @@ endif;
 </tr>
 
 <tr>
-    <th>特注希望</th>
+    <th>事前相談</th>
     <td>
         <label>
             <?php $prop = !empty($b_extra_order) ? $checked : ''; ?>
             <input type="checkbox" name="b_extra_order" value="1"<?= $prop ?>>
-            特注希望あり
+            事前相談済み
         </label>
     </td>
-</tr>
-
-<tr>
-    <th>調整金額</th>
-    <td><input type="text" name="adjust_price" value="<?= $adjust_price ?? 0 ?>"><br>
-        <small>※基本料金からの増減額を入力してください</small></td>
 </tr>
 
 <tr>
@@ -432,7 +426,15 @@ endif;
     <small>入力例「【ページ数】200p【冊数】3000冊」</small></td>
 </tr>
 
+<tr>
+    <th>調整金額</th>
+    <td><input type="text" name="adjust_price" value="<?= $adjust_price ?? 0 ?>"><br>
+        <small>※基本料金からの増減額を入力してください</small></td>
+</tr>
+
 </table>
+
+<p><small>遠隔地納品に伴う入金期限の前倒し調整機能は未実装です（快適印刷システム担当にご相談ください）</small></p>
 
 
 

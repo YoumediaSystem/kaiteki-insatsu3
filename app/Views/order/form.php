@@ -648,7 +648,7 @@ mod_print_up_date();
 <dt><h4>事前相談内容</h4></dt>
 <dd>
     <div class="ec-input">
-        <input type="text" id="extra_order_note" name="extra_order_note" class="width_full" value="<?= $extra_order_note ?? '' ?>" placeholder="事前相談の内容や日時をご入力ください">
+        <input type="text" id="extra_order_note" name="extra_order_note" class="width_full" value="<?= $extra_order_note ?? '' ?>" placeholder="事前相談の内容や日時をご入力ください"><br>
 
         <small class="attention">担当者にて内容確認後、入稿調整いたします。</small><br>
         <small class="attention">入力に相違がある場合、確認にお時間をいただく場合がございます。</small>
