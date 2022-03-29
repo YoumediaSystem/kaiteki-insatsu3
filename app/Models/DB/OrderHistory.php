@@ -884,7 +884,7 @@ class OrderHistory extends Model
         // 特注チェック＆内容
         if (!empty($param['b_extra_order'])
         &&  empty($param['extra_order_note'])) {
-            $error[] = '特注希望の場合は、希望内容を入力してください。';
+            $error[] = '事前相談済みの場合は、相談内容を入力してください。';
         }
     
         return $error;

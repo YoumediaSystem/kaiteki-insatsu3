@@ -10,7 +10,7 @@ class OrderExtra extends SendMail
 
     private $b_customer = false; // ユーザー向け通知
 
-    private $subject_admin = '';
+    private $subject_admin = '入稿内容調整希望のお知らせ';
 
     private $subject_customer = '';
 

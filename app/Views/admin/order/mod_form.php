@@ -56,7 +56,7 @@ h4 {
     text-align:right;
 }
 
-textarea {
+textarea, input.width_full {
     width:calc(100% - 1.2rem);
 }
 
@@ -421,12 +421,15 @@ endif;
 
 <tr>
     <th>調整コメント（顧客向け）</th>
-    <td><input type="text" name="adjust_note_front" value="<?= $adjust_note_front ?? '' ?>"></td>
+    <td><input type="text" name="adjust_note_front" value="<?= $adjust_note_front ?? '' ?>" class="width_full">
+    <small>入力例「ページ数200pで入稿希望の為」「冊数3000冊で入稿希望の為」</small>
+</td>
 </tr>
 
 <tr>
     <th>調整コメント（発注書用）</th>
-    <td><input type="text" name="adjust_note_admin" value="<?= $adjust_note_admin ?? '' ?>"></td>
+    <td><input type="text" name="adjust_note_admin" value="<?= $adjust_note_admin ?? '' ?>" class="width_full">
+    <small>入力例「【ページ数】200p【冊数】3000冊」</small></td>
 </tr>
 
 </table>

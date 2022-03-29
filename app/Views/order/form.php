@@ -628,27 +628,30 @@ mod_print_up_date();
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
 <dl>
-<dt><h4>特注希望</h4></dt>
+<dt><h4>事前相談</h4></dt>
 <dd>
     <div class="ec-input">
 
         <label>
             <?php $prop = !empty($b_extra_order) ? $checked : ''; ?>
             <input type="checkbox" id="b_extra_order" name="b_extra_order" value="特注希望あり"<?= $prop ?>>
-            特注希望あり
+            事前相談済み
         </label>
 
-        <small class="attention">ページ数・冊数・納品先でご相談を希望される方はチェックを入れてください</small>
+        <small class="attention">ページ数・冊数・納品先等でご相談された方はチェックを入れてください</small>
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
 
 <dl>
-<dt><h4>特注希望内容</h4></dt>
+<dt><h4>事前相談内容</h4></dt>
 <dd>
     <div class="ec-input">
-        <input type="text" id="extra_order_note" name="extra_order_note" class="width_full" value="<?= $extra_order_note ?? '' ?>" placeholder="特注希望の場合は、ここに希望内容をご入力ください">
+        <input type="text" id="extra_order_note" name="extra_order_note" class="width_full" value="<?= $extra_order_note ?? '' ?>" placeholder="事前相談の内容や日時をご入力ください">
+
+        <small class="attention">担当者にて内容確認後、入稿調整いたします。</small><br>
+        <small class="attention">入力に相違がある場合、確認にお時間をいただく場合がございます。</small>
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->

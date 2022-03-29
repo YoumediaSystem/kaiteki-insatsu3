@@ -66,8 +66,8 @@ class OrderForm
         ,'binding'						=> '製本'
         ,'r18'							=> '対象年齢'
         ,'r18_check'					=> '18歳以上か'
-        ,'b_extra_order'				=> '特注希望'
-        ,'extra_order_note'				=> '特注希望内容'
+        ,'b_extra_order'				=> '事前相談'
+        ,'extra_order_note'				=> '事前相談内容'
 
         // 納品部数
 
