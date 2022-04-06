@@ -212,6 +212,7 @@ class Batch extends BaseController
 
                     case 141:
                     case 151:
+                    case 161:
                         $Model = new \App\Models\Mail\OrderNG();
                         $data = $Model->adjust($data);
                         $Model->sendAutomail($data);
@@ -219,6 +220,7 @@ class Batch extends BaseController
 
                     case 150:
                     case 160:
+                    case 170:
                         $Model = new \App\Models\Mail\OrderOK();
                         $data = $Model->adjust($data);
                         $Model->sendAutomail($data);

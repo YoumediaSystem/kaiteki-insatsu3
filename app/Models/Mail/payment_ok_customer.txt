@@ -14,8 +14,6 @@
 
 ■入稿セット名　　[product_set_name]
 
-■合計部数　　　　[print_number_all]
-
 ■金額　　　　　　[price]
 
 

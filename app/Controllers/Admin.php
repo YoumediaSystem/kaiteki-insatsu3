@@ -420,20 +420,34 @@ class Admin extends BaseController
             ||  mb_strpos($val,'理由：',0,'UTF-8') !== false
             ||  mb_strpos($val,'理由1：',0,'UTF-8') !== false
             ||  mb_strpos($val,'理由2：',0,'UTF-8') !== false
+            ||  mb_strpos($val,'理由3：',0,'UTF-8') !== false
             ) unset($a[$key]);
 
         if (!empty($this->param['ng_reason'])) {
             $ng_reason = (string)$this->param['ng_reason'];
             $a[] = $ng_reason;
 
-            $status = (mb_strpos($ng_reason,'理由1',0,'UTF-8') !== false)
-            ? 41 // 一次不備
-            : 51;// 二次不備
+            $status = 41; // 一次不備
+
+            if (mb_strpos($ng_reason,'理由1',0,'UTF-8') !== false)
+                $status = 41; // 一次不備
+
+            if (mb_strpos($ng_reason,'理由2',0,'UTF-8') !== false)
+                $status = 51; // 二次不備
+
+            if (mb_strpos($ng_reason,'理由3',0,'UTF-8') !== false)
+                $status = 61; // 三次不備
 
         } else {
-            $status = (in_array($status_before, [40,41]))
-            ? 50 // 仮受付
-            : 60;// 印刷開始
+
+            if (in_array($status_before, [40,41]))
+                $status = 50; // 仮受付
+
+            elseif (in_array($status_before, [50,51]))
+                $status = 60; // 表紙OK
+
+            elseif (in_array($status_before, [60,61]))
+                $status = 70; // 本文
         }
         
         $note = implode('　', $a);
@@ -448,12 +462,12 @@ class Admin extends BaseController
         $data['mode'] = 'detail';
         $data = $Order->parseData($data);
 
-        if (in_array($status, [41,51])) {
+        if (in_array($status, [41,51,61])) {
             $Model = new \App\Models\Mail\OrderNG();
             $data = $Model->adjust($data);
             $Model->sendAutomail($data);
 
-        } elseif (in_array($status, [50,60])) {
+        } elseif (in_array($status, [50,60,70])) {
             $Model = new \App\Models\Mail\OrderOK();
             $data = $Model->adjust($data);
             $Model->sendAutomail($data);

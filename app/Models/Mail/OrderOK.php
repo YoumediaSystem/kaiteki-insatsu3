@@ -65,7 +65,7 @@ class OrderOK extends SendMail
 
     function getTextByStatus($status = 150, $adjust_detail_text = '') {
 
-        if (!in_array($status, [10,50,60,150,160])) return [
+        if (!in_array($status, [10,50,60,70,150,160,170])) return [
             'subject' => '',
             'order_step' => '',
             'order_step_next' => '',
@@ -97,11 +97,20 @@ class OrderOK extends SendMail
         }
 
         if (in_array($status, [60,160])) {
-            $a['subject'] = $this->subject_customer.'印刷開始のお知らせ';
-            $a['order_step'] = '原稿データ精査';
-            $a['order_step_next'] = 'これより、印刷を開始いたします。';
+            $a['subject'] = $this->subject_customer.'表紙印刷開始のお知らせ';
+            $a['order_step'] = '表紙データ精査';
+            $a['order_step_next'] = 'これより、表紙の印刷を開始いたします。';
 
-            $a['order_step_notice']  = '※以後納品まで印刷内容は変更できません。'.$CR;
+            $a['order_step_notice']  = '※これ以後、表紙は変更できません。'.$CR;
+            $a['order_step_notice'] .= '　あらかじめご理解ご了承ください。';
+        }
+
+        if (in_array($status, [70,170])) {
+            $a['subject'] = $this->subject_customer.'本文印刷開始のお知らせ';
+            $a['order_step'] = '本文データ精査';
+            $a['order_step_next'] = 'これより、本文の印刷を開始いたします。';
+
+            $a['order_step_notice']  = '※以後納品まで内容変更できません。'.$CR;
             $a['order_step_notice'] .= '　あらかじめご理解ご了承ください。';
         }
 
@@ -124,7 +133,10 @@ class OrderOK extends SendMail
 
         $body = file_get_contents(__DIR__.'/'.$this->customer_template_file);
 
-        $param += $this->getTextByStatus($param['status'], $param['adjust_detail_text']);
+        $param += $this->getTextByStatus(
+            $param['status']
+            ,($param['adjust_detail_text'] ?? '')
+        );
 
         foreach($param as $key=>$val)
             if(!in_array($key, $this->parse_ignore_keys) && !is_array($val))

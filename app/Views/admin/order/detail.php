@@ -479,9 +479,9 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
 </table>
 
 
-<?php if(in_array($order['status'],[40,41,50,51,60])):
+<?php if(in_array($order['status'],[40,41,50,51,60,61,70])):
     
-    $b_ok = ($order['status'] == 60); ?>
+    $b_ok = ($order['status'] == 70); ?>
 
 <hr><!-- －－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－－ -->
 
@@ -494,31 +494,42 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
     <p>
         <select name="ng_reason">
 
-            <?php if($order['status'] != 60): ?>
-            <option value="">内容OK（<?= 
-                in_array($order['status'], [50,51])
-                ? '印刷開始する'
-                : '仮受付する'
-                ?>）</option>
+            <?php
+            $order_ok_text = '仮受付する';
+
+            if (in_array($order['status'], [50,51]))
+                $order_ok_text = '表紙を印刷開始する';
+
+            if (in_array($order['status'], [60,61]))
+                $order_ok_text = '本文を印刷開始する・精査完了';
+
+            if($order['status'] != 70): ?>
+            <option value="">精査OK（<?= $order_ok_text ?>）</option>
             <?php endif; ?>
 
-            <?php if(in_array($order['status'], [40,41,50,51,60])): ?>
+            <?php if(in_array($order['status'], [40,41,50,51,60,61,70])): ?>
             <option value="理由1：ダウンロード不可">一次不備（ダウンロード不可）</option>
             <option value="理由1：ファイル不備">一次不備（ファイル不備）</option>
+            <option value="理由1：納品先">一次不備（納品先）</option>
+            <option value="理由1：その他">一次不備（その他）</option>
             <?php endif; ?>
 
-            <?php if(in_array($order['status'], [50,51,60])): ?>
+            <?php if(in_array($order['status'], [50,51,60,61,70])): ?>
             <option value="理由2：表紙内容">二次不備（表紙内容）</option>
-            <option value="理由2：本文内容">二次不備（本文内容）</option>
-            <option value="理由2：納品先">二次不備（納品先）</option>
             <option value="理由2：その他">二次不備（その他）</option>
+            <?php endif; ?>
+
+            <?php if(in_array($order['status'], [60,61,70])): ?>
+            <option value="理由3：本文内容">三次不備（本文内容）</option>
+            <option value="理由3：台割ノンブル相違">三次不備（台割ノンブル相違）</option>
+            <option value="理由3：その他">三次不備（その他）</option>
             <?php endif; ?>
 
         </select>
     </p>
 
     <p>
-        <textarea name="ng_reason_other" placeholder="二次不備（その他）の場合は、詳細を入力"></textarea>
+        <textarea name="ng_reason_other" placeholder="不備（その他）の場合は、詳細を入力"></textarea>
     </p>
 
     <p>

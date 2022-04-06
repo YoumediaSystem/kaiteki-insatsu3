@@ -18,8 +18,6 @@
 
 ■入稿セット名　　[product_set_name]
 
-■合計部数　　　　[print_number_all]
-
 
 ■決済ID　　　　　[payment_id]
 

@@ -14,8 +14,6 @@
 
 ■入稿セット名　　[product_set_name]
 
-■合計部数　　　　[print_number_all]
-
 ■入金日　　　　　[payment_date]
 
 詳細ページ：

@@ -638,20 +638,20 @@ mod_print_up_date();
             事前相談済み
         </label>
 
-        <small class="attention">ページ数・冊数・納品先等でご相談された方はチェックを入れてください</small>
+        <small class="attention">特別な相談をされた方はチェックを入れてください</small>
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
 
 <dl>
-<dt><h4>事前相談内容</h4></dt>
+<dt><h4>事前相談・見積コード</h4></dt>
 <dd>
     <div class="ec-input">
-        <input type="text" id="extra_order_note" name="extra_order_note" class="width_full" value="<?= $extra_order_note ?? '' ?>" placeholder="事前相談の内容や日時をご入力ください"><br>
+        <input type="text" id="extra_order_note" name="extra_order_note" class="width_full" value="<?= $extra_order_note ?? '' ?>" placeholder="例：<?= $client_code ?>_20220104_100900"><br>
 
-        <small class="attention">担当者にて内容確認後、入稿調整いたします。</small><br>
-        <small class="attention">入力に相違がある場合、確認にお時間をいただく場合がございます。</small>
+        <small class="attention">担当者にて内容確認し調整いたします。</small><br>
+        <small class="attention">見積コードに相違がある場合、確認にお時間をいただく場合がございます。</small>
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->

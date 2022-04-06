@@ -67,7 +67,7 @@ class OrderForm
         ,'r18'							=> '対象年齢'
         ,'r18_check'					=> '18歳以上か'
         ,'b_extra_order'				=> '事前相談'
-        ,'extra_order_note'				=> '事前相談内容'
+        ,'extra_order_note'				=> '事前相談・見積コード'
 
         // 納品部数
 

@@ -62,6 +62,7 @@ class OrderNG extends SendMail
                 if (mb_strpos($val, '理由：', 0, 'UTF-8') !== false
                 ||  mb_strpos($val, '理由1：', 0, 'UTF-8') !== false
                 ||  mb_strpos($val, '理由2：', 0, 'UTF-8') !== false
+                ||  mb_strpos($val, '理由3：', 0, 'UTF-8') !== false
                 )
                     $param['ng_reason'] = '（'.$val.'）';
 
