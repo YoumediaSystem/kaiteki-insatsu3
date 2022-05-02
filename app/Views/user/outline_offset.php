@@ -468,7 +468,7 @@ section.content .wrap_bonus_info h3 {
             <img src="/img/headline/h3_spec_offset_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
-        <table>
+        <table style="margin-bottom:1rem">
         <tr>
             <th>入稿・印刷・発送</th>
             <td>
@@ -485,6 +485,16 @@ section.content .wrap_bonus_info h3 {
 
     </div><!-- wrap_content_spec -->
 
+
+<p>
+    遠隔地（北海道・東北・九州・四国・沖縄など）
+    開催イベントへの搬入は〆切が早まる場合がございます。
+</p>
+
+<p style="margin-bottom:3rem">
+    変則的な〆切をご案内させて頂く場合がございます為、
+    お早めにご相談ください。
+</p>
 
 
     <h3>※ゴールデンウィーク期間合わせは繁忙期の為、入稿締切が前倒しとなります。</h3>
@@ -509,7 +519,6 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 <?php endforeach; ?>
 
 </table>
-
 
 
     <div class="wrap_bonus_info">
