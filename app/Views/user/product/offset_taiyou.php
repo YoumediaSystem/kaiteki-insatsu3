@@ -533,8 +533,10 @@ td .buttons {
     お早めにご相談ください。
 </p>
 
+<!--
+<?php /* if(count($early_limit)): ?>
 
-    <h3>※ゴールデンウィーク期間合わせは繁忙期の為、入稿締切が前倒しとなります。</h3>
+    <h3>※以下の納品希望日は繁忙期の為、入稿締切が前倒しとなります。</h3>
 
 <table id="early_limit_list" style="margin-bottom:6em">
 
@@ -556,7 +558,8 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 <?php endforeach; ?>
 
 </table>
-
+<?php endif; // early_limit */ ?>
+-->
 
 
     <div class="wrap_bonus_info">
@@ -595,7 +598,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 </div><!-- wrap_text -->
 
 <div class="wrap_img">
-    <img src="/img/product/taiyou/detail_illust_1.png">
+    <img src="/img/detail_illust_1.png">
 </div><!-- wrap_img -->
 
 </div><!-- wrap_text_img -->
@@ -686,7 +689,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 </div><!-- wrap_text -->
 
 <div class="wrap_img">
-    <img src="/img/product/taiyou/detail_illust_2.png">
+    <img src="/img/detail_illust_2.png">
 </div><!-- wrap_img -->
 
 </div><!-- wrap_text_img -->

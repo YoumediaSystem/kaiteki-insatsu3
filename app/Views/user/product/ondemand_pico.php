@@ -519,7 +519,7 @@ td .buttons {
 
 <?php if(count($early_limit)): ?>
 
-    <h3>※ゴールデンウィーク期間合わせは繁忙期の為、入稿締切が前倒しとなります。</h3>
+    <h3>※以下の納品希望日は繁忙期の為、入稿締切が前倒しとなります。</h3>
 
     <table id="early_limit_list" style="margin-bottom:6em">
 

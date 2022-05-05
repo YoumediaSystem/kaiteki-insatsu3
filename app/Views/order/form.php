@@ -66,6 +66,15 @@ if (empty($print_up_date_d))
 unset($DT1);
 
 
+// 支援イベントURL
+$client_event_list_URL = [
+    'taiyou' => 'https://www.taiyoushuppan.co.jp/doujin/discount/kojinevent/link.php'
+    ,'pico' => 'https://www.pico-net.com/doujinshi/campaign/participant/studioyou.html'
+    ,'kanbi' => ''
+    ,'test' => 'https://www.youyou.co.jp/'
+];
+
+
 $checked	= ' checked="checked"';
 $selected	= ' selected="selected"';
 $disabled	= ' disabled="disabled"';
@@ -907,7 +916,7 @@ $h3_text = !empty($b_not_trust) ? '（無料印刷分を含む）' : '';
 <!--<table>-->
 <div class="ec-borderedDefs">
 
-<p>※直接搬入できるイベントは、<a href="https://www.taiyoushuppan.co.jp/doujin/discount/kojinevent/link.php" target="_blank">支援企画対象イベント</a>に限ります。あらかじめご確認ください。</p>
+<p>※直接搬入できるイベントは、<a href="<?= $client_event_list_URL[$client_code] ?>" target="_blank">支援企画対象イベント</a>に限ります。あらかじめご確認ください。</p>
 
 <dl>
 <dt><?php $k = 'event_1'; $key = '_date'; ?>
@@ -1073,7 +1082,7 @@ mod_event_1_date();
 <!--<table>-->
 <div class="ec-borderedDefs">
 
-<p>※直接搬入できるイベントは、<a href="https://www.taiyoushuppan.co.jp/doujin/discount/kojinevent/link.php" target="_blank">支援企画対象イベント</a>に限ります。あらかじめご確認ください。</p>
+<p>※直接搬入できるイベントは、<a href="<?= $client_event_list_URL[$client_code] ?>" target="_blank">支援企画対象イベント</a>に限ります。あらかじめご確認ください。</p>
 
 <dl>
 <dt><?php $k = 'event_2'; $key = '_date'; ?>
