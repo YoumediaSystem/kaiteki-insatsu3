@@ -2,6 +2,8 @@
 
 const PAGE_NAME = '入稿フォーム';
 
+$b_taiyou = ($client_code == 'taiyou');
+
 $DT = new \Datetime();
 $now_y = (int)$DT->format('Y');
 unset($DT);
@@ -13,7 +15,13 @@ foreach($a as $key=>$val) $$key = $val;
 $youbi = $lib->getYoubiArray();
 
 
-$Price = new \App\Models\Service\Price();
+$Price = (new \App\Models\Service\PriceInterface())
+    ->getObject($client_code);
+
+$LimitDate = (new \App\Models\Service\LimitInterface())
+    ->getObject($client_code);
+
+
 
 $price_format = $Price->getPriceFormat([
     'client_code' => $client_code,
@@ -25,7 +33,6 @@ $select = $Price->getFormSelector(
     $name_en
 );
 
-$LimitDate = new \App\Models\Service\LimitDate();
 $limit_list = $LimitDate->getLimitList4OrderForm($client_code);
 
 $upload_border_date = $LimitDate->getUploadBorderDate();
@@ -63,6 +70,7 @@ $checked	= ' checked="checked"';
 $selected	= ' selected="selected"';
 $disabled	= ' disabled="disabled"';
 $hidden		= ' style="display:none"';
+$disable_input	= ' class="disable_input"';
 
 function get_class_text($key, $necessary) {
     return in_array($key, $necessary) ? 'class="ec-label required"' : 'class="ec-label"';}
@@ -389,17 +397,32 @@ mod_print_up_date();
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'print_size';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>仕上がりサイズ</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="print_size" name="print_size" class="price_factor">
-            <?php foreach($select['print_size'] as $val):
-                $prop = ($val == $print_size) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" class="price_factor" value="<?=
+        $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
@@ -428,116 +451,215 @@ mod_print_up_date();
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'nonble_from';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>本文始まりページ数</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="nonble_from" name="nonble_from">
-            <?php foreach($select['nonble_from'] as $val):
-                $prop = ($val == $nonble_from) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'print_direction';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>とじ方向</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="print_direction" name="print_direction">
-            <?php foreach($select['print_direction'] as $val):
-                $prop = ($val == $print_direction) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'cover_paper';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>表紙・用紙</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="cover_paper" name="cover_paper" class="price_factor">
-            <?php foreach($select['cover_paper'] as $val):
-                $prop = ($val == $cover_paper) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'cover_color';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>表紙・印刷色</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="cover_color" name="cover_color" class="price_factor">
-            <?php foreach($select['cover_color'] as $val):
-                $prop = ($val == $cover_color) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'cover_process';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>表紙・基本加工</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="cover_process" name="cover_process" class="price_factor">
-            <?php foreach($select['cover_process'] as $val):
-                $prop = ($val == $cover_process) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
 
-        <?php if($set_id == 'ondemand'): ?>
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
+
+
+        <?php if($b_taiyou && $set_id == 'ondemand'): ?>
             <span class="attention" style="display:inline-block">クリアPP・マットPPは表紙がアートポストまたはマットポストのみ選択可能です。</span>
         <?php endif; ?>
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'main_paper';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>本文・用紙</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="main_paper" name="main_paper" class="price_factor">
-            <?php foreach($select['main_paper'] as $val):
-                $prop = ($val == $main_paper) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'main_color';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>本文・印刷色</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="main_color" name="main_color" class="price_factor">
-            <?php foreach($select['main_color'] as $val):
-                $prop = ($val == $main_color) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
@@ -566,51 +688,91 @@ mod_print_up_date();
 <!-- －－－－－－－－－－－－－－－－－－－－－ -->
 */ ?>
 
-<dl>
+<?php
+$key = 'main_buffer_paper';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>遊び紙</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="main_buffer_paper" name="main_buffer_paper" class="price_factor">
-            <?php foreach($select['main_buffer_paper'] as $val):
-                $prop = ($val == $main_buffer_paper) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'main_buffer_paper_detail';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>遊び紙の種類</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="main_buffer_paper_detail" name="main_buffer_paper_detail" class="price_factor">
-            <option value="">（未選択）</option>
+<?php if ($formtype == 'multi'): ?>
 
-            <?php foreach($select['main_buffer_paper_detail'] as $val):
-                $prop = ($val == $main_buffer_paper_detail) ? $selected : ''; ?>
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
 </dl><!-- －－－－－－－－－－－－－－－－－－－－－ -->
 
-<dl>
+<?php
+$key = 'binding';
+$val = $select[$key][0] ?? '';
+$formtype = $lib->get_formItemType($select[$key]);
+$prop = ($formtype == 'none') ? $disable_input : '';
+?>
+<dl <?= $prop ?>>
 <dt><h4>製本</h4></dt>
 <dd>
     <div class="ec-input">
 
-        <select id="binding" name="binding" class="price_factor">
-            <?php foreach($select['binding'] as $val):
-                $prop = ($val == $binding) ? $selected : ''; ?>
+<?php if ($formtype == 'multi'): ?>
+
+        <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+            <?php foreach($select[$key] as $val):
+                $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php else: ?>
+        <input type="hidden" id="<?= $key ?>" name="<?= $key ?>" value="<?= $select[$key][0] ?? '' ?>">
+        <?= ($formtype == 'single') ? $select[$key][0] : '' ?>
+
+<?php endif; ?>
 
     </div>
 </dd>
@@ -717,10 +879,12 @@ $h3_text = !empty($b_not_trust) ? '（無料印刷分を含む）' : '';
 
     <p>現在<span id="number_info"></span>冊
     　<span class="attention">1箇所まで無料、2箇所から1箇所ごとに
-    +<?= number_format($price_format['price_split']) ?>円（快適本屋さんOnlineは納品無料）</span></p>
+    +<?= number_format($price_format['price_split']) ?>円
+    <?= $b_taiyou ? '（快適本屋さんOnlineは納品無料）' : '' ?></span>
+    </p>
 
 
-    <?php if(strpos($name_en, 'offset') !== false): ?>
+    <?php if($b_taiyou && strpos($name_en, 'offset') !== false): ?>
         <div class="ec-input">
 
             <?php $prop = !empty($b_overprint_kaiteki) ? $checked : ''; ?>
@@ -1223,6 +1387,8 @@ global.price = 0;
 global.delivery_divide = 0; // 分納先の数
 global.delivery_discount = <?= $b_delivery_discount ? 'true' : 'false' ?>;
 
+global.b_taiyou = <?= $b_taiyou ? 'true' : 'false' ?>;
+
 $('select[name="print_number_all"], .wrap_input_number input')
     .on('input', function(){ mod_number() });
 
@@ -1239,7 +1405,7 @@ function mod_number() {
     var num_ratio = <?= !empty($b_not_trust) ? 1.1 : 1 ?>;
 
     var t_num_all = $('select[name="print_number_all"]').val();
-    var num_all  = parseInt(t_num_all.replace('冊','')) * num_ratio;
+    var num_all  = parseInt(t_num_all.replace(/[^0-9]/g,'')) * num_ratio;
     var num = 0, n = 0, nn = 0, rest = num_all;
     var count = 0;
     var t = '';
@@ -1257,35 +1423,37 @@ function mod_number() {
     var number_event_2	= parseInt($('#number_event_2').val());
     var number_other	= parseInt($('#number_other').val());
 
-    var number_kaiteki	= parseInt($('#number_kaiteki').val()); // 分納カウント対象外
+    var number_kaiteki	= parseInt($('#number_kaiteki').val()); // 大陽のみ分納カウント対象外
 
-    n = number_home;
+    n = number_home; // 自宅
     nn = n;
     count += n ? 1 : 0;
 
-    n = number_event_1;
+    n = number_event_1; // イベント1
     nn += n;
     count += n ? 1 : 0;
     
     if (0 < n) {	$('#wrap_group_event_1').addClass('visible');
     } else {		$('#wrap_group_event_1').removeClass('visible'); }
 
-    n = number_event_2;
+    n = number_event_2; // イベント2
     nn += n;
     count += n ? 1 : 0;
     
     if (0 < n) {	$('#wrap_group_event_2').addClass('visible');
     } else {		$('#wrap_group_event_2').removeClass('visible'); }
 
-    n = number_kaiteki;
+    n = number_kaiteki; // 快適本屋さん
     nn += n;
+    count += (n && !global.b_taiyou) ? 1 : 0;
 
-    n = number_other;
+    n = number_other; // その他
     nn += n;
     count += n ? 1 : 0;
     
     if (0 < n) {	$('#wrap_group_other').addClass('visible');
     } else {		$('#wrap_group_other').removeClass('visible'); }
+
 
     t = nn + '/' + num_all;
     $('#number_info').text(t);
@@ -1311,8 +1479,8 @@ function mod_price() {
     var size = $('select[name="print_size"]').val();
     var t_page = $('select[name="print_page"]').val();
     var t_num = $('select[name="print_number_all"]').val();
-    var page = parseInt(t_page);
-    var num  = parseInt(t_num);
+    var page = parseInt(t_page.replace(/[^0-9]/g,''));
+    var num  = parseInt(t_num.replace(/[^0-9]/g,''));
 
     var data = JSON.parse('<?= json_encode($price_format) ?>');
 
@@ -1325,11 +1493,11 @@ function mod_price() {
     // 表紙・本文
 
     if (print_size != 'b5') {
-        if (t_num != '0冊' && t_page != '0p')
+        if (num && page)
             total += parseInt(data.price_base_matrix['data'][t_num][t_page]);
 
     } else {
-        if (t_num != '0冊' && t_page != '0p')
+        if (num && page)
             total += parseInt(data.price_base_matrix_b5['data'][t_num][t_page]);
     }
 
@@ -1376,6 +1544,8 @@ function mod_price() {
     if (parseInt($('#number_event_1').val()) > 0)   delivery_divide++;
     if (parseInt($('#number_event_2').val()) > 0)   delivery_divide++;
     if (parseInt($('#number_other').val()) > 0)     delivery_divide++;
+    if (parseInt($('#number_kaiteki').val()) > 0
+    &&  !global.b_taiyou) {delivery_divide++;}
 
     var b_delivery_kaiteki = false;
     if (parseInt($('#number_kaiteki').val()) > 0
@@ -1384,7 +1554,7 @@ function mod_price() {
 
     if (2 <= delivery_divide) {
 
-        if (!b_delivery_kaiteki && global.b_delivery_discount) {
+        if (global.b_taiyou && !b_delivery_kaiteki && global.b_delivery_discount) {
             price_split = price_split / 3 * 2;
         }
 

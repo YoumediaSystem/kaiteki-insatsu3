@@ -90,15 +90,20 @@ h4 {
     <th>商品</th>
     <td>
         <select name="product_set_id">
-
             <?php $prop = ($product_set_id == '') ? $selected : ''; ?>
             <option value=""<?= $prop ?>>（全て）</option>
 
-            <?php $prop = ($product_set_id == '1') ? $selected : ''; ?>
-            <option value="1"<?= $prop ?>>快適すご盛セット</option>
+<?php foreach($product_set as $key=>$product):
 
-            <?php $prop = ($product_set_id == '2') ? $selected : ''; ?>
-            <option value="2"<?= $prop ?>>快適すご盛パック</option>
+    if (!is_numeric($key)) continue;
+
+    $prop = ($product_set_id == $product['id']) ? $selected : '';
+?>
+            <option value="<?= $product['id'] ?>"<?= $prop ?>><?= $product['name'] ?? '' ?></option>
+<!-- <?=
+print_r($product, true)
+?> -->
+<?php endforeach; ?>
         </select>
     </td>
 </tr>

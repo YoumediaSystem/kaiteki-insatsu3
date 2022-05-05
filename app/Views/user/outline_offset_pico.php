@@ -4,16 +4,18 @@ const PAGE_NAME = '印刷セットのご案内（オフセット）';
 const TYPE = 'セット';
 
 $Product = new \App\Models\DB\ProductSet();
-$LimitDate = new \App\Models\Service\LimitDate();
+//$LimitDate = new \App\Models\Service\LimitDate();
 
-$product_data = $Product->getFromID(1);
+$LimitDate = (new \App\Models\Service\LimitInterface())->getObject($client_code);
+
+$product_data = $Product->getFromID(3);
 
 unset($Product);
 
 $rest_product = $product_data['max_order'] - $product_data['ordered'];
 
-$sample_page = '16p';
-$sample_number = '30冊';
+$sample_page = '20p';
+$sample_number = '50冊';
 
 $Config = new \App\Models\Service\Config();
 $point_ratio = $Config->getPointRatio();
@@ -29,7 +31,7 @@ $lib = new \App\Models\CommonLibrary();
 $youbi = $lib->getYoubiArray();
 $early_limit = (new \App\Models\DB\LimitDateList())
     ->getList4OrderForm([
-        'client_code'   => 'taiyou',
+        'client_code'   => 'pico',
         'date_from'     => '2022-04-01',
         'date_to'       => '2022-05-31'
     ]);
@@ -147,7 +149,7 @@ h5, h6 {
 }
 
 #price, #price_b5 {
-    background-color:#00ad8a;
+    background-color:#0040ad;
     color:#fff;
     margin-bottom:0;
     padding:0.5em 1em;
@@ -179,7 +181,7 @@ h5, h6 {
 
 .post .wrap_matrix table th,
 .post .wrap_matrix table td {
-    border:1px solid #a3ccc4;
+    border:1px solid #a3b2cc;
 }
 
 .post .wrap_matrix table thead th {
@@ -187,8 +189,8 @@ h5, h6 {
     z-index: 1;
     top: 0;
 
-    background-color: #ebf6ec;
-    color:#007a62;
+    background-color: #d9e7ff;
+    color:#002d7a;
 }
 
 .post .wrap_matrix table tbody th {
@@ -196,15 +198,15 @@ h5, h6 {
     z-index: 2;
     left: -1px;
 
-    background-color: #ebf6ec;
-    color:#007a62;
+    background-color: #d9e7ff;
+    color:#002d7a;
 }
 
 .post .wrap_matrix table thead th.cells_corner {
     z-index: 3;
     top: 0px;
     left: -1px;
-    background-color: #a5d9a9;
+    background-color: #a5b8d9;
 }
 
 .post .wrap_matrix table td {
@@ -241,7 +243,7 @@ section.content h3 img {
     width:100%;
     margin-top:0;
     margin-bottom:3rem;
-    border:1px solid #1db089;
+    border:1px solid #1c52b0;
 
 }
 
@@ -249,7 +251,7 @@ section.content h3 img {
     width:9em;
     font-weight:bold;
     font-size:1.13rem;
-    color:#006954;
+    color:#0052e0;
 }
 
 #wrap_content_spec td {
@@ -258,14 +260,13 @@ section.content h3 img {
 
 #wrap_content_spec th,
 #wrap_content_spec td {
-    border:1px solid #1db089;
-/*    background-color:#ebf6ec;*/
-    background-color: #fff;
+    border:1px solid #1c52b0;
+    background-color:#fff;
 }
 
 .wrap_bonus_info {
 /*    background-color:#fffae6;*/
-    border:2px solid #1db089;
+    border:2px solid #1c52b0;
     margin-bottom:3rem;
 }
 
@@ -282,7 +283,7 @@ section.content .wrap_bonus_info h3 {
     font-size: 1.33rem;
     font-weight:bold;
 
-    background-image:url(/img/headline/h3_bg_offset.png);
+    background-image:url(/img/product/pico/h3_bg_offset.png);
     background-position:left bottom;
     background-repeat:no-repeat;
 }
@@ -308,14 +309,14 @@ section.content .wrap_bonus_info h3 {
     font-size:1.33rem;
 
     background-color:#fff;
-    border:1px solid #1db089;
+    border:1px solid #1c52b0;
     border-radius:1rem;
 
-    color:#147d61;
+    color:#143a7d;
 }
 
 .wrap_after_notes {
-    border:1px solid #1db089;
+    border:1px solid #1c52b0;
     margin-bottom:3rem;
 }
 
@@ -323,9 +324,9 @@ section.content .wrap_bonus_info h3 {
 
     font-size: 1rem;
 
-    border-top:1px solid #1db089;
+    border-top:1px solid #1c52b0;
 
-    background-image:url(/img/headline/h3_bg_offset.png);
+    background-image:url(/img/product/pico/h3_bg_offset.png);
     background-position:left bottom;
     background-repeat:no-repeat;
 }
@@ -438,22 +439,14 @@ td .buttons {
 <article class="post" style="padding-top:0">
 
     <h2>
-        <img src="/img/headline/title_detail_offset.png" alt="オフセット印刷
-    快適すご盛セット" width="100%" style="max-width:480px">
-<!--
-        <span><?=
-        $rest_product
-        ? '残り <b>'.$rest_product.'</b> セット'
-        : '完売しました'
-        ?></span>
--->
+        <img src="/img/product/pico/title_detail_offset.png?d=20220421-1" alt="オフセット印刷 PICOスマートオフセット" width="100%" style="max-width:480px">
     </h2>
 
     <div id="wrap_content_spec">
 
         <h3>
-            <img src="/img/headline/h3_content_offset.png" width="100%" alt="快適すご盛セット内容" class="pc_mid_only">
-            <img src="/img/headline/h3_content_offset_sp.png" width="100%" alt="" class="sp_only">
+            <img src="/img/product/pico/h3_content_offset.png" width="100%" alt="PICOスマートオフセット内容" class="pc_mid_only">
+            <img src="/img/product/pico/h3_content_offset_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
         <table>
@@ -461,23 +454,23 @@ td .buttons {
         <tr>
             <th>印刷仕様</th>
             <td>
-                仕上がりサイズ：A6（文庫）・B6・A5・B5から1種を選択<br>
-                表紙：オフセット4色フルカラー ＋ アートポスト180kg ＋ クリアPPまたはマットPPから選択<br>
-                本文：オフセット スミ刷り ＋ 上質70kg・上質90kg・書籍バルギーの中から1種選択<br>
+                仕上がりサイズ：A5・B5から1種を選択<br>
+                表紙：オフセット4色フルカラー ＋ アートポスト180kg ＋ クリアPP<br>
+                本文：オフセット モノクロ（スミ刷り） ＋ 美弾紙ホワイト<br>
                 製本：無線綴じ
 
                 <p class="buttons">
-                    <a href="/data_format" target="_blank">くわしい原稿形式はこちら</a><p>
+                    <a href="https://www.pico-net.com/doujinshi/download/" target="_blank">原稿形式・テンプレートはこちら</a><p>
 
             </td>
         </tr>
 
         <tr>
-            <th><small style="font-size:0.774rem;">オフセット</small><br>すご盛特典</th>
+            <th><small style="font-size:0.774rem;">オフセット</small><br>入稿特典</th>
             <td>
                 <ol>
-                    <li>「快適本屋さん」で委託通販される方には、発注部数の10％を無料で増刷プレゼント＆販売手数料無料</li>
-                    <li>納品1カ所無料＆快適本屋さんへの送料無料</li>
+                    <li>「快適本屋さん」で委託通販される方には、<!--発注部数の10％を無料で増刷プレゼント＆-->販売手数料無料</li>
+                    <li>納品1カ所無料<!--＆快適本屋さんへの送料無料--></li>
                     <li>同人誌イベント1SP無料招待</li>
 <!--                    
                     <li>「快適本屋さん」で通販されない方には、分納2カ所目の送料割引<br>
@@ -489,7 +482,7 @@ td .buttons {
         </tr>
         <tr>
             <th>価格</th>
-            <td>セット内容の全てを含んだお得な特別価格（価格はA6・B6・A5と、B5の2種類）
+            <td>セット内容の全てを含んだお得な特別価格
 
                 <p class="buttons">
                     <a href="#price">価格表はこちら</a><p>
@@ -499,18 +492,20 @@ td .buttons {
         </table>
 
         <h3>
-            <img src="/img/headline/h3_spec_offset.png" width="100%" alt="オフセット印刷基本仕様" class="pc_mid_only">
-            <img src="/img/headline/h3_spec_offset_sp.png" width="100%" alt="" class="sp_only">
+            <img src="/img/product/pico/h3_spec_offset.png" width="100%" alt="オフセット印刷基本仕様" class="pc_mid_only">
+            <img src="/img/product/pico/h3_spec_offset_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
-        <table style="margin-bottom:1rem">
+        <table>
         <tr>
             <th>入稿・印刷・発送</th>
             <td>
                 <ol>
                     <li><?= $limit_date_text ?>→金曜日発送※</li>
                     <li>表紙・本文同時入稿</li>
+<!--
                     <li>発注部数の10％を無料増刷（快適本屋さんに納品する場合のみ）</li>
+-->
                 </ol>
 
 
@@ -521,44 +516,44 @@ td .buttons {
     </div><!-- wrap_content_spec -->
 
 
-<p>
-    遠隔地（北海道・東北・九州・四国・沖縄など）
-    開催イベントへの搬入は〆切が早まる場合がございます。
-</p>
 
-<p style="margin-bottom:3rem">
-    変則的な〆切をご案内させて頂く場合がございます為、
-    お早めにご相談ください。
-</p>
-
+<?php if(count($early_limit)): ?>
 
     <h3>※ゴールデンウィーク期間合わせは繁忙期の為、入稿締切が前倒しとなります。</h3>
 
-<table id="early_limit_list" style="margin-bottom:6em">
+    <table id="early_limit_list" style="margin-bottom:6em">
 
-<tr>
-    <th>納品希望日</th>
-    <th>入稿締切日時</th>
-</tr>
+    <tr>
+        <th>納品希望日</th>
+        <th>入稿締切日時</th>
+    </tr>
 
-<?php foreach ($early_limit as $row):
-            
-$DT1 = new \Datetime($row['print_up_date']);
-$DT2 = new \Datetime($row['limit_date']); ?>
+    <?php foreach ($early_limit as $row):
+                
+    $DT1 = new \Datetime($row['print_up_date']);
+    $DT2 = new \Datetime($row['limit_date']); ?>
 
-<tr>
-<td><?= $DT1->format('Y/n/j').$youbi[$DT1->format('w')] ?></td>
-<td><b><?= $DT2->format('Y/n/j').$youbi[$DT2->format('w')] ?>　12時まで</b></td>
-</tr>
+    <tr>
+    <td><?= $DT1->format('Y/n/j').$youbi[$DT1->format('w')] ?></td>
+    <td><b><?= $DT2->format('Y/n/j').$youbi[$DT2->format('w')] ?>　12時まで</b></td>
+    </tr>
 
-<?php endforeach; ?>
+    <?php endforeach; ?>
 
-</table>
+    </table>
+
+<?php endif; // early_limit ?>
+
 
 
     <div class="wrap_bonus_info">
 
-    <h3><img src="/img/headline/h3_icon_offset_2.png"><i>無料増刷分</i>を<i>快適本屋さん</i>で<i>らくらく通信販売</i>（委託手数料無料）</h3>
+    <h3><img src="/img/product/pico/h3_icon_offset_2.png">
+<!--
+<i>無料増刷分</i>を<i>快適本屋さん</i>で<i>らくらく通信販売</i>（委託手数料無料）
+-->
+快適本屋さんに委託納品する場合、<i>委託手数料無料</i>
+</h3>
 
 
 <div class="bonus_detail">
@@ -567,6 +562,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
 <div class="wrap_text">
 <ol>
+<!--
     <li>快適本屋さんに納品する場合のみ、発注された部数の10％を無料で印刷します<br>
         　例・100部印刷されたら、10冊余分に無料で印刷いたします<br>
         <span class="attention">仕上がった同人誌を「快適本屋さん」で委託販売される方に限定したプレゼントです</span>
@@ -574,17 +570,20 @@ $DT2 = new \Datetime($row['limit_date']); ?>
     <li>10％の無料印刷分を快適本屋さんで通信販売します<br>
         <span class="attention">快適本屋さんでの販売方法は、次項で説明いたします。</span>
     </li>
+-->
     <li>通販売上は、全額をお振込みします（通販手数料ナシ・振込料はご負担ください）<br>
         <span class="attention">お振込み規定等は、快適本屋さんに準じます。</span>
     </li>
+<!--
     <li>快適本屋さんには送料無料で納品します（配送運賃がかかりません）審査用の見本誌を送る手間も省けます</li>
+-->
     <li>100部以上入稿されますと、審査なしで通販手続きにすすめます。<br>
         <span class="attention">100部未満入稿には、通販をご希望の際、簡単な作品審査があります。</span>
     </li>
     <li>快適本屋さんで通販する、しないの選択は、入稿の際の入稿フォームからできます。
-        また無料増刷分に追加して通販されたい場合は、ご希望の部数を指定してください。
+<!--        また無料増刷分に追加して通販されたい場合は、ご希望の部数を指定してください。-->
         <ul class="attention">
-            <li>無料増刷分の委託手数料は無料ですが、追加部数には通販委託の基本手数料（30％）がかかります。</li>
+            <li><!-- 無料増刷分の委託手数料は無料ですが、-->追加部数には通販委託の基本手数料（30％）がかかります。</li>
             <li>お申込み方法は、次項をご覧ください。</li>
         </ul>
     </li>
@@ -623,12 +622,12 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_offset_3.png">納品1カ所送料無料</h3>
+    <h3><img src="/img/product/pico/h3_icon_offset_3.png">納品1カ所送料無料</h3>
 
 
         <div class="bonus_detail">
 
-        <p>全国どこでも1カ所納品無料となります（快適印刷さんへの納品無料とは別途に、1カ所への送料が無料となります）。</p>
+        <p>全国どこでも1カ所納品無料となります<!--（快適印刷さんへの納品無料とは別途に、1カ所への送料が無料となります）-->。</p>
 
         <ul class="attention">
             <li>分納2カ所目から、1カ所毎に＋1,500円となります。</li>
@@ -645,7 +644,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_offset_4.png">スタジオYOU主催イベントに<i>サークル参加1SPご招待</i></h3>
+    <h3><img src="/img/product/pico/h3_icon_offset_4.png">スタジオYOU主催イベントに<i>サークル参加1SPご招待</i></h3>
 
 
 <div class="bonus_detail">
@@ -704,7 +703,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
     </div><!-- wrap_bonus_info -->
 
 
-
+<!--
     <div class="wrap_bonus_info">
     
     <h3><img src="/img/headline/h3_icon_offset_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他店で委託販売されている方に好評な特典です</i></small></h3>
@@ -732,14 +731,14 @@ $DT2 = new \Datetime($row['limit_date']); ?>
                 <li>快適印刷ポイントは、快適本屋ポイントに移行して「快適本屋さんOnline」で同人誌購入することもできます。</li>
             </ul>
 
-        </div><!-- bonus_detail -->
+        </div>!-- bonus_detail --
 
 
-    </div><!-- wrap_bonus_info -->
+    </div>!-- wrap_bonus_info -->
 
 
     
-    <h4 id="price">快適すご盛セット価格表（オフセット　A6・B6・A5）</h4>
+    <h4 id="price">PICOスマートオフセット価格表（オフセット　A5）</h4>
 
     <div class="wrap_matrix">
     <table>
@@ -769,7 +768,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
 
 
-    <h4 id="price_b5">快適すご盛セット価格表（オフセット　B5）</h4>
+    <h4 id="price_b5">PICOスマートオフセット価格表（オフセット　B5）</h4>
 
     <div class="wrap_matrix">
     <table>
@@ -801,34 +800,35 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <p class="buttons">
         <a href="/order/form?id=<?= $id ?>">
-            <img class="button_img" src="/img/button/button_2_form_offset.png" alt="入稿フォーム" width="100%" style="max-width:460px"></a>
+            <img class="button_img" src="/img/product/pico/button_2_form_offset.png?d=20220421-1" alt="入稿フォーム" width="100%" style="max-width:460px"></a>
     </p>
 
 
 
-    <h4>快適すご盛セットご提供一覧</h4>
+    <h4>PICOスマートオフセットご提供一覧</h4>
 
     <div class="wrap_after_notes">
 
-        <h5>特別印刷価格ご提供：大陽出版様</h5>
+        <h5>特別印刷価格ご提供：PICO様</h5>
 
         <div class="after_notes_text">
 
-<p>「快適すご盛りセット」は、早い、安い、きれいで定評のある同人誌印刷会社・大陽出版様とのコラボにより生まれました。</p>
 
-<p>大陽出版様が快適印刷さんだけの「特別印刷価格」を組んで提供してくださいました。</p>
+<p>当セットは同人誌印刷会社・PICO様とのコラボにより生まれました。</p>
+
+<p>また快適印刷さんだけの「特別印刷価格」を組んで提供してくださいました。</p>
 
 <p>そして、スタジオYOU様、グループの快適本屋さん等にお願いして、同人活動が楽しく快適になる、どこにもない大変お得なセットができあがりました。</p>
-
+<!--
 <p>当セットは、期間を限定して入稿受付させていただきます。</p>
 
-<p>当セットは、大陽出版様が印刷してくださいますので、ご入稿、ご入金先も大陽出版様となり、発送・納品も同様となります。</p>
+<p>当セットは、PICO様が印刷してくださいますので、ご入稿、ご入金先もPICO様となり、発送・納品も同様となります。</p>
   
-<p>入稿された原稿に「不備」などがありましたら、大陽出版さまからご連絡が入ります。予め、ご承諾いただけますようお願いいたします。</p>
-<!--
-<p>また、入稿時期、仕様変更、印刷後の手直し等、印刷料金に過不足が出た場合も、大陽出版様から連絡が入ります。万一、新たなお支払いが生じた場合、大陽出版様にお支払いください。</p>
+<p>入稿された原稿に「不備」などがありましたら、PICOさまからご連絡が入ります。予め、ご承諾いただけますようお願いいたします。</p>
+
+<p>また、入稿時期、仕様変更、印刷後の手直し等、印刷料金に過不足が出た場合も、PICO様から連絡が入ります。万一、新たなお支払いが生じた場合、PICO様にお支払いください。</p>
 -->
-<p>発注入金後、ご登録頂いた内容に誤り（ページ数の数え間違い等）があり差額が発生した場合、大陽出版にお支払いください。</p>
+<p>発注入金後、ご登録頂いた内容に誤り（ページ数の数え間違い等）があり差額が発生した場合、PICO様に直接お支払いください。</p>
 
 <p>快適印刷さんでは、今後も様々な同人誌印刷、イベント、企画会社とコラボして、皆様の同人活動がより快適に、より楽しくなるお手伝いや応援をいたします。入稿をお待ちしています。</p>
 
@@ -855,7 +855,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
         <div class="after_notes_text">
 
-<p>無料増刷や委託の通信販売は、快適本屋さんが担当いたします。</p>
+<p><!--無料増刷や-->委託の通信販売は、快適本屋さんが担当いたします。</p>
 
 <p>同人誌通販サイトでご入稿された方が快適本屋さんに委託販売の申込をされますと、様々な特典を得ることが出来ます。</p>
 
@@ -867,18 +867,16 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
 
 
-    <h4>分納・オプション申込につきまして</h4>
+    <h4><!--分納・-->オプション申込につきまして</h4>
 
 <ul>
-    <li>ご自宅発送、イベント搬入、書店発送、在庫保管等で2カ所以上の納品をご希望の場合は、印刷された印刷会社様の規定や料金が適用されます。<br>
 <!--
+    <li>ご自宅発送、イベント搬入、書店発送、在庫保管等で2カ所以上の納品をご希望の場合は、印刷された印刷会社様の規定や料金が適用されます。<br>
         今回では、「もっと」特典に該当しない方は、2カ所目から有料となります。<br>
--->
         <span class="attention">印刷された印刷会社様のサイト等からお申込みください。</span>
     </li>
 
     <li>イベント搬入をご希望の場合も、必ず入稿・印刷された印刷会社様の指定する連絡期日までにご連絡をお願いします。</li>
-<!--
     <li>分納以外のオプション申込につきましても同様に、印刷された印刷会社の規定や料金が適用されます。</li>
 -->
     <li>当セットは、印刷会社様が他セット・商品で提供されているオプションにはご利用頂けません。</li>

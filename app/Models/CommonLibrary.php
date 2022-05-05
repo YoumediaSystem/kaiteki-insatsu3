@@ -30,6 +30,7 @@ class CommonLibrary {
             $check_dns = ($Config->getProtocol() == 'https://');
         }
 
+        $m = ['',''];
         switch (true) {
             case false === filter_var($mail_address, FILTER_VALIDATE_EMAIL):
             case !preg_match('/@(?!\[)(.++)\z/', $mail_address, $m):
@@ -56,6 +57,27 @@ class CommonLibrary {
                 mb_strpos($text, $needle, 0, 'UTF-8') !== false);
         }
         return $b;
+    }
+
+    function get_formItemType($array) {
+
+        if (is_array($array)) {
+
+            if (!count($array)) return 'none';
+
+            if (1 < count($array)) return 'multi';
+
+            $t = $array[0];
+
+        } else $t = $array;
+
+        if ($t == 'なし'
+        ||  $t == '無し'
+        ||  $t == '（なし）'
+        ||  $t == '（無し）'
+        ) return 'none';
+
+        return 'single';
     }
 
     function getSelectItemsYMD() {

@@ -69,7 +69,7 @@ section.content .buttons a {
 
 			<section class="content">
 
-				<h1 class="heading">快適印刷さん 原稿データ形式について</h1>
+				<h1 class="heading">すご盛セット/パック 原稿データ形式について</h1>
 				<article class="post">
 <!--				
 					<p class="dateLabel"><time datetime="2014-09-01">2014/09/01</time></p>

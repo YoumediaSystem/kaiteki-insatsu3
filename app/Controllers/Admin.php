@@ -28,7 +28,9 @@ class Admin extends BaseController
 
         $a['admin'] = [
             'id' => $session->get('admin_id'),
-            'name' => $session->get('admin_name')
+            'name' => $session->get('admin_name'),
+            'role' => $session->get('admin_role'),
+            'client_code' => $session->get('admin_client_code')
         ];
 //        $a['error'] = [];
 
@@ -352,8 +354,13 @@ class Admin extends BaseController
         $Order = new \App\Models\DB\OrderHistory();
         $this->param['statusName'] = $Order->getStatusNameArray();
 
+        $this->param['product_set'] = (new \App\Models\DB\ProductSet())
+                ->getList($this->param);
+
         if (!empty($this->param['mode']) && $this->param['mode'] == 'search') {
             
+            if (empty($this->param['page'])) $this->param['page'] = 0;
+
             $this->param['user_list'] = $Order->getList($this->param);
 
             $this->param['count_all'] = $this->param['user_list']['count_all'] ?? 0;
@@ -443,10 +450,17 @@ class Admin extends BaseController
             if (in_array($status_before, [40,41]))
                 $status = 50; // 仮受付
 
-            elseif (in_array($status_before, [50,51]))
-                $status = 60; // 表紙OK
+            elseif (in_array($status_before, [50,51])) {
 
-            elseif (in_array($status_before, [60,61]))
+                $status = 60; // 表紙印刷開始
+
+                if (!empty($this->param['to_status'])
+                &&  in_array($this->param['to_status'], [62,70])
+                )
+                    $status = (int)$this->param['to_status'];
+            }
+
+            elseif (in_array($status_before, [60,61,62]))
                 $status = 70; // 本文
         }
         
@@ -519,7 +533,9 @@ class Admin extends BaseController
             $Order->getDetailFromID($this->param['id']);
 
         $this->param['price'] =
-            (new \App\Models\Service\Price())->getPrice($this->param);
+            (new \App\Models\Service\PriceInterface())
+                ->getObject($this->param['client_code'])
+                ->getPrice($this->param);
             
         $this->param['statusName'] = $Order->getStatusName();
 
@@ -548,8 +564,9 @@ class Admin extends BaseController
             $org['mode'] = 'detail';
             $temp = $Order->parseData($org);
             $temp['adjust_detail_text'] =
-                '【合計金額　'.$this->param['price'].'円】'
-                .($this->param['adjust_note_front'] ?? '');
+                '【合計金額　'.$this->param['price'].'円　'.
+                '入金期限　'.str_replace('-','/', $this->param['payment_limit']).
+                '】'.($this->param['adjust_note_front'] ?? '');
             $temp['status'] = 10;
 
             $OrderOK = new \App\Models\Mail\OrderOK();
@@ -560,9 +577,10 @@ class Admin extends BaseController
             $this->param['status'] = 10;
         }
 
-        $Order->save([ // 受発注データは以下3項目のみ更新、他はmodレコードを更新
+        $Order->save([ // 受発注データは以下項目のみ更新、他はmodレコードを更新
             'id'            => $this->param['id'],
             'print_title'   => $this->param['print_title'],
+            'payment_limit' => $this->param['payment_limit'],
             'status'        => $this->param['status'],
             'note'          => $this->param['note'],
             'protect'       => $dest['protect']
@@ -631,6 +649,28 @@ class Admin extends BaseController
 //        echo $exec_command.'<br>';
 
         echo 1;
+    }
+
+    // CSV出力
+    public function export_order_csv() {
+
+        if (empty($this->param['id']) || !is_numeric($this->param['id']))
+            return NULL;
+
+        $order = (new \App\Models\DB\OrderHistory())
+            ->getDetailFromID($this->param['id']);
+        
+        $data = (new \App\Models\ExportCSV())->getOrderData($order);
+
+        $this->response->setHeader("Content-Type", "application/octet-stream");
+        $this->response->setHeader('Content-Disposition'
+            ,'attachment; filename=order_'.$this->param['id'].'.csv'
+        );
+        echo $data;
+/*
+        $this->response->download($data, null)
+            ->setFileName('order_'.$this->param['id'].'.csv');
+*/
     }
 
     // 発送先編集
@@ -739,6 +779,7 @@ class Admin extends BaseController
             $this->param['count_all'] = $this->param['payment_list']['count_all'] ?? 0;
             unset($this->param['payment_list']['count_all']);
 
+            $Order = new \App\Models\DB\OrderHistory();
             $this->param['pager'] = $Order->getPagerInfo($this->param);
         }
 
@@ -1148,6 +1189,7 @@ class Admin extends BaseController
             $this->param['count_all'] = $this->param['send_list']['count_all'] ?? 0;
             unset($this->param['send_list']['count_all']);
 
+            $Order = new \App\Models\DB\OrderHistory();
             $this->param['pager'] = $Order->getPagerInfo($this->param);
         }
 

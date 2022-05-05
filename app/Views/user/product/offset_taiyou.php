@@ -1,12 +1,12 @@
 <?php
 
-const PAGE_NAME = '印刷セットのご案内（オンデマンド）';
-const TYPE = 'パック';
+const PAGE_NAME = '印刷セットのご案内（オフセット）';
+const TYPE = 'セット';
 
 $Product = new \App\Models\DB\ProductSet();
 $LimitDate = new \App\Models\Service\LimitDate();
 
-$product_data = $Product->getFromID(2);
+$product_data = $Product->getFromID(1);
 
 unset($Product);
 
@@ -40,29 +40,29 @@ $early_limit = (new \App\Models\DB\LimitDateList())
 <html lang="ja">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE">
-	<meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
-	<title><?= PAGE_NAME ?> | <?= $site['name'] ?></title>
+    <meta charset="UTF-8">
+    <meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE">
+    <meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
+    <title><?= PAGE_NAME ?> | <?= $site['name'] ?></title>
 
-	<link rel="profile" href="http://gmpg.org/xfn/11">
-	<link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
-	<script src="/js/jquery.js"></script>
-	<script src="/js/script.js"></script>
-	<script src="/js/pagetop.js"></script>
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+    <script src="/js/jquery.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/pagetop.js"></script>
 </head>
 
 <body>
 
-	<?= $view['header'] ?>
+    <?= $view['header'] ?>
 
-	<div id="wrapper" style="padding-top:0">
+    <div id="wrapper" style="padding-top:0">
 
 <!--	<section id="main"> -->
 
-			<section class="content">
+            <section class="content">
 
-			<style>
+<style>
 
 h2, h2 img, h2 span {
     vertical-align:top;
@@ -77,33 +77,33 @@ h2 span {
 
 #wrap_subtype {
 /*	
-	display:grid;
-	grid-template-columns: calc(33% - 5px) calc(33% - 5px) calc(33% - 5px);
-	gap: 10px;
+    display:grid;
+    grid-template-columns: calc(33% - 5px) calc(33% - 5px) calc(33% - 5px);
+    gap: 10px;
 */
-	margin-top:3em;
+    margin-top:3em;
 }
 
 ul.common_list {
-	margin:0;
-	padding-inline-start: 1rem;
+    margin:0;
+    padding-inline-start: 1rem;
 }
 
 ul.common_list li {
-	list-style:disc;
-	padding-left:0;
+    list-style:disc;
+    padding-left:0;
 }
 /*
 #wrap_subtype .trust_only {
-	grid-column: 1;
+    grid-column: 1;
 }
 
 #wrap_subtype .delivery_only {
-	grid-column: 2;
+    grid-column: 2;
 }
 
 #wrap_subtype .trust_delivery {
-	grid-column: 3;
+    grid-column: 3;
 }
 
 #wrap_subtype .header { grid-row: 1; }
@@ -112,33 +112,33 @@ ul.common_list li {
 */
 
 h4, h5, h6 {
-	padding:1em 0;
-	margin:1em 0;
-	border-top:1px solid #ebebeb;
-	border-bottom:1px solid #ebebeb;
+    padding:1em 0;
+    margin:1em 0;
+    border-top:1px solid #ebebeb;
+    border-bottom:1px solid #ebebeb;
 }
 
 h4 {
-	font-size:1rem;
+    font-size:1rem;
     margin-top:0;
 }
 
 h4, h5 {
-	font-weight:bold;
+    font-weight:bold;
 }
 
 h5, h6 {
-	text-align:center;
+    text-align:center;
 }
 
 .wrap_link {
-	text-align:right;
-	font-size:1.33em;
+    text-align:right;
+    font-size:1.33em;
 }
 
 .post table th,
 .post table td {
-	vertical-align:middle;
+    vertical-align:middle;
 }
 
 .buttons {
@@ -147,9 +147,8 @@ h5, h6 {
 }
 
 #price, #price_b5 {
-    background-color:#ff8d00;
+    background-color:#00ad8a;
     color:#fff;
-
     margin-bottom:0;
     padding:0.5em 1em;
 
@@ -180,7 +179,7 @@ h5, h6 {
 
 .post .wrap_matrix table th,
 .post .wrap_matrix table td {
-    border:1px solid #deb995;
+    border:1px solid #a3ccc4;
 }
 
 .post .wrap_matrix table thead th {
@@ -188,8 +187,8 @@ h5, h6 {
     z-index: 1;
     top: 0;
 
-    background-color: #fff3e4;
-    color:#ab6c2e;
+    background-color: #ebf6ec;
+    color:#007a62;
 }
 
 .post .wrap_matrix table tbody th {
@@ -197,15 +196,15 @@ h5, h6 {
     z-index: 2;
     left: -1px;
 
-    background-color: #fff3e4;
-    color:#ab6c2e;
+    background-color: #ebf6ec;
+    color:#007a62;
 }
 
 .post .wrap_matrix table thead th.cells_corner {
     z-index: 3;
     top: 0px;
     left: -1px;
-    background-color: #ffd096;
+    background-color: #a5d9a9;
 }
 
 .post .wrap_matrix table td {
@@ -219,7 +218,7 @@ section.content img.button_img {
 
 .post h2 {
     border-bottom: none;
-    background-image: url(/img/illust.png);
+    background-image: url(/img/product/taiyou/illust.png);
     background-position: right 1.5rem;
     background-repeat: no-repeat;
 
@@ -242,7 +241,7 @@ section.content h3 img {
     width:100%;
     margin-top:0;
     margin-bottom:3rem;
-    border:1px solid #de8d3b;
+    border:1px solid #1db089;
 
 }
 
@@ -250,7 +249,7 @@ section.content h3 img {
     width:9em;
     font-weight:bold;
     font-size:1.13rem;
-    color:#8a4c00;
+    color:#006954;
 }
 
 #wrap_content_spec td {
@@ -259,14 +258,14 @@ section.content h3 img {
 
 #wrap_content_spec th,
 #wrap_content_spec td {
-    border:1px solid #de8d3b;
-/*    background-color:#fff3e4;*/
+    border:1px solid #1db089;
+/*    background-color:#ebf6ec;*/
     background-color: #fff;
 }
 
 .wrap_bonus_info {
 /*    background-color:#fffae6;*/
-    border:2px solid #de8d3b;
+    border:2px solid #1db089;
     margin-bottom:3rem;
 }
 
@@ -283,7 +282,7 @@ section.content .wrap_bonus_info h3 {
     font-size: 1.33rem;
     font-weight:bold;
 
-    background-image:url(/img/headline/h3_bg_ondemand.png);
+    background-image:url(/img/product/taiyou/h3_bg_offset.png);
     background-position:left bottom;
     background-repeat:no-repeat;
 }
@@ -298,25 +297,25 @@ section.content .wrap_bonus_info h3 {
     color:#ff4b78;
 }
 
+.bonus_detail {
+    width:calc(100% - 2em);
+    margin:0 1em;
+}
+
 .wrap_bonus_info h4 {
     text-align:center;
     padding: 0.0625em 0;
     font-size:1.33rem;
 
     background-color:#fff;
-    border:1px solid #de8d3b;
+    border:1px solid #1db089;
     border-radius:1rem;
 
-    color:#ab6c2e;
-}
-
-.bonus_detail {
-    width:calc(100% - 2em);
-    margin:0 1em;
+    color:#147d61;
 }
 
 .wrap_after_notes {
-    border:1px solid #de8d3b;
+    border:1px solid #1db089;
     margin-bottom:3rem;
 }
 
@@ -324,9 +323,9 @@ section.content .wrap_bonus_info h3 {
 
     font-size: 1rem;
 
-    border-top:1px solid #de8d3b;
+    border-top:1px solid #1db089;
 
-    background-image:url(/img/headline/h3_bg_ondemand.png);
+    background-image:url(/img/product/taiyou/h3_bg_offset.png);
     background-position:left bottom;
     background-repeat:no-repeat;
 }
@@ -360,36 +359,31 @@ section.content .wrap_bonus_info h3 {
 
 #bonus_event_list table {
     width:100%;
-    border: 1px solid #de8d3b;
+    border: 1px solid #1db089;
 }
 
 #bonus_event_list th,
 #bonus_event_list td {
-    border-top: 1px solid #de8d3b;
-    border-bottom: 1px solid #de8d3b;
+    border-top: 1px solid #1db089;
+    border-bottom: 1px solid #1db089;
 
-    border-left: 1px solid #fff3e4;
-    border-right: 1px solid #fff3e4;
+    border-left: 1px solid #ebf6ec;
+    border-right: 1px solid #ebf6ec;
 }
 
 #bonus_event_list th:first-child,
 #bonus_event_list td:first-child {
-    border-left: 1px solid #de8d3b;
+    border-left: 1px solid #1db089;
 }
 
 #bonus_event_list th:last-child,
 #bonus_event_list td:last-child {
-    border-right: 1px solid #de8d3b;
+    border-right: 1px solid #1db089;
 }
 
 #bonus_event_list th {
-    background-color: #fff3e4;
+    background-color: #ebf6ec;
 }
-/*
-    border:1px solid #de8d3b;
-    background-color:#fff3e4;
-
-*/
 
 .wrap_text_img {
     display:grid;
@@ -403,12 +397,6 @@ section.content .wrap_bonus_info h3 {
 @media screen and (max-width:728px) {
 
     .wrap_text_img {display:block;}
-}
-
-#early_limit_list td {
-    padding:1em 0.5em;
-    border-left:none;
-    border-right:none;
 }
 
 #early_limit_list td {
@@ -449,9 +437,9 @@ td .buttons {
 
 <article class="post" style="padding-top:0">
 
-    <h2 style="border-bottom:none;">
-        <img src="/img/headline/title_detail_ondemand.png" alt="オンデマンド印刷
-    快適すご盛パック" width="100%" style="max-width:480px">
+    <h2>
+        <img src="/img/product/taiyou/title_detail_offset.png" alt="オフセット印刷
+    快適すご盛セット" width="100%" style="max-width:480px">
 <!--
         <span><?=
         $rest_product
@@ -464,8 +452,8 @@ td .buttons {
     <div id="wrap_content_spec">
 
         <h3>
-            <img src="/img/headline/h3_content_ondemand.png" width="100%" alt="快適すご盛パック内容" class="pc_mid_only">
-            <img src="/img/headline/h3_content_ondemand_sp.png" width="100%" alt="" class="sp_only">
+            <img src="/img/product/taiyou/h3_content_offset.png" width="100%" alt="快適すご盛セット内容" class="pc_mid_only">
+            <img src="/img/product/taiyou/h3_content_offset_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
         <table>
@@ -474,28 +462,24 @@ td .buttons {
             <th>印刷仕様</th>
             <td>
                 仕上がりサイズ：A6（文庫）・B6・A5・B5から1種を選択<br>
-                表紙：オンデマンド4色フルカラー ＋
-                アートポスト180kg
-                ・マットポスト180kg
-                ・Mr.Bスーパーホワイト180kg
-                ・ミニッツGAスノーホワイト170kg
-                ・シャインフェイスゴールド180kg
-                ・シャインフェイスシルバー180kgから選択<br>
-                本文：オンデマンド スミ刷り ＋ 上質70kg・上質90kg・書籍用紙90kgの中から1種選択<br>
+                表紙：オフセット4色フルカラー ＋ アートポスト180kg ＋ クリアPPまたはマットPPから選択<br>
+                本文：オフセット スミ刷り ＋ 上質70kg・上質90kg・書籍バルギーの中から1種選択<br>
                 製本：無線綴じ
 
                 <p class="buttons">
-                    <a href="/data_format" target="_blank">くわしい原稿形式はこちら</a><p>
+                    <a href="/data_format" target="_blank">くわしい原稿形式はこちら</a>
+                    <a href="https://www.taiyoushuppan.co.jp/doujin/download/index.php" target="_blank">原稿テンプレート</a>
+                <p>
 
             </td>
         </tr>
 
         <tr>
-            <th><small style="font-size:0.774rem;">オンデマンド</small><br>すご盛特典</th>
+            <th><small style="font-size:0.774rem;">オフセット</small><br>すご盛特典</th>
             <td>
                 <ol>
-                    <li>同人誌のお買物にも使える快適印刷ポイント進呈（要ポイント移行）</li>
-                    <li>通販納品＆納品1カ所送料無料</li>
+                    <li>「快適本屋さん」で委託通販される方には、発注部数の10％を無料で増刷プレゼント＆販売手数料無料</li>
+                    <li>納品1カ所無料＆快適本屋さんへの送料無料</li>
                     <li>同人誌イベント1SP無料招待</li>
 <!--                    
                     <li>「快適本屋さん」で通販されない方には、分納2カ所目の送料割引<br>
@@ -512,17 +496,13 @@ td .buttons {
                 <p class="buttons">
                     <a href="#price">価格表はこちら</a><p>
 
-<!--
-                <a href="#price">
-                <img src="/img/button/button_price.png" alt="価格表はこちら"></a>
--->
             </td>
         </tr>
         </table>
 
         <h3>
-            <img src="/img/headline/h3_spec_ondemand.png" width="100%" alt="オフセット印刷基本仕様" class="pc_mid_only">
-            <img src="/img/headline/h3_spec_ondemand_sp.png" width="100%" alt="" class="sp_only">
+            <img src="/img/product/taiyou/h3_spec_offset.png" width="100%" alt="オフセット印刷基本仕様" class="pc_mid_only">
+            <img src="/img/product/taiyou/h3_spec_offset_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
         <table style="margin-bottom:1rem">
@@ -532,7 +512,10 @@ td .buttons {
                 <ol>
                     <li><?= $limit_date_text ?>→金曜日発送※</li>
                     <li>表紙・本文同時入稿</li>
+                    <li>発注部数の10％を無料増刷（快適本屋さんに納品する場合のみ）</li>
                 </ol>
+
+
             </td>
         </tr>
         </table>
@@ -578,27 +561,64 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
 
-    <h3><img src="/img/headline/h3_icon_ondemand_2.png">同人誌のお買い物に使える<i>快適本屋ポイントプレゼント</i></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_offset_2.png"><i>無料増刷分</i>を<i>快適本屋さん</i>で<i>らくらく通信販売</i>（委託手数料無料）</h3>
 
 
 <div class="bonus_detail">
 
-<p>
-ご注文印刷価格の1％を快適本屋ポイントとして進呈
-</p>
+<div class="wrap_text_img">
 
+<div class="wrap_text">
 <ol>
-    <li>快適本屋ポイントはオンデマンド入稿された全ての皆様にもれなくプレゼントいたします。</li>
-    <li>快適本屋ポイントは印刷価格の1％分を進呈いたします。<br>
-    <b>例・印刷価格10,000円（税込）なら<em>100快適本屋ポイント進呈</em></b></li>
-    <li>快適本屋1ポイント＝1円相当</li>
-    <li><a href="https://www.kaitekihonya.com" target="_blank">快適本屋さんOnline</a>から、どなたもお買い物できます。</li>
-    <li>あらかじめ快適本屋さんOnlineへの会員登録が必要となります。
-    なお、快適印刷さん・快適本屋さん・快適本屋さんOnlineのIDは別々となりますので、ご注意ください。
+    <li>快適本屋さんに納品する場合のみ、発注された部数の10％を無料で印刷します<br>
+        　例・100部印刷されたら、10冊余分に無料で印刷いたします<br>
+        <span class="attention">仕上がった同人誌を「快適本屋さん」で委託販売される方に限定したプレゼントです</span>
+    </li>
+    <li>10％の無料印刷分を快適本屋さんで通信販売します<br>
+        <span class="attention">快適本屋さんでの販売方法は、次項で説明いたします。</span>
+    </li>
+    <li>通販売上は、全額をお振込みします（通販手数料ナシ・振込料はご負担ください）<br>
+        <span class="attention">お振込み規定等は、快適本屋さんに準じます。</span>
+    </li>
+    <li>快適本屋さんには送料無料で納品します（配送運賃がかかりません）審査用の見本誌を送る手間も省けます</li>
+    <li>100部以上入稿されますと、審査なしで通販手続きにすすめます。<br>
+        <span class="attention">100部未満入稿には、通販をご希望の際、簡単な作品審査があります。</span>
+    </li>
+    <li>快適本屋さんで通販する、しないの選択は、入稿の際の入稿フォームからできます。
+        また無料増刷分に追加して通販されたい場合は、ご希望の部数を指定してください。
+        <ul class="attention">
+            <li>無料増刷分の委託手数料は無料ですが、追加部数には通販委託の基本手数料（30％）がかかります。</li>
+            <li>お申込み方法は、次項をご覧ください。</li>
+        </ul>
     </li>
 </ol>
+</div><!-- wrap_text -->
+
+<div class="wrap_img">
+    <img src="/img/product/taiyou/detail_illust_1.png">
+</div><!-- wrap_img -->
+
+</div><!-- wrap_text_img -->
+
+
+
+    <h4>快適本屋さんでの通販をご希望の皆様に</h4>
+
+    <p>初めて快適本屋さんをご利用になる方、既に快適本屋さんの登録ナンバー（5桁ID）をお持ちのサークル様、<br>
+いずれも、快適本屋さんサイトの「<a href="https://kaitekihonya.com/user_data/circle" target="_blank">サークル様へ（委託案内）</a>」から
+委託作品登録をお願いします。登録は数分で終了します。</p>
+
+<p>なお、快適印刷さん・快適本屋さん・快適本屋さんOnlineのIDは別々となります。</p>
+
+
+<ul class="attention">
+    <li>お振込み規定の詳細、追加通販部数をご希望の場合の申込方法等も全て「サークル様へ（委託案内）」から、ご覧いただけます。</li>
+    <li>100部未満入稿の方で、通信販売をご希望の場合も「サークル様へ（委託案内）」から作品審査等のお手続きをしていただけます。</li>
+</ul>
 
 </div><!-- bonus_detail -->
+
+
 
     </div><!-- wrap_bonus_info -->
 
@@ -606,65 +626,18 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_3.png"><i>らくらく無料納品</i><small style="font-weight: normal; font-size: 0.774rem;">（送料無料）</small><i>快適本屋さんへの納品も無料</i></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_offset_3.png">納品1カ所送料無料</h3>
+
 
         <div class="bonus_detail">
 
-<div class="wrap_text_img">
-
-<div class="wrap_text">
-
-        <p><b>審査用の見本誌を送る手間も省けます</b></p>
-
-
-<ol>
-    <li>
-        納品1カ所の送料無料 全国どこでも1カ所納品無料となります。<br>
-        <span class="attention">分納2カ所目から、1カ所毎に＋1,500円となります。</span>
-    </li>
-    <li>
-        入稿された同人誌を「快適本屋さん」で通販を希望される場合、さらに「快適本屋さん」への納品送料が無料となります。<br>
-        初めて快適本屋さんをご利用になる方、既に快適本屋さんの登録ナンバー（5桁）をお持ちのサークル様、
-　いずれも、快適本屋さんサイトの「<a href="https://kaitekihonya.com/user_data/circle" target="_blank">サークル様へ（委託案内）</a>」から委託作品登録をお願いします。登録は数分で終了します。<br>
-
-なお、快適印刷さん・快適本屋さん・快適本屋さんOnlineのIDは別々となります。
-    </li>
-    <li>100部以上入稿された作品は、審査なしで「快適本屋さん」の通販を開始することができます。
+        <p>全国どこでも1カ所納品無料となります（快適印刷さんへの納品無料とは別途に、1カ所への送料が無料となります）。</p>
 
         <ul class="attention">
-            <li>100部未満入稿には、通信販売お申込みの際、簡単な作品審査があります。</li>
-            <li>100部未満入稿の方で、通信販売をご希望の場合も「サークル様へ（委託案内）」から作品審査等のお手続きをしていただけます。</li>
+            <li>分納2カ所目から、1カ所毎に＋1,500円となります。</li>
+            <li>入稿時にイベント会場、ご自宅、書店などご希望の納品場所をご指定ください。</li>
+            <li>納品先は国内に限ります。</li>
         </ul>
-
-    </li>
-    <li>残部の納品もまた、1カ所送料を無料とさせていただきます。</li>
-    <li>入稿時に「入稿フォーム」にイベント会場、ご自宅、書店などご希望の納品場所（分納先）をご指定ください。<br>
-        <span class="attention">納品先は国内に限ります</span>
-    </li>
-</ol>
-</div><!-- wrap_text -->
-
-<div class="wrap_img">
-    <img src="/img/detail_illust_1.png">
-</div><!-- wrap_img -->
-
-</div><!-- wrap_text_img -->
-
-
-
-        <h4>快適本屋さんでの通販をご希望の皆様に</h4>
-
-<p>初めて快適本屋さんをご利用になる方、既に快適本屋さんの登録ナンバー（5桁）をお持ちのサークル様、いずれも、快適本屋さん
-サイトの「<a href="https://kaitekihonya.com/user_data/circle" target="_blank">サークル様へ（委託案内）</a>」から
-委託作品登録をお願いします。登録は数分で終了します。</p>
-
-<p>なお、快適印刷さん・快適本屋さん・快適本屋さんOnlineのIDは別々となります。</p>
-
-
-<ul class="attention">
-<li>お振込み規定の詳細、追加通販部数をご希望の場合の申込方法等も全て「サークル様へ（委託案内）」から、ご覧いただけます。</li>
-<li>100部未満入稿の方で、通信販売をご希望の場合も「サークル様へ（委託案内）」から作品審査等のお手続きをしていただけます。</li>
-</ul>
 
         </div><!-- bonus_detail -->
 
@@ -675,7 +648,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_4.png">スタジオYOU主催イベントに<i>サークル1SP参加ご招待</i></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_offset_4.png">スタジオYOU主催イベントに<i>サークル参加1SPご招待</i></h3>
 
 
 <div class="bonus_detail">
@@ -688,19 +661,21 @@ $DT2 = new \Datetime($row['limit_date']); ?>
     <li>スタジオYOU様主催等「ご招待同人誌イベント一覧表」に掲載されたイベントに無料でサークル参加できます。</li>
     <li>参加費に関係なく、指定されたイベントならどこにでも参加できます。</li>
     <li>ご招待券は入稿後、「ご招待コード」をメールにて送付いたします。<br>
-スタジオYOU様主催イベントの場合、イベントご招待申込の際、参加される方のお名前と「ご招待コード」をご記入くださるだけで完了となります。<br>
+スタジオYOU様主催イベントの場合、イベントご招待申込の際、参加される方のお名前と
+「ご招待コード」をご記入くださるだけで完了となります。<br>
 <span class="attention">イベント団体により、イベント申込方法は異なります。イベントご招待申込の際、連絡いたします。</span>
     </li>
     <li>ご招待スペースは、１スペースとなっております。<br>
         <span class="attention">追加、合体スペースでのお申し込みもできます（有料）。</span>
     </li>
     <li>スタジオYOU主催イベントへのお申込は「オンラインYOU」でのみ「ご招待コード」を使用できます。</li>
-    <li>「ご招待コード」は、入稿されたご本人以外使用できません（入稿者名と参加者名の一致が必要です）。</li>
+    <li>「ご招待コード」は、入稿されたご本人以外使用できません<small>（入稿者名と参加者名の一致が必要です）</small></li>
     <li>「ご招待コード」の有効期限は、発行後6カ月となっています。期限内にご利用ください。</li>
     <li>「ご招待コード」は１回限り有効です。</li>
+</ol>
 
 
-    <h4 style="margin-top:2em">ご招待イベント申込み時のご注意</h4>
+<h4 style="margin-top:2em">ご招待イベント申込み時のご注意</h4>
 
 <ol>
     <li>ご招待イベントの受付は、各イベント先着30名様までとなっております。30名様のお申込みに達しましたら、締切日前でもそのイベントの受付は終了とさせていただきます。</li>
@@ -711,7 +686,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 </div><!-- wrap_text -->
 
 <div class="wrap_img">
-    <img src="/img/detail_illust_2.png">
+    <img src="/img/product/taiyou/detail_illust_2.png">
 </div><!-- wrap_img -->
 
 </div><!-- wrap_text_img -->
@@ -722,10 +697,9 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 <div id="bonus_event_list" style="margin-top:2em">
     <h4>ご招待同人誌イベント一覧</h4>
 
-<?php include_once(__DIR__.'/_event_list.php'); ?>
+<?php include_once(__DIR__.'/../_event_list.php'); ?>
 
 </div><!-- bonus_event_list -->
-
 
 </div><!-- bonus_detail -->
 
@@ -736,7 +710,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他店で委託販売されている方に好評な特典です</i></small></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_offset_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他店で委託販売されている方に好評な特典です</i></small></h3>
 
 
         <div class="bonus_detail">
@@ -767,11 +741,8 @@ $DT2 = new \Datetime($row['limit_date']); ?>
     </div><!-- wrap_bonus_info -->
 
 
-
-
-
-
-    <h4 id="price">快適すご盛パック価格表（オンデマンド　A6・B6・A5）</h4>
+    
+    <h4 id="price">快適すご盛セット価格表（オフセット　A6・B6・A5）</h4>
 
     <div class="wrap_matrix">
     <table>
@@ -801,7 +772,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
 
 
-    <h4 id="price_b5">快適すご盛パック価格表（オンデマンド　B5）</h4>
+    <h4 id="price_b5">快適すご盛セット価格表（オフセット　B5）</h4>
 
     <div class="wrap_matrix">
     <table>
@@ -830,25 +801,15 @@ $DT2 = new \Datetime($row['limit_date']); ?>
     </div><!-- wrap_matrix -->
 
 
-<!--
-<pre>
-<?= print_r($matrix, true) ?>
-</pre>
--->
-
 
     <p class="buttons">
         <a href="/order/form?id=<?= $id ?>">
-            <img class="button_img" src="/img/button/button_2_form_ondemand.png" alt="入稿フォーム"></a>
+            <img class="button_img" src="/img/product/taiyou/button_2_form_offset.png" alt="入稿フォーム" width="100%" style="max-width:460px"></a>
     </p>
 
 
 
-
-
-
-
-    <h4>快適すご盛パックご提供一覧</h4>
+    <h4>快適すご盛セットご提供一覧</h4>
 
     <div class="wrap_after_notes">
 
@@ -856,32 +817,23 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
         <div class="after_notes_text">
 
-        <p>「<b>快適すご盛りパック</b>」は、早い、安い、きれいで定評のある同人誌印刷会社・大陽出版様とのコラボにより生まれました。</p>
+<p>「快適すご盛りセット」は、早い、安い、きれいで定評のある同人誌印刷会社・大陽出版様とのコラボにより生まれました。</p>
 
 <p>大陽出版様が快適印刷さんだけの「特別印刷価格」を組んで提供してくださいました。</p>
 
-<p>そして、「快適印刷さん」がスタジオYOU様、グループの快適本屋さん等にお願いして、同人活動が楽しく快適になる、どこにもない大変お得なパックができあがりました。</p>
+<p>そして、スタジオYOU様、グループの快適本屋さん等にお願いして、同人活動が楽しく快適になる、どこにもない大変お得なセットができあがりました。</p>
 
-<p>当パックは、期間を限定して入稿受付させていただきます。</p>
+<p>当セットは、期間を限定して入稿受付させていただきます。</p>
 
-<p>当パックは、大陽出版様が印刷してくださいますので、ご入稿、ご入金先も大陽出版様となり、発送・納品も同様となります。</p>
+<p>当セットは、大陽出版様が印刷してくださいますので、ご入稿、ご入金先も大陽出版様となり、発送・納品も同様となります。</p>
   
-<p>
-    入稿された原稿に「不備」などがありましたら、大陽出版さまからご連絡が入ります。<br>
-    予め、ご承諾いただけますようお願いいたします。
-</p>
-
+<p>入稿された原稿に「不備」などがありましたら、大陽出版さまからご連絡が入ります。予め、ご承諾いただけますようお願いいたします。</p>
 <!--
-<p>また、入稿時期、仕様変更、印刷後の手直し等、印刷料金に過不足が出た場合も、大陽出版様から連絡が入ります。</p>
-
-<p>万一、新たなお支払いが生じた場合、大陽出版様にお支払いください。</p>
+<p>また、入稿時期、仕様変更、印刷後の手直し等、印刷料金に過不足が出た場合も、大陽出版様から連絡が入ります。万一、新たなお支払いが生じた場合、大陽出版様にお支払いください。</p>
 -->
-
 <p>発注入金後、ご登録頂いた内容に誤り（ページ数の数え間違い等）があり差額が発生した場合、大陽出版にお支払いください。</p>
 
-<p>快適印刷さんでは、今後も様々な同人誌印刷、イベント、企画会社とコラボして、皆様の同人活動がより快適に、より楽しくなるお手伝いや応援をいたします。</p>
-
-<p>入稿をお待ちしています。</p>
+<p>快適印刷さんでは、今後も様々な同人誌印刷、イベント、企画会社とコラボして、皆様の同人活動がより快適に、より楽しくなるお手伝いや応援をいたします。入稿をお待ちしています。</p>
 
 
         </div><!-- after_notes_text -->
@@ -921,10 +873,9 @@ $DT2 = new \Datetime($row['limit_date']); ?>
     <h4>分納・オプション申込につきまして</h4>
 
 <ul>
-
     <li>ご自宅発送、イベント搬入、書店発送、在庫保管等で2カ所以上の納品をご希望の場合は、印刷された印刷会社様の規定や料金が適用されます。<br>
-<!--    
-今回の”<b>すご盛り</b>”企画では「もっと」特典に該当しない方は、2カ所目から有料となります。<br>
+<!--
+        今回では、「もっと」特典に該当しない方は、2カ所目から有料となります。<br>
 -->
         <span class="attention">印刷された印刷会社様のサイト等からお申込みください。</span>
     </li>
@@ -933,141 +884,25 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 <!--
     <li>分納以外のオプション申込につきましても同様に、印刷された印刷会社の規定や料金が適用されます。</li>
 -->
-<li>当セットは、印刷会社様が他セット・商品で提供されているオプションにはご利用頂けません。</li>
+    <li>当セットは、印刷会社様が他セット・商品で提供されているオプションにはご利用頂けません。</li>
 
 </ul>
 
-<!--
-<p>快適印刷おまけパックは「<a href="#outline_trust">通販プラン▼</a>」「<a href="#outline_delivery">納品プラン▼</a>」「<a href="#outline_both">通販＆納品よくばりプラン▼</a>」計3つのプランからお選びいただけます。</p>
 
-<table>
 
-	<tr>
-		<th>全プラン共通の特徴</th>
-		<td>
-		
-			<ul style="margin:0;">
-				<li>表紙・本文同時入稿</li>
-				<li>水曜日締切・同週金曜日発送</li>
-			</ul>
-		
-		</td>
-	</tr>
-
-</table>
+                </article>
 
 
 
-<h4 id="outline_trust">快適印刷おまけパック・通販おまけプラン</h4>
-
-<p>2大特典！Ｗおまけプレゼント付</p>
-
-
-<h5>特典１　印刷数のうち最大10％まで快適本屋さん販売手数料無料！</h5>
-
-<p>さらに100冊以上印刷の方や快適本屋さんで委託経験のある方は、審査なしですぐに通販できます！</p>
-
-<p>納品送料は無料です！</p>
-
-<ul class="attention">
-	<li>無料対象外の部数には基本手数料（30％）がかかります。</li>
-	<li>委託販売作品の納品先への送料は無料です。</li>
-	<li>残部の納品は1箇所（ご自宅・イベント搬入・書店発送・在庫保管）送料無料です。</li>
-	<li>100冊未満の方で初めて快適本屋さんの委託販売を申し込まれる方は、審査が必要です。<a href="https://www.youclub.jp/circle/new/" target="_blank">新規サークル様用登録フォーム ＞＞</a></li>
-</ul>
-
-
-<h5>特典２　スタジオYOU主催イベント 1SPご招待券</h5>
-
-<p>全国のスタジオYOU主催イベントで使用できます！</p>
-
-<ul class="attention">
-	<li>ご利用の際は、オンラインYOUでイベント申込する必要がございます。</li>
-	<li>ご招待IDは、快適本屋さん委託申請フォームでご申請いただいたメールアドレスに返信いたします。</li>
-	<li>オンラインYOUでイベント申込後、お支払いページで「ご招待」を選択し、テキストボックスにご招待IDを含む所定のテキストをご記入ください。</li>
-	<li>ご招待券（ご招待ID）の有効期限は発行から1年、1回限りご利用可能です。</li>
-</ul>
-
-<p class="wrap_link">
-	<a href="order/?set_id=ondemand_trust">通販おまけプラン 入稿フォーム ＞＞</a>
-</p>
-
-
-
-<h4 id="outline_delivery">快適印刷おまけパック・納品おまけプラン</h4>
-
-<p>割引＆プレゼント付！</p>
-
-
-<h5>特典１　追加納品手数料割引</h5>
-
-<p>まとめて1箇所納品の場合、送料無料</p>
-
-<p>納品2箇所目からの追加料金が33％オフの 1500→1000円（何箇所でも、合計4箇所まで）</p>
-
-<ul class="attention">
-	<li>4箇所を超える納品希望は受付できません。</li>
-</ul>
-
-
-<h5>特典２　スタジオYOU主催イベント プレゼントチケット</h5>
-
-<p>全国のスタジオYOU主催イベントで使用できます！</p>
-
-<p>プレゼントチケットは「パンフレット」または「追加イス1脚」いずれかと交換できます！</p>
-
-<ul class="attention">
-	<li>ご利用の際は、オンラインYOUでイベント申込する必要がございます。</li>
-	<li>ご招待IDは、快適本屋さん委託申請フォームでご申請いただいたメールアドレスに返信いたします。</li>
-	<li>オンラインYOUでイベント申込する際、備考欄に納品プランIDを含む所定のテキストをご記入ください。</li>
-	<li>ご招待券（ご招待ID）の有効期限は発行から1年、1回限りご利用可能です。</li>
-</ul>
-
-<p class="wrap_link">
-	<a href="order/?set_id=ondemand_delivery">納品おまけプラン 入稿フォーム ＞＞</a>
-</p>
-
-
-
-
-
-<h4 id="outline_both">快適印刷おまけパック・通販＆納品よくばりプラン</h4>
-
-<p>200冊発注される方は、両プランのいいとこ取りサービスを受けられます！</p>
-
-
-<h5>7大特典！</h5>
-
-<ul class="common_list">
-	<li>注文冊数のうち最大10％までの快適本屋さん販売手数料が無料</li>
-	<li>はじめて快適本屋さんに委託の場合は審査通過保証</li>
-	<li>快適本屋さん委託手数料無料（無料印刷分のみ）</li>
-	<li>無料分通販納品＋納品1箇所の送料無料</li>
-	<li>納品2箇所目からの追加料金33％オフ 1500→1000円（何箇所でも、最大4箇所まで）</li>
-	<li>スタジオYOUイベント 1SPご招待券プレゼント</li>
-	<li>スタジオYOUイベント パンフレット引換/追加イス券プレゼント</li>	</ul>
-
-
-<p class="wrap_link">
-	<a href="order/?set_id=ondemand_both">通販＆納品よくばりプラン 入稿フォーム ＞＞</a>
-</p>
--->
-
-
-
-				</article>
-
-
-
-			</section>
+            </section>
 
 <!--	</section> -->
 
-		<?php //$view['side'] ?>
+        <?php //$view['side'] ?>
 
-	</div><!-- wrapper -->
+    </div><!-- wrapper -->
 
-	<?= $view['footer'] ?>
+    <?= $view['footer'] ?>
 
 </body>
 </html>

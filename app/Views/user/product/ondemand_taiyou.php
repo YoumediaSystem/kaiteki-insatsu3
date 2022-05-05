@@ -219,7 +219,7 @@ section.content img.button_img {
 
 .post h2 {
     border-bottom: none;
-    background-image: url(/img/illust.png);
+    background-image: url(/img/product/taiyou/illust.png);
     background-position: right 1.5rem;
     background-repeat: no-repeat;
 
@@ -283,7 +283,7 @@ section.content .wrap_bonus_info h3 {
     font-size: 1.33rem;
     font-weight:bold;
 
-    background-image:url(/img/headline/h3_bg_ondemand.png);
+    background-image:url(/img/product/taiyou/h3_bg_ondemand.png);
     background-position:left bottom;
     background-repeat:no-repeat;
 }
@@ -326,7 +326,7 @@ section.content .wrap_bonus_info h3 {
 
     border-top:1px solid #de8d3b;
 
-    background-image:url(/img/headline/h3_bg_ondemand.png);
+    background-image:url(/img/product/taiyou/h3_bg_ondemand.png);
     background-position:left bottom;
     background-repeat:no-repeat;
 }
@@ -450,7 +450,7 @@ td .buttons {
 <article class="post" style="padding-top:0">
 
     <h2 style="border-bottom:none;">
-        <img src="/img/headline/title_detail_ondemand.png" alt="オンデマンド印刷
+        <img src="/img/product/taiyou/title_detail_ondemand.png" alt="オンデマンド印刷
     快適すご盛パック" width="100%" style="max-width:480px">
 <!--
         <span><?=
@@ -464,8 +464,8 @@ td .buttons {
     <div id="wrap_content_spec">
 
         <h3>
-            <img src="/img/headline/h3_content_ondemand.png" width="100%" alt="快適すご盛パック内容" class="pc_mid_only">
-            <img src="/img/headline/h3_content_ondemand_sp.png" width="100%" alt="" class="sp_only">
+            <img src="/img/product/taiyou/h3_content_ondemand.png" width="100%" alt="快適すご盛パック内容" class="pc_mid_only">
+            <img src="/img/product/taiyou/h3_content_ondemand_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
         <table>
@@ -485,7 +485,9 @@ td .buttons {
                 製本：無線綴じ
 
                 <p class="buttons">
-                    <a href="/data_format" target="_blank">くわしい原稿形式はこちら</a><p>
+                    <a href="/data_format" target="_blank">くわしい原稿形式はこちら</a>
+                    <a href="https://www.taiyoushuppan.co.jp/doujin/download/index.php" target="_blank">原稿テンプレート</a>
+                <p>
 
             </td>
         </tr>
@@ -521,11 +523,11 @@ td .buttons {
         </table>
 
         <h3>
-            <img src="/img/headline/h3_spec_ondemand.png" width="100%" alt="オフセット印刷基本仕様" class="pc_mid_only">
-            <img src="/img/headline/h3_spec_ondemand_sp.png" width="100%" alt="" class="sp_only">
+            <img src="/img/product/taiyou/h3_spec_ondemand.png" width="100%" alt="オフセット印刷基本仕様" class="pc_mid_only">
+            <img src="/img/product/taiyou/h3_spec_ondemand_sp.png" width="100%" alt="" class="sp_only">
         </h3>
 
-        <table style="margin-bottom:1rem">
+        <table>
         <tr>
             <th>入稿・印刷・発送</th>
             <td>
@@ -539,16 +541,6 @@ td .buttons {
 
     </div><!-- wrap_content_spec -->
 
-
-<p>
-    遠隔地（北海道・東北・九州・四国・沖縄など）
-    開催イベントへの搬入は〆切が早まる場合がございます。
-</p>
-
-<p style="margin-bottom:3rem">
-    変則的な〆切をご案内させて頂く場合がございます為、
-    お早めにご相談ください。
-</p>
 
 
     <h3>※ゴールデンウィーク期間合わせは繁忙期の為、入稿締切が前倒しとなります。</h3>
@@ -575,10 +567,20 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 </table>
 
 
+<p>
+    遠隔地（北海道・東北・九州・四国・沖縄など）
+    開催イベントへの搬入は〆切が早まる場合がございます。
+</p>
+
+<p>
+    変則的な〆切をご案内させて頂く場合がございます為、
+    お早めにご相談ください。
+</p>
+
 
     <div class="wrap_bonus_info">
 
-    <h3><img src="/img/headline/h3_icon_ondemand_2.png">同人誌のお買い物に使える<i>快適本屋ポイントプレゼント</i></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_ondemand_2.png">同人誌のお買い物に使える<i>快適本屋ポイントプレゼント</i></h3>
 
 
 <div class="bonus_detail">
@@ -606,7 +608,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_3.png"><i>らくらく無料納品</i><small style="font-weight: normal; font-size: 0.774rem;">（送料無料）</small><i>快適本屋さんへの納品も無料</i></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_ondemand_3.png"><i>らくらく無料納品</i><small style="font-weight: normal; font-size: 0.774rem;">（送料無料）</small><i>快適本屋さんへの納品も無料</i></h3>
 
         <div class="bonus_detail">
 
@@ -645,7 +647,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 </div><!-- wrap_text -->
 
 <div class="wrap_img">
-    <img src="/img/detail_illust_1.png">
+    <img src="/img/product/taiyou/detail_illust_1.png">
 </div><!-- wrap_img -->
 
 </div><!-- wrap_text_img -->
@@ -675,7 +677,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_4.png">スタジオYOU主催イベントに<i>サークル1SP参加ご招待</i></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_ondemand_4.png">スタジオYOU主催イベントに<i>サークル1SP参加ご招待</i></h3>
 
 
 <div class="bonus_detail">
@@ -711,7 +713,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 </div><!-- wrap_text -->
 
 <div class="wrap_img">
-    <img src="/img/detail_illust_2.png">
+    <img src="/img/product/taiyou/detail_illust_2.png">
 </div><!-- wrap_img -->
 
 </div><!-- wrap_text_img -->
@@ -722,7 +724,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 <div id="bonus_event_list" style="margin-top:2em">
     <h4>ご招待同人誌イベント一覧</h4>
 
-<?php include_once(__DIR__.'/_event_list.php'); ?>
+<?php include_once(__DIR__.'/../_event_list.php'); ?>
 
 </div><!-- bonus_event_list -->
 
@@ -736,7 +738,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <div class="wrap_bonus_info">
     
-    <h3><img src="/img/headline/h3_icon_ondemand_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他店で委託販売されている方に好評な特典です</i></small></h3>
+    <h3><img src="/img/product/taiyou/h3_icon_ondemand_5.png">快適本屋さんでの通販をご希望されない方　<small style="font-size:0.774rem"><i>他店で委託販売されている方に好評な特典です</i></small></h3>
 
 
         <div class="bonus_detail">
@@ -839,7 +841,7 @@ $DT2 = new \Datetime($row['limit_date']); ?>
 
     <p class="buttons">
         <a href="/order/form?id=<?= $id ?>">
-            <img class="button_img" src="/img/button/button_2_form_ondemand.png" alt="入稿フォーム"></a>
+            <img class="button_img" src="/img/product/taiyou/button_2_form_ondemand.png" alt="入稿フォーム"></a>
     </p>
 
 

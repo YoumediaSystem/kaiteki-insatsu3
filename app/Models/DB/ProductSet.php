@@ -19,6 +19,7 @@ class ProductSet extends Model
     protected $useSoftDeletes = false;
 
     protected $allowedFields = [
+        'client_code',
         'name',
         'name_en',
         'max_order',
@@ -79,10 +80,14 @@ class ProductSet extends Model
     public function getList($param) {
 
         $b_all = (
-            empty($param['client_code'])
+            empty($param['admin']['client_code'])
+        &&  empty($param['client_code'])
         &&  empty($param['name'])
         );
         $page = $param['page'] ?? 0;
+
+        $client_code = !empty($param['client_code'])
+            ? $param['client_code'] : ($param['admin']['client_code'] ?? '');
 
         if ($b_all)
             $count = $this->countAllResults(false);
@@ -90,7 +95,7 @@ class ProductSet extends Model
         else {
             $count = $this
             ->like('name', $param['name'] ?? '', 'both')
-            ->where('client_code', $param['client_code'] ?? '')
+            ->like('client_code', $client_code ?? '%')
             ->countAllResults(false);
         }
         $data = $this
@@ -110,6 +115,26 @@ class ProductSet extends Model
         return $result;
     }
 
+
+    public function getID4client($client_code = NULL) {
+
+//        if (empty($client_code)) return [];
+
+        if (empty($client_code))
+            $data = $this
+            ->findAll();
+
+        else
+            $data = $this
+            ->where('client_code', $client_code)
+            ->findAll();
+
+        $result = [];
+        foreach($data as $key=>$val)
+            $result[] = $val['id'];
+
+        return $result;
+    }
 
     // 値補正
     function adjustParam($param)

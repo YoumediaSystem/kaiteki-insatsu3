@@ -2,7 +2,10 @@
 
 const PAGE_NAME = '受注内容変更フォーム';
 
-$Price = new \App\Models\Service\Price();
+$b_taiyou = ($product_set['client_code'] == 'taiyou');
+
+$Price = (new \App\Models\Service\PriceInterface())
+    ->getObject($product_set['client_code'],$product_set['name_en']);
 
 $price_format = $Price->getPriceFormat([
     'client_code' => $product_set['client_code'],
@@ -190,6 +193,71 @@ endif;
 </td>
 </tr>
 
+
+<?php
+
+$DT = new \DateTime($payment_limit);
+$DT->setTimezone(new DateTimeZone('Asia/Tokyo'));
+
+$key = 'payment_limit';
+
+$payment_limit_y = $payment_limit_y ?? (int)$DT->format('Y');
+$payment_limit_m = $payment_limit_m ?? (int)$DT->format('n');
+$payment_limit_d = $payment_limit_d ?? (int)$DT->format('j');
+$payment_limit_h = $payment_limit_h ?? (int)$DT->format('H');
+
+?>
+
+<tr>
+    <th>入金期限</th>
+    <td>
+
+<?php if(in_array($status, [10,12])): ?>
+
+    <?php $kkey = $key.'_y'; ?>
+        <select id="<?= $kkey ?>" name="<?= $kkey ?>" class="digit-6">
+            <option value="">-</option>
+            <?php foreach($select_y as $val):
+                $prop = ($val == $$kkey) ? $selected : ''; ?>
+                <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <?php $kkey = $key.'_m'; ?>
+        <select id="<?= $kkey ?>" name="<?= $kkey ?>" class="digit-4">
+            <option value="">-</option>
+            <?php foreach($select_m as $val):
+                $prop = ($val == $$kkey) ? $selected : ''; ?>
+                <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
+
+        <?php $kkey = $key.'_d'; ?>
+        <select id="<?= $kkey ?>" name="<?= $kkey ?>" class="digit-4">
+            <option value="">-</option>
+            <?php foreach($select_d as $val):
+                $prop = ($val == $$kkey) ? $selected : ''; ?>
+                <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
+
+<?= $DT->format('H') ?>時まで<br>
+
+<small>納品先が遠隔地かつ事前相談済の場合は変更してください</small>
+
+<?php else: ?>
+<input type="hidden" id="payment_limit_y" name="payment_limit_y" value="<?= $payment_limit_y ?>">
+<input type="hidden" id="payment_limit_m" name="payment_limit_m" value="<?= $payment_limit_m ?>">
+<input type="hidden" id="payment_limit_d" name="payment_limit_d" value="<?= $payment_limit_d ?>">
+<?= $DT->format('Y/n/j H') ?>時まで
+
+<?php endif; ?>
+
+<input type="hidden" id="payment_limit_h" name="payment_limit_h" value="<?= $payment_limit_h ?>">
+
+</td>
+</tr>
+
 <tr>
     <th>管理備考</th>
     <td><textarea name="note"><?= $note ?? '' ?></textarea></td>
@@ -371,7 +439,7 @@ endif;
     </td>
 </tr>
 
-<?php if(strpos($product_set['name_en'],'offset') !== false): ?>
+<?php if($b_taiyou && strpos($product_set['name_en'],'offset') !== false): ?>
 
 <tr>
     <th>余部特典</th>
@@ -389,7 +457,7 @@ endif;
 <?php endif; // b_overprint_kaiteki ?>
 
 <tr>
-    <th>納品先※快適本屋さん含む</th>
+    <th>納品先数　※快適本屋さん含む</th>
     <td>
         <select id="delivery_divide" name="delivery_divide"<?= $disabled ?>>
             <?php foreach(range(1,5) as $n):
@@ -398,7 +466,11 @@ endif;
                 <option value="<?= $n ?>"<?= $prop ?>><?= $n ?></option>
             <?php endforeach; ?>
         </select>
+
+<?php if($b_taiyou): ?>
     <small class="attention">快適本屋さんに余部のみ納品する場合はカウント数に含めない</small>
+<?php endif; ?>
+
 </td>
 </tr>
 

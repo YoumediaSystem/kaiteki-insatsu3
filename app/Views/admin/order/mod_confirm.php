@@ -153,6 +153,39 @@ table {
 </tr>
 
 <tr>
+    <th>入金期限</th>
+    <td>
+<?php
+$date_text  = $payment_limit_y.'-';
+$date_text .= $payment_limit_m.'-';
+$date_text .= $payment_limit_d.' ';
+$date_text .= $payment_limit_h.':00:00';
+$DT = new \DateTime($date_text);
+$DT->setTimezone(new DateTimeZone('Asia/Tokyo'));
+
+$DT_org = new \DateTime($org['payment_limit']);
+$DT_org->setTimezone(new DateTimeZone('Asia/Tokyo'));
+?>
+<input type="hidden" id="payment_limit_y" name="payment_limit_y" value="<?= $payment_limit_y ?>">
+<input type="hidden" id="payment_limit_m" name="payment_limit_m" value="<?= $payment_limit_m ?>">
+<input type="hidden" id="payment_limit_d" name="payment_limit_d" value="<?= $payment_limit_d ?>">
+<input type="hidden" id="payment_limit_h" name="payment_limit_h" value="<?= $payment_limit_h ?>">
+<input type="hidden" id="payment_limit" name="payment_limit" value="<?= $date_text ?>">
+
+<?php if($DT != $DT_org): ?>
+
+    <?= $DT_org->format('Y/n/j H') ?>時まで
+    → <strong><?= $DT->format('Y/n/j H') ?>時まで</strong>
+
+<?php else: ?>
+    <?= $DT->format('Y/n/j H') ?>時まで
+
+<?php endif; ?>
+
+    </td>
+</tr>
+
+<tr>
     <th>管理備考</th>
     <td>
         <input type="hidden" name="note" value="<?= $note ?? '' ?>">

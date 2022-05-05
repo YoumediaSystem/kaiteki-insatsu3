@@ -13,10 +13,16 @@
         font-weight:bold;
     }
 
+    #sidebar h3 a {
+        text-decoration: underline;
+    }
+
     #sidebar li {
         margin-bottom: 10px;
         padding-left:0.5em;
+/*
         list-style: disc;
+*/
         list-style-position: inside;
         box-sizing: border-box;
     }
@@ -34,11 +40,13 @@
 </style>
 
 <aside id="sidebar">
+<!--
 	<section>
 		<article>
             <img id="banner_1000pt" src="img/ph2/banner/bn_1000pt.png" width="240" alt="新規登録でポイント1000円分プレゼント！" style="padding:10px;">
         </article>
 	</section>
+-->
 	<section>
 
         <h2>
@@ -47,17 +55,25 @@
 
 		<article>
 
-            <h3>同人誌基本セット</h3>
+            <h3><a href="/index_taiyou">大陽出版提供セット＞＞</a></h3>
             <ul>
-                <li><a href="/">オフセット印刷</a></li>
-                <li><a href="/">オンデマンド印刷</a></li>
+                <li><a href="/outline_offset">快適すご盛セット<small>（オフセット）</small></a></li>
+                <li><a href="/outline_ondemand">快適すご盛パック<small>（オンデマンド）</small></a></li>
             </ul>
 
-            <h3>同人誌割引セット</h3>
+            <h3>PICO提供セット</h3>
             <ul>
-                <li><a href="/">早割りセット</a></li>
-                <li><a href="/">イベント合わせセット</a></li>
+                <li><a href="/outline_offset_pico">PICOスマートオフセット</a></li>
+                <li><a href="/outline_ondemand_pico">PICOスマートオンデマンド</a></li>
             </ul>
+
+
+            <h3>お得なセットが続々追加予定！</h3>
+
+            <p>&nbsp;</p>
+
+
+<?php if(!empty($b_ph2)): ?>
 
             <h3>特殊印刷</h3>
             <ul>
@@ -96,6 +112,10 @@
                 <li><a href="/">カレンダー</a></li>
                 <li><a href="/">年賀状</a></li>
             </ul>
+
+<?php endif; ?>
+
+
 
 		</article>
 	</section>

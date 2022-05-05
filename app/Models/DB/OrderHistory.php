@@ -17,7 +17,8 @@ class OrderHistory extends Model
         ,51 => '二次不備'
         ,60 => '印刷開始済・表紙'
         ,61 => '三次不備'
-        ,70 => '印刷開始済・本文'
+        ,62 => '印刷開始済・本文'
+        ,70 => '印刷開始済・全て'
         ,90 => '期限切れ'
 
         ,110 => '未入金（通知未発送）'
@@ -27,7 +28,8 @@ class OrderHistory extends Model
         ,151 => '二次不備（通知未発送）'
         ,160 => '印刷開始済・表紙（通知未発送）'
         ,161 => '三次不備（通知未発送）'
-        ,170 => '印刷開始済・本文（通知未発送）'
+        ,160 => '印刷開始済・本文（通知未発送）'
+        ,170 => '印刷開始済・全て（通知未発送）'
         ,190 => '期限切れ（通知未発送）'
 
         ,-1 => '削除'
@@ -428,10 +430,10 @@ class OrderHistory extends Model
     function getPagerInfo($param) {
 
         $pager = [
-            'page'      => $param['page'],
+            'page'      => $param['page'] ?? 0,
             'count_all' => $param['count_all'],
             'max_page'  => intval($param['count_all'] / $this->rows_of_page),
-            'offset'    => $this->rows_of_page * $param['page']
+            'offset'    => $this->rows_of_page * ($param['page'] ?? 0)
         ];
 
         return $pager;
@@ -445,11 +447,19 @@ class OrderHistory extends Model
 //        &&  empty($param['tel'])
 //        &&  empty($param['sei_kana'])
 //        &&  empty($param['mei_kana'])
+        &&  empty($param['admin']['client_code'])
         &&  empty($param['product_set_id'])
         &&  empty($param['status'])
         );
         
         if (empty($param['page'])) $param['page'] = 0;
+
+        if (!empty($param['product_set_id']))
+            $product_set_id = [$param['product_set_id']];
+
+        else
+            $product_set_id = (new \App\Models\DB\ProductSet())
+                ->getID4client($param['admin']['client_code']);
 
         if ($b_all) {
             $count = $this
@@ -457,9 +467,9 @@ class OrderHistory extends Model
 
         } else {
             $count = $this
-            ->like('user_id', $param['user_id'] ?? '*')
-            ->like('product_set_id', $param['product_set_id'] ?? '*')
-            ->like('status', $param['status'] ?? '*')
+            ->like('user_id', $param['user_id'] ?? '%')
+            ->like('status', $param['status'] ?? '%')
+            ->whereIn('product_set_id', $product_set_id)
             ->countAllResults(false);
         }
 
@@ -472,7 +482,7 @@ class OrderHistory extends Model
 
         foreach($data as $key=>$val) {
             $temp = $val;
-            $temp['mode'] = $param['mode'];
+            $temp['mode'] = $param['mode'] ?? '';
             $result[] = $this->parseData($temp);
         }
 
@@ -643,8 +653,8 @@ class OrderHistory extends Model
         $this->key2name = (new \App\Models\Service\OrderForm())->getKey2Names();
 
         $lib = new \App\Models\CommonLibrary();
-        $Limit = new \App\Models\Service\LimitDate();
-
+        $Limit = (new \App\Models\Service\LimitInterface())
+            ->getObject($param['client_code'], $param['name_en']);
 
         $error = [];
 
@@ -723,13 +733,13 @@ class OrderHistory extends Model
             $b_border = false;
         }
     
-        // 冊数
-        if ($param['print_number_all'] == '0冊')
-            $error[] = '冊数を選択してください。';
+        // 冊数・ページ数
+        $print_number_all = (int)preg_replace('/[^0-9]/','',$param['print_number_all']);
+        $print_page = (int)preg_replace('/[^0-9]/','',$param['print_page']);
+
+        if (empty($print_number_all)) $error[] = '冊数を選択してください。';
     
-        // ページ数
-        if ($param['print_page'] == '0p')
-            $error[] = 'ページ数を選択してください。';
+        if (empty($print_page)) $error[] = 'ページ数を選択してください。';
 
         // 誕生日チェック
         if (mb_strpos($param['r18'],'成人向',0,'UTF-8') !== false) {
@@ -746,7 +756,8 @@ class OrderHistory extends Model
             $error[] = $this->key2name[$key].'を確認してください。';
     
         // 表紙の紙と加工の組み合わせ
-        if (mb_strpos($param['name_en'], 'ondemand', 0, 'UTF-8') !== false) {
+        if ($param['client_code'] == 'taiyou'
+        &&  mb_strpos($param['name_en'], 'ondemand', 0, 'UTF-8') !== false) {
     
             $b_process = (mb_strpos($param['cover_paper'], 'ポスト', 0,'UTF-8') !== false);
     

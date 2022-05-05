@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models\Service;
+namespace App\Models\Service\OrderForm;
 
-class OrderForm
+class PicoForm
 {
     protected $key2name = [
 
@@ -67,7 +67,7 @@ class OrderForm
         ,'r18'							=> '対象年齢'
         ,'r18_check'					=> '18歳以上か'
         ,'b_extra_order'				=> '事前相談'
-        ,'extra_order_note'				=> '事前相談・見積コード'
+        ,'extra_order_note'				=> '事前相談内容'
 
         // 納品部数
 

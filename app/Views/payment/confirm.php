@@ -152,15 +152,17 @@ $total = 0;
 $point_total = 0;
 
 foreach($order_list as $order):
-    
+
+    $b_taiyou = ($order['product_set']['client_code'] == 'taiyou');
+
     $DT_limit = new \Datetime($order['payment_limit']);
     
     $total += $order['price'];
 
     $ratio = $point_ratio; // 0.01
-    if (
-//        strpos($order['product_set']['name_en'],'ondemand') !== false
-        empty($order['b_overprint_kaiteki'])
+
+    if ($b_taiyou
+    &&  empty($order['b_overprint_kaiteki'])
     &&  empty($order['number_kaiteki'])
     )   $ratio = $not_kaiteki_point_ratio * $point_ratio;// 50 * 0.01
 

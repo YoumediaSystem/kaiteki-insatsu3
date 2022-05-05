@@ -54,7 +54,7 @@ class User extends BaseController
         $Config = new \App\Models\Service\Config();
 
         $view_file = ($Config->isRealOpen())
-        ? 'user/index' : 'user/index_soon';
+        ? 'user/index_ph1' : 'user/index_soon';
 
         return view($view_file, $this->param);
     }
@@ -65,6 +65,22 @@ class User extends BaseController
 
         $this->setCommonViews();
         return view('user/index', $this->param);
+    }
+
+    public function index_taiyou()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/index_taiyou', $this->param);
+    }
+
+    public function index_ph1()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        $this->setCommonViews();
+        return view('user/index_ph1', $this->param);
     }
 
     public function index_ph2()
@@ -155,7 +171,8 @@ class User extends BaseController
         $this->param['matrix_b5'] = $MatrixData->getMatrixData($param);
 
         $this->setCommonViews();
-        return view('user/outline_offset', $this->param);
+        return view('user/product/offset_taiyou', $this->param);
+//        return view('user/outline_offset', $this->param);
     }
 
     public function outline_ondemand()
@@ -182,7 +199,70 @@ class User extends BaseController
         $this->param['matrix_b5'] = $MatrixData->getMatrixData($param);
 
         $this->setCommonViews();
-        return view('user/outline_ondemand', $this->param);
+        return view('user/product/ondemand_taiyou', $this->param);
+//        return view('user/outline_ondemand', $this->param);
+    }
+
+    public function outline_offset_pico()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        if (empty($this->param['id']))
+            $this->param['id'] = 3;
+
+        // 商品概要データ読込
+        $ProductSet = new \App\Models\DB\ProductSet();
+        $this->param += $ProductSet->getFromID($this->param['id']);
+
+        // 冊数P数マトリクスデータ読込
+        $MatrixData = new \App\Models\Service\MatrixData();
+        $param = [
+            'client_code' => 'pico',
+            'product_code' => 'offset'
+        ];
+
+        $param['paper_size'] = '';
+        $this->param['matrix'] = $MatrixData->getMatrixData($param);
+
+        $param['paper_size'] = 'a5';
+        $this->param['matrix_a5'] = $MatrixData->getMatrixData($param);
+
+        $param['paper_size'] = 'b5';
+        $this->param['matrix_b5'] = $MatrixData->getMatrixData($param);
+
+        $this->setCommonViews();
+        return view('user/product/offset_pico', $this->param);
+    }
+
+    public function outline_ondemand_pico()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        if (empty($this->param['id']))
+            $this->param['id'] = 4;
+
+        // 商品概要データ読込
+        $ProductSet = new \App\Models\DB\ProductSet();
+        $this->param += $ProductSet->getFromID($this->param['id']);
+
+        // 冊数P数マトリクスデータ読込
+        $MatrixData = new \App\Models\Service\MatrixData();
+        $param = [
+            'client_code' => 'pico',
+            'product_code' => 'ondemand'
+        ];
+
+        $param['paper_size'] = '';
+        $this->param['matrix'] = $MatrixData->getMatrixData($param);
+
+        $param['paper_size'] = 'a5';
+        $this->param['matrix_a5'] = $MatrixData->getMatrixData($param);
+
+        $param['paper_size'] = 'b5';
+        $this->param['matrix_b5'] = $MatrixData->getMatrixData($param);
+
+        $this->setCommonViews();
+        return view('user/product/ondemand_pico', $this->param);
     }
 
     public function company()

@@ -66,7 +66,10 @@ $DT = new \Datetime($testdate);
         <div class="panel">
 
             <ul>
+
+<?php if(!empty($admin['role']) && $admin['role'] != 'client'): ?>
                 <li><a href="/admin/user"><strong>会員管理</strong><span>User</span></a></li>
+<?php endif; ?>
 
                 <li><a href="/admin/order"><strong>受注管理</strong><span>Order</span></a></li>
 

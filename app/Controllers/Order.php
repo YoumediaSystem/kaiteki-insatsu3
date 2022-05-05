@@ -57,14 +57,18 @@ class Order extends BaseController
         if ($this->check_mente()) return redirect()->to('/mente');
         if (!$this->check_login()) return redirect()->to('/login');
 
-        $Price = new \App\Models\Service\Price();
-        $this->param = $Price->adjustParam($this->param);
+        if (!empty($this->param['id'])) {
+            $ProductSet = new \App\Models\DB\ProductSet();
+            $this->param = array_merge(
+                $this->param,
+                $ProductSet->getFromID($this->param['id'])
+            );
 
-        $ProductSet = new \App\Models\DB\ProductSet();
+            $Price = (new \App\Models\Service\PriceInterface())
+                ->getObject($this->param['client_code']);
 
-        if (!empty($this->param['id']))
-            $this->param = array_merge($this->param,
-                $ProductSet->getFromID($this->param['id']));
+            $this->param = $Price->adjustParam($this->param);
+        }
 
         $this->setCommonViews();
         return view('order/form', $this->param);
@@ -78,7 +82,12 @@ class Order extends BaseController
 
         $viewfile = 'order/form';
 
+        $ProductSet = new \App\Models\DB\ProductSet();
         $OrderHistory = new \App\Models\DB\OrderHistory();
+
+        if (!empty($this->param['id']))
+            $this->param = array_merge($this->param,
+                $ProductSet->getFromID($this->param['id']));
 
         $this->param = $OrderHistory->adjustParam($this->param);
         $error = $OrderHistory->checkParam($this->param);
@@ -86,16 +95,11 @@ class Order extends BaseController
         if (!count($error)) {
             $viewfile = 'order/confirm';
             $this->param['price'] =
-                (new \App\Models\Service\Price())->getPrice($this->param);
-
+                (new \App\Models\Service\PriceInterface())
+                    ->getObject($this->param['client_code'])
+                    ->getPrice($this->param);
         } else
             $this->param['error'] = $error;
-
-        $ProductSet = new \App\Models\DB\ProductSet();
-
-        if (!empty($this->param['id']))
-            $this->param = array_merge($this->param,
-                $ProductSet->getFromID($this->param['id']));
 
         $this->setCommonViews();
         return view($viewfile, $this->param);

@@ -64,19 +64,21 @@ h4 {
 
 <table>
 
+<?php if($admin['role'] != 'client'): ?>
 <tr>
     <th>クライアント</th>
     <td>
         <select name="client_code">
+            <option value="">未選択</option>
             <?php
             if (isset($client_list)):
                 foreach($client_list as $client): ?>
             <option><?= $client ?></option>
             <?php endforeach; endif; ?>
-            <option value="">（なし）</option>
         </select>
     </td>
 </tr>
+<?php endif; ?>
 
 <tr>
     <th>商品名</th>

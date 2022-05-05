@@ -80,17 +80,13 @@ $DT = new \Datetime($testdate);
                 </li>
                 -->
                 <li><a href="/guide"><strong>ご利用ガイド</strong><span>HowToUse</span></a></li>
-
-                <li><a href="/data_format"><strong>原稿形式</strong><span>Format</span></a></li>                
 <!--
+                <li><a href="/data_format"><strong>原稿形式</strong><span>Format</span></a></li>                
                 <li><a href="/limits"><strong>締切情報</strong><span>Limits</span></a></li>
--->
                 <li><a href="/outline_offset"><strong>オフセット入稿</strong><span>Offset</span></a></li>
-
                 <li><a href="/outline_ondemand"><strong>オンデマンド入稿</strong><span>Ondemand</span></a></li>
-                <!--
                 <li><a href="/order_list"><strong>入稿する</strong><span>Order</span></a></li>
-                -->
+-->
 
                 <li><a href="/contact"><strong>お問合せ</strong><span>Contact</span></a></li>
 

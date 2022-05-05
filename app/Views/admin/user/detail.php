@@ -66,7 +66,9 @@ td span + span {
 
 
 
-<h4>会員no.<?= $id ?? '' ?></h4>
+<h4>会員no.<?= $id ?? '' ?>
+　<a href="/admin/order?mode=search&user_id=<?= $id ?? '' ?>">受注履歴＞＞</a>
+</h4>
 
 <div id="form_area" class="text">
 

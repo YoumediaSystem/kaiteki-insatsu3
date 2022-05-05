@@ -6,6 +6,9 @@ $print_number_all = (int)str_replace('冊','',$order['print_number_all'] ?? 0);
 
 $Config = new \App\Models\Service\Config();
 
+$b_taiyou = ($order['product_set']['client_code'] == 'taiyou');
+$b_pico = ($order['product_set']['client_code'] == 'pico');
+
 ?><!DOCTYPE html>
 <html lang="ja">
 
@@ -146,13 +149,13 @@ $org_price_text = !empty($order['org_price'])
 <td><?= $date_text ?></td>
 </tr>
 
+<?php if (in_array($order['status'],[40,41,50,51,60,61,62,70,140])):
+
+if ($b_taiyou): ?>
+
 <tr>
 <th>作業依頼書</th>
-<td><?php
-
-if (in_array($order['status'],[40,41,50,51,60,140,141,150,151,160])): ?>
-
-    <?php if($b_order_sheet): ?>
+<td><?php if($b_order_sheet): ?>
 　<a href="/pdf/order_sheet/<?= $client_dir ?>/<?= $order_sheet_file ?>?d=<?= $DT_now->format('U') ?>" target="_blank">作業依頼書PDF</a>
     <?php endif; ?>
 
@@ -207,10 +210,24 @@ function reload() {
 
 </script>
 
-<?php endif; ?>
-
 </td>
 </tr>
+
+<?php else: // not taiyou ?>
+
+<tr>
+<th>発注CSV</th>
+<td>
+    <a href="/admin/export_order_csv?id=<?=
+        $order['id'] ?>" target="_blank">ダウンロード</a>
+</td>
+</tr>
+
+<?php
+endif; // b_taiyou
+endif; // status
+?>
+
 
 
 <tr>
@@ -383,8 +400,9 @@ $delivery_divide = $order['delivery_divide'];
 
 ?>
 
-<h4>発送先：<?= $divide_without_kaiteki ?>箇所（快適本屋さん除く）<?=
-empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
+<h4>発送先：<?= $divide_without_kaiteki ?>箇所
+<?= $b_taiyou ? '（快適本屋さん除く）' : '' ?><?=
+$b_taiyou && empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
 ? '　※もっと特典適用あり' : '' ?></h4>
 <!--
 <p class="link">
@@ -479,7 +497,7 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
 </table>
 
 
-<?php if(in_array($order['status'],[40,41,50,51,60,61,70])):
+<?php if(in_array($order['status'],[40,41,50,51,60,61,62,70])):
     
     $b_ok = ($order['status'] == 70); ?>
 
@@ -488,41 +506,60 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
 <h4><?= $b_ok ? '不備戻し入力' : '精査結果入力' ?>
 
 <div class="text-center">
-    <form method="post" action="/admin/order_detail_judge">
-    <input type="hidden" name="id" value="<?= $order['id'] ?>">
+    <form id="form1" method="post" action="/admin/order_detail_judge">
+    <input type="hidden" id="id" name="id" value="<?= $order['id'] ?>">
+    <input type="hidden" id="to_status" name="to_status" value="">
 
     <p>
-        <select name="ng_reason">
+        <select id="judge" name="ng_reason">
 
             <?php
             $order_ok_text = '仮受付する';
+            $to_status = $order['status'] + 10;
 
             if (in_array($order['status'], [50,51]))
                 $order_ok_text = '表紙を印刷開始する';
 
-            if (in_array($order['status'], [60,61]))
-                $order_ok_text = '本文を印刷開始する・精査完了';
+            if (in_array($order['status'], [60,61,62])
+            ||  ($b_pico && in_array($order['status'], [50,51]))
+            ) {
+                $order_ok_text = 'すべて印刷開始する（精査完了）';
+                $to_status = 70;
+            }
 
-            if($order['status'] != 70): ?>
-            <option value="">精査OK（<?= $order_ok_text ?>）</option>
+            if($order['status'] != 70):
+
+                if (in_array($order['status'], [50,51])): ?>
+                    <option value="" data-to_status="60">精査OK（先に表紙を印刷開始する）</option>
+                    <option value="" data-to_status="62">精査OK（先に本文を印刷開始する）</option>
+
+                    <?php if($b_pico): ?>
+                        <option value="" data-to_status="70">精査OK・すべて印刷開始する（精査完了）</option>
+                    <?php endif; ?>
+
+                <?php else: ?>
+                    <option value="" data-to_status="<?= $to_status ?>">精査OK（<?= $order_ok_text ?>）</option>
+
+                <?php endif; // 50,51
+
+            endif; // not70 ?>
+
+            <?php if(in_array($order['status'], [40,41,50,51,60,61,62,70])): ?>
+            <option data-to_status="41" value="理由1：ダウンロード不可">一次不備（ダウンロード不可）</option>
+            <option data-to_status="41" value="理由1：ファイル不備">一次不備（ファイル不備）</option>
+            <option data-to_status="41" value="理由1：納品先">一次不備（納品先）</option>
+            <option data-to_status="41" value="理由1：その他">一次不備（その他）</option>
             <?php endif; ?>
 
-            <?php if(in_array($order['status'], [40,41,50,51,60,61,70])): ?>
-            <option value="理由1：ダウンロード不可">一次不備（ダウンロード不可）</option>
-            <option value="理由1：ファイル不備">一次不備（ファイル不備）</option>
-            <option value="理由1：納品先">一次不備（納品先）</option>
-            <option value="理由1：その他">一次不備（その他）</option>
+            <?php if(in_array($order['status'], [50,51,60,61,62,70])): ?>
+            <option data-to_status="51" value="理由2：表紙内容">二次不備（表紙内容）</option>
+            <option data-to_status="51" value="理由2：本文内容">二次不備（本文内容）</option>
+            <option data-to_status="51" value="理由2：台割ノンブル相違">二次不備（台割ノンブル相違）</option>
+            <option data-to_status="51" value="理由2：その他">二次不備（その他）</option>
             <?php endif; ?>
 
-            <?php if(in_array($order['status'], [50,51,60,61,70])): ?>
-            <option value="理由2：表紙内容">二次不備（表紙内容）</option>
-            <option value="理由2：その他">二次不備（その他）</option>
-            <?php endif; ?>
-
-            <?php if(in_array($order['status'], [60,61,70])): ?>
-            <option value="理由3：本文内容">三次不備（本文内容）</option>
-            <option value="理由3：台割ノンブル相違">三次不備（台割ノンブル相違）</option>
-            <option value="理由3：その他">三次不備（その他）</option>
+            <?php if(in_array($order['status'], [60,61,62,70])): ?>
+            <option data-to_status="61" value="理由3：その他">三次不備（その他）</option>
             <?php endif; ?>
 
         </select>
@@ -532,11 +569,12 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
         <textarea name="ng_reason_other" placeholder="不備（その他）の場合は、詳細を入力"></textarea>
     </p>
 
+    </form>
+
     <p>
-        <button>精査結果を登録する</button>
+        <button type="button" id="go_next">精査結果を登録する</button>
     </p>
 
-    </form>
 </div>
 <?php endif; ?>
 
@@ -560,6 +598,22 @@ empty($order['number_kaiteki']) && empty($order['b_overprint_kaiteki'])
     </div><!-- wrapper -->
 
     <?= $view['footer'] ?>
+
+<script>
+
+$('#go_next').on('click', function(){
+
+    var v = $('#judge').val();
+
+    if (v == '') {
+        var to_status = $('#judge option:selected').attr('data-to_status');
+        $('#to_status').val(to_status);
+    }
+
+    $('#form1').submit();
+});
+
+</script>
 
 </body>
 </html>
