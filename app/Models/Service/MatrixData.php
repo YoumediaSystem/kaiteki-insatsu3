@@ -94,7 +94,7 @@ class MatrixData
                         if ($key != 0 && $ih != '') $a[$ih] = [];
     
                     } elseif (!empty($ih) && !empty($iv)) {
-                        $a[$ih][$iv] = $vv;
+                        $a[$ih][$iv] = (int)preg_replace('/[^0-9]/','',$vv);
                     }
                 }
             }

@@ -414,6 +414,37 @@ $DT_org->setTimezone(new DateTimeZone('Asia/Tokyo'));
     </td>
 </tr>
 
+
+<?php if(
+    $org['main_buffer_paper_detail'] != ''
+||  $main_buffer_paper_detail != ''
+):
+?>
+<tr>
+<th>遊び紙の種類</th>
+    <td>
+        <input type="hidden" name="main_buffer_paper_detail" value="<?= $main_buffer_paper_detail ?? '' ?>">
+
+        <?php if($main_buffer_paper_detail != $org['main_buffer_paper_detail']): ?>
+
+            <?= !empty($org['main_buffer_paper_detail'])
+? $org['main_buffer_paper_detail'] : '（未選択）' ?>
+
+            → <strong><?= !empty($main_buffer_paper_detail)
+? $main_buffer_paper_detail :  '（未選択）' ?></strong>
+
+        <?php else: ?>
+            <?= $org['main_buffer_paper_detail'] ?? '（未選択）' ?>
+
+        <?php endif; ?>
+    </td>
+</tr>
+<?php else: ?>
+    <input type="hidden" id="main_buffer_paper_detail" name="main_buffer_paper_detail" value="">
+
+<?php endif; ?>
+
+
 <tr>
 <th>余部特典</th>
     <td>

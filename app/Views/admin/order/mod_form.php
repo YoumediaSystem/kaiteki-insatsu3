@@ -439,6 +439,30 @@ $payment_limit_h = $payment_limit_h ?? (int)$DT->format('H');
     </td>
 </tr>
 
+<?php if(is_array($select['main_buffer_paper'])
+&&  1 < count($select['main_buffer_paper'])): ?>
+<tr>
+    <th>遊び紙の種類</th>
+    <td>
+
+        <select id="main_buffer_paper_detail" name="main_buffer_paper_detail" class="price_factor">
+
+            <?php $prop = empty($main_buffer_paper_detail) ? $selected : ''; ?>
+                <option value=""<?= $prop ?>>（未選択）</option>
+
+            <?php foreach($select['main_buffer_paper_detail'] as $val):
+                $prop = ($val == $main_buffer_paper_detail) ? $selected : ''; ?>
+                <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
+            <?php endforeach; ?>
+        </select>
+
+    </td>
+</tr>
+<?php else: ?>
+    <input type="hidden" id="main_buffer_paper_detail" name="main_buffer_paper_detail" value="">
+
+<?php endif; ?>
+
 <?php if($b_taiyou && strpos($product_set['name_en'],'offset') !== false): ?>
 
 <tr>
@@ -624,6 +648,12 @@ $('#go_prev').on('click', function(){
 });
 
 $('#go_next').on('click', function(){
+
+    var val = $('#main_buffer_paper').val();
+
+    if (val == 'なし') {
+        $('#main_buffer_paper_detail').val('');
+    }
 
     $('select:disabled').removeAttr('disabled');
 /*

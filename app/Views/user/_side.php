@@ -67,6 +67,11 @@
                 <li><a href="/outline_ondemand_pico">PICOスマートオンデマンド</a></li>
             </ul>
 
+            <h3>関西美術印刷提供セット</h3>
+            <ul>
+                <li><a href="/outline_offset_kanbi">RGBカラー表紙パック</a></li>
+            </ul>
+
 
             <h3>お得なセットが続々追加予定！</h3>
 

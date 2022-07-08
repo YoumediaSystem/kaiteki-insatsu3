@@ -504,6 +504,11 @@ text-shadow:
         <img src="/img/slider/slider_ondemand_pico.jpg" alt="PICOスマートオンデマンド"></a>
     </div>
 
+    <div>
+        <a href="/outline_offset_kanbi">
+        <img src="/img/slider/slider_offset_kanbi.jpg" alt="RGBカラー表紙パック"></a>
+    </div>
+
 </div><!-- mainBanner -->
 <script>
 
@@ -550,6 +555,12 @@ $(function() {
         <div class="ec-borderedDefs">
 
             <dl>
+
+                <dt><h4>2022.6.15</h4></dt>
+                <dd>
+                    新セット
+「<a href="/outline_offset_kanbi">RGBカラー表紙パック</a>」を追加！
+                </dd>
 
                 <dt><h4>2022.5.5</h4></dt>
                 <dd>
@@ -607,7 +618,7 @@ $(function() {
 
             <p>入稿は<b>東名阪エリア開催イベント合わせなら事前相談不要</b>、
 かつ一般のオンラインストレージをお使いいただくことで<b>短納期入稿可能</b>
-（たとえば、すご盛セット/パックは水曜12時まで受付可）となっております。</p>
+（たとえば、すご盛セット/パックは火曜12時まで受付可）となっております。</p>
 
             <p>FTPソフト設定などの面倒な作業は不要で、しかも大きいイベント直前によくある「FTP接続できない」「FTPアップロードが完了できない」心配も無用です！</p>
 

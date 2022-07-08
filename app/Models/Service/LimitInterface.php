@@ -13,6 +13,9 @@ class LimitInterface
         if ($client_code == 'pico')
             return new \App\Models\Service\Limit\PicoLimit();
 
+        if ($client_code == 'kanbi')
+            return new \App\Models\Service\Limit\KanbiLimit();
+
         return new \App\Models\Service\LimitDate(); // default taiyou
     }
 }

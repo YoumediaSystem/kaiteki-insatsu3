@@ -3,6 +3,8 @@
 const PAGE_NAME = '入稿フォーム';
 
 $b_taiyou = ($client_code == 'taiyou');
+$b_kanbi = ($client_code == 'kanbi');
+$b_pico = ($client_code == 'pico');
 
 $DT = new \Datetime();
 $now_y = (int)$DT->format('Y');
@@ -74,6 +76,20 @@ $client_event_list_URL = [
     ,'test' => 'https://www.youyou.co.jp/'
 ];
 
+// 関美 10%off
+if ($b_kanbi) {
+    $b_discount_10per = $Price->isCampaignRatio();
+
+    $DT_discount = new \DateTime($Price->getLimitCampaign());
+
+    $text_limit_discount = $DT_discount->format('n月j日').'まで';
+
+    $text_discount_per = (1 - $Price->getCampaignRatio()) * 100;
+    $text_discount_per .= '％OFF！';
+}
+
+
+
 
 $checked	= ' checked="checked"';
 $selected	= ' selected="selected"';
@@ -122,6 +138,21 @@ table {
     border: 1px solid #00ad8d;
     border-radius: 0.33rem;
     padding: 0.25em 0.5em;
+}
+
+.campaign_discount {
+    font-size:1.13rem;
+}
+
+#price_header #campaign_in_price {
+    font-size: 0.774rem;
+    font-weight: normal;
+}
+
+@media screen and (max-width:729px) {
+    #price_header #campaign_in_price {
+        display:none;
+    }
 }
 
 </style>
@@ -741,6 +772,10 @@ $prop = ($formtype == 'none') ? $disable_input : '';
 <?php if ($formtype == 'multi'): ?>
 
         <select id="<?= $key ?>" name="<?= $key ?>" class="price_factor">
+
+            <?php $prop = empty($$key) ? $selected : ''; ?>
+                <option value=""<?= $prop ?>>（未選択）</option>
+
             <?php foreach($select[$key] as $val):
                 $prop = ($val == $$key) ? $selected : ''; ?>
                 <option value="<?= $val ?>"<?= $prop ?>><?= $val ?></option>
@@ -1380,7 +1415,11 @@ $('#go_next').on('click', function(){
 <div id="box_price_info">
     <div id="wrap_price">
 
-        <span id="price_header">現在の合計</span>
+        <span id="price_header">現在の合計<?php if ($b_kanbi && $b_discount_10per): ?>
+
+<span id="campaign_in_price">から<?= $text_discount_per ?></span>
+
+<?php endif; ?></span>
         <span id="price">￥0</span>
         <span id="price_footer">(税込)</span>
 
@@ -1569,6 +1608,10 @@ function mod_price() {
 
         total += (delivery_divide - 1) * price_split; // 1500 or 1000
     }
+
+    // 値引きキャンペーンなど
+    if (0 < data.discount_number) total -= data.discount_number;
+    if (0 < data.discount_ratio) total -= total * data.discount_ratio;
 
     // 消費税
     if (add_tax) total += roundDown(total * data.tax_per, 1);

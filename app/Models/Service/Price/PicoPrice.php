@@ -93,6 +93,10 @@ class PicoPrice
         ];
     
         $data['price_split'] = 1500; // 分納1件あたりの追加料金
+
+        $data['discount_number'] = 0;
+        $data['discount_ratio'] = 0;
+
 /*    
         if (!empty($param['set_id']) && (
                 strpos($param['set_id'],'_delivery') !== false

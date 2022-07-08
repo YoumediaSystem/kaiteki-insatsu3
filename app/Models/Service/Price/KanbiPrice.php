@@ -1,11 +1,32 @@
 <?php
 
-namespace App\Models\Service;
+namespace App\Models\Service\Price;
 
-class Price
+class KanbiPrice
 {
+    protected $campaign_ratio = 0.9;
+    protected $limit_campaign_ratio = '2022-08-31 23:59:59';
+    protected $name_campaign_ratio = '90％キャンペーン';
+
     public function __construct() {
 
+    }
+
+    public function getLimitCampaign() {
+        return (string)$this->limit_campaign_ratio;
+    }
+
+    public function isCampaignRatio() {
+
+        $DT_now = new \Datetime();
+        $DT_limit = new \DateTime($this->limit_campaign_ratio);
+
+        return (bool)($DT_now <= $DT_limit);
+    }
+
+    public function getCampaignRatio() {
+
+        return (float)$this->campaign_ratio;
     }
 
     public function adjustParam($param) {
@@ -38,7 +59,12 @@ class Price
         $param['main_paper'] = $param['main_paper'] ?? '';
         $param['main_color'] = $param['main_color'] ?? '';
         $param['main_buffer_paper'] = $param['main_buffer_paper'] ?? '';
-        $param['main_buffer_paper_detail'] = $param['main_buffer_paper_detail'] ?? '';
+
+        if ($param['main_buffer_paper'] != 'なし')
+            $param['main_buffer_paper_detail'] = $param['main_buffer_paper_detail'] ?? '';
+        else
+            $param['main_buffer_paper_detail'] = '';
+
         $param['binding'] = $param['binding'] ?? '';
         $param['r18'] = $param['r18'] ?? '';
 
@@ -62,10 +88,7 @@ class Price
 //        $data['price_base_matrix_b5']	= $matrix_b5['data'];
     
         $data['print_size_group'] = [ // 用紙サイズグループ
-             'A6'		=> ''
-            ,'文庫(A6)' => ''
-            ,'B6'		=> ''
-            ,'A5'		=> ''
+             'A5'		=> ''
             ,'B5'		=> 'b5'
         ];
 
@@ -95,10 +118,11 @@ class Price
             ,'tracing_b5'		=> [185.150, 370.290]
         ];
     
-        $data['price_split'] = 1500; // 分納1件あたりの追加料金
+        $data['price_split'] = 1780; // 分納1件あたりの追加料金
 
         $data['discount_number'] = 0;
-        $data['discount_ratio'] = 0;
+        $data['discount_ratio'] = ($this->isCampaignRatio())
+            ? 1 - (float)$this->campaign_ratio : 0;
 
 /*    
         if (!empty($param['set_id']) && (
@@ -134,7 +158,7 @@ class Price
         $b_round_up = false; // 端数切り捨て
     
         // 用紙サイズグループ
-    //	$print_size = ($param['print_size'] == 'B5') ? 'b5' : 'small';
+        $print_size = ($param['print_size'] == 'B5') ? 'b5' : '';
         $print_size = $data['print_size_group'][$param['print_size']];
     
         // 冊数
@@ -207,8 +231,8 @@ class Price
             $buffer_double = ($param['main_buffer_paper'] == '前のみ') ? 0 : 1;
             
             $key = $buffer_type.'_'.$print_size;
-    
-            $price = $data['buffer_table_10000'][$key][$buffer_double] /* * (1 / 1000) */;
+/*    
+            $price = $data['buffer_table_10000'][$key][$buffer_double];// * (1 / 1000);
     //		$price *= $param['print_page'];
             $price *= $param['print_number_all'];
             $price = $this->get_round_10((int)$price);
@@ -218,6 +242,7 @@ class Price
                 .$param['main_buffer_paper_detail']
                 .'）', $price);
             $a_price['total'] += $price;
+*/
         }
     
         // 分納
@@ -233,7 +258,7 @@ class Price
         if (!empty($param['delivery_divide'])) { // 受注変更
 
             $count = $param['delivery_divide'];
-            if(!empty($param['number_kaiteki'])) $count -= 1;
+//            if(!empty($param['number_kaiteki'])) $count -= 1;
 
         } else { // 新規入稿
             $count = 0;
@@ -241,22 +266,35 @@ class Price
             $count += (0 < ($param['number_event_1'] ?? 0))	? 1 : 0;
             $count += (0 < ($param['number_event_2'] ?? 0))	? 1 : 0;
             $count += (0 < ($param['number_other'] ?? 0))	? 1 : 0;
+            $count += (0 < ($param['number_kaiteki'] ?? 0))	? 1 : 0;
         }
         
         if (2 <= $count) {
 
             $price_text = '分納'.$count.'箇所';
-
+/*
             if (!$b_delivery_kaiteki && $b_delivery_discount) {// 1500 → 1000
                 $data['price_split'] = intval($data['price_split'] / 3 * 2);
                 $price_text .= '(特典)';
             }
-            
+*/
             $price = ($count - 1) * $data['price_split'];
             
             $a_price['detail'][] = $this->text_price($price_text, $price);
             $a_price['total'] += $price;
         }
+
+        // 90%キャンペーン -2022.8.31まで
+        if ($this->isCampaignRatio()) {
+
+            $n = 1 - (float)$this->campaign_ratio;
+            $price = $a_price['total'] * $n * -1;
+            
+            $a_price['detail'][] = $this->text_price(
+                $this->name_campaign_ratio, $price);
+            $a_price['total'] += $price;
+        }
+
     
         // 金額調整を適用
         if (!empty($param['adjust_price'])) {
@@ -378,7 +416,7 @@ class Price
         */
         
         $select['print_size'] = [
-            'A6','B6','A5','B5'];
+            'A5','B5'];
         
         $select['sex_type'] = [
             '男','女','未回答'];
@@ -390,91 +428,82 @@ class Price
     
         if ($b_offset) {
             $select['cover_paper'] = [
-                'アートポスト180kg'];
+                'アート紙（アイベストW）180kg'
+            ];
             $select['cover_color'] = [
-                'オフセット印刷フルカラー（表2・3印刷無し）'];
+                '4色オフセットフルカラー'
+            ];
             $select['cover_process'] = [
-                'クリアPP','マットPP'];
+                'PP',
+                'マットPP'
+            ];
             $select['main_paper'] = [
-                '上質70kg'
-                ,'上質90kg'
-                ,'スーパーバルギー'
-                ,'書籍バルギー'
-                //,'書籍バルギー'
-                //,'上質110kg','スーパーバルギー'
+                '上質紙70kg',
+                '上質紙90kg',
+                '上質紙110kg',
+                'ルンバ・白84kg',
+                'ルンバ・クリーム84kg',
+                'ルンバ・ピンク84kg',
+                'ルンバ・ブルー84kg',
+                'ルンバ・ナチュラル70.5kg'
             ];
             $select['main_color'] = [
-                'オフセット印刷スミ1色'];
+                'スミベタ（黒）',
+                'カンビ特色（赤）',
+                'カンビ特色（オレンジ）',
+                'カンビ特色（桃）',
+                'カンビ特色（ピンク）',
+                'カンビ特色（紫）',
+                'カンビ特色（青）',
+                'カンビ特色（青緑）',
+                'カンビ特色（緑）',
+                'カンビ特色（黄緑）',
+                'カンビ特色（黄土色）',
+                'カンビ特色（茶）',
+                'カンビ特色（灰）',
+            ];
         }
         
         if ($b_ondemand) {
             $select['cover_paper'] = [
-                'アートポスト180kg',
-                'マットポスト180kg',
-                'Mr.B（スーパーホワイト）＜180kg＞',
-                'ミニッツGA（スノーホワイト）＜170kg＞',
-                'シャインフェイス（ゴールド）＜180kg＞',
-                'シャインフェイス（シルバー）＜180kg＞',
-            ];
+                'アートポスト180kg'];
             $select['cover_color'] = [
-                'オンデマンド印刷フルカラー（表2・3印刷無し）'];
+                'デジカラー',
+                'デジスミ'
+            ];
             $select['cover_process'] = [
-                'クリアPP','マットPP','なし'];
+                '加工無'];
             $select['main_paper'] = [
-                '上質70kg'
-                ,'上質90kg'
-                ,'書籍用紙90kg'
+                '美弾紙ホワイト'
+                ,'上質90k'
             ];
             $select['main_color'] = [
-                'オンデマンド印刷スミ1色'];
+                'デジスミ'];
         }
         
         $select['main_print_type'] = [
             'AM120線','FM'];
         
         $select['main_buffer_paper'] = [
-            'なし'];
-        //	'なし','前のみ','前後'];
+            'なし',
+            '前のみ'
+        ];
         
         $select['main_buffer_paper_detail'] = [
-        /*	
-             '色上質・やまぶき'
-            ,'色上質・レモン'
-            ,'色上質・濃クリーム'
-            ,'色上質・白茶'
-            ,'色上質・オレンジ'
-        
-            ,'色上質・サーモン'
-            ,'色上質・空'
-            ,'色上質・ブルー'
-            ,'色上質・水'
-            ,'色上質・あじさい'
-        
-            ,'色上質・りんどう'
-            ,'色上質・銀ねず'
-            ,'色上質・コスモス'
-            ,'色上質・さくら'
-            ,'色上質・桃'
-        
-            ,'色上質・若草'
-            ,'色上質・もえぎ'
-            ,'色上質・若竹'
-            ,'色上質・赤'
-            ,'色上質・黒'
-        
-            ,'クラシコトレーシング・ピンク'
-            ,'クラシコトレーシング・イエロー'
-            ,'クラシコトレーシング・ブルー'
-            ,'クラシコトレーシング・グレー'
-            ,'クラシコトレーシング・オレンジ'
-        
-            ,'クラシコトレーシング・グリーン'
-            ,'クラシコトレーシング・バイオレット'
-        */
+            '色上質中厚口・レモン',
+            '色上質中厚口・さくら',
+            '色上質中厚口・若草',
+            '色上質中厚口・水色',
+            '色上質中厚口・ラベンダー',
+            '色上質中厚口・銀鼠',
+            '色上質中厚口・黒',
+            'クラフト紙'
         ];
         
         $select['binding'] = [
-            '無線綴じ'];
+            '中綴じ',
+            '無線綴じ'
+        ];
         
         $select['r18'] = [
             '全年齢向け','成人向け表現あり'];

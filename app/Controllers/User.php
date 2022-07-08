@@ -265,6 +265,36 @@ class User extends BaseController
         return view('user/product/ondemand_pico', $this->param);
     }
 
+    public function outline_offset_kanbi()
+    {
+        if ($this->check_mente()) return redirect()->to('/mente');
+
+        if (empty($this->param['id'])) $this->param['id'] = 5;
+
+        // 商品概要データ読込
+        $ProductSet = new \App\Models\DB\ProductSet();
+        $this->param += $ProductSet->getFromID($this->param['id']);
+
+        // 冊数P数マトリクスデータ読込
+        $MatrixData = new \App\Models\Service\MatrixData();
+        $param = [
+            'client_code' => 'kanbi',
+            'product_code' => 'offset'
+        ];
+
+        $param['paper_size'] = '';
+        $this->param['matrix'] = $MatrixData->getMatrixData($param);
+
+        $param['paper_size'] = 'a5';
+        $this->param['matrix_a5'] = $MatrixData->getMatrixData($param);
+
+        $param['paper_size'] = 'b5';
+        $this->param['matrix_b5'] = $MatrixData->getMatrixData($param);
+
+        $this->setCommonViews();
+        return view('user/product/offset_kanbi', $this->param);
+    }
+
     public function company()
     {
         $this->setCommonViews();

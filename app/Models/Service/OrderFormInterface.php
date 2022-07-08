@@ -13,6 +13,9 @@ class OrderFormInterface
         if ($client_code == 'pico')
             return new \App\Models\Service\OrderForm\PicoForm();
 
+        if ($client_code == 'kanbi')
+            return new \App\Models\Service\OrderForm\KanbiForm();
+
         return new \App\Models\Service\OrderForm(); // default taiyou
     }
 }
