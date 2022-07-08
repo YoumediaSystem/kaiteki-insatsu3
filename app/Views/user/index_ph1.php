@@ -556,7 +556,7 @@ $(function() {
 
             <dl>
 
-                <dt><h4>2022.6.15</h4></dt>
+                <dt><h4>2022.7.8</h4></dt>
                 <dd>
                     新セット
 「<a href="/outline_offset_kanbi">RGBカラー表紙パック</a>」を追加！
