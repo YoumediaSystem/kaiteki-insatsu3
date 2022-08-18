@@ -4,7 +4,10 @@ namespace App\Models\Service;
 
 class LimitDate
 {
+//  taiyou（大陽出版）用
+
 //    protected $limit_days = -5;// 2022.3.3 納品5日前12時ルールに変更
+//      2022.8.18 金曜納品は前週火曜の〆切にする
 
     protected $limit_weekday = 'tuesday';
     protected $limit_hms = '12:00:00';
@@ -147,8 +150,11 @@ class LimitDate
                 $DT2 = new \Datetime(
                     $datetext
                     , new \DateTimezone('Asia/Tokyo'));
-                    
-                $DT2->modify('-2days');
+                
+                // 納品日から入稿期限を出すための補正
+//                $DT2->modify('-2days'); // 納品日-2 = 土曜OK、金曜OK、木曜NG
+                $DT2->modify('-3days'); // 納品日-3 = 土曜OK、金曜NG、木曜NG
+
                 $DT2->modify('last '.$this->limit_weekday.' '.$this->limit_hms);
                 $limit_date = $DT2->format('Y-m-d H:i:s');
 /*
