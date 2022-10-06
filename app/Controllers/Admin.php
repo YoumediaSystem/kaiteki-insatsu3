@@ -578,11 +578,11 @@ class Admin extends BaseController
         }
 
         $Order->save([ // 受発注データは以下項目のみ更新、他はmodレコードを更新
-            'id'            => $this->param['id'],
-            'print_title'   => $this->param['print_title'],
-            'payment_limit' => $this->param['payment_limit'],
-            'status'        => $this->param['status'],
-            'note'          => $this->param['note'],
+            'id'            => $org['id'],
+            'print_title'   => $dest['print_title'],
+            'payment_limit' => $dest['payment_limit'],
+            'status'        => $dest['status'],
+            'note'          => $dest['note'],
             'protect'       => $dest['protect']
         ]);
 

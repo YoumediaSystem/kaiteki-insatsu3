@@ -63,7 +63,7 @@ table {
 
 <table>
 
-<?php if($admin['role'] == 'master'): ?>
+<?php // if($admin['role'] == 'master'): ?>
 
 <tr>
     <th>入稿状況</th>
@@ -81,7 +81,7 @@ table {
     </td>
 </tr>
 
-<?php endif; // master ?>
+<?php // endif; // master ?>
 
 <tr>
     <th>タイトル</th>

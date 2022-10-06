@@ -125,6 +125,7 @@ button[disabled] {
 <input type="hidden" name="name_en" value="<?= $product_set['name_en'] ?? '' ?>">
 <input type="hidden" name="client_code" value="<?= $product_set['client_code'] ?? '' ?>">
 <input type="hidden" name="product_code" value="<?= $product_set['name_en'] ?? '' ?>">
+<input type="hidden" name="payment_id" value="<?= $product_set['payment_id'] ?? '' ?>">
 
 <input type="hidden" name="number_home" value="<?= $number_home ?? 0 ?>">
 <input type="hidden" name="number_kaiteki" value="<?= $number_kaiteki ?? 0 ?>">
@@ -165,7 +166,18 @@ endif;
     </td>
 </tr>
 
-<?php endif; // master ?>
+<?php else: // client ?>
+<tr>
+    <th>入稿状況</th>
+    <td>
+        <input type="hidden" name="status" value="<?= $status ?? '' ?>">
+        <?= $statusName[$status] ?>
+    </td>
+</tr>
+
+<?php endif; // master only ?>
+
+
 
 <tr>
     <th>タイトル</th>

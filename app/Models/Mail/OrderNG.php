@@ -99,7 +99,7 @@ class OrderNG extends SendMail
         $data = [
             'from'		=> $mail['admin_mail_address']
             ,'to'		=> $param['mail_address']
-            ,'bcc'		=> $mail['bcc_mail_address_2user']
+            ,'bcc'		=> $mail['bcc_mail_address_2user'].','.$param['product_set']['client_mail']
             ,'subject'	=> $subject
             ,'body'		=> $body
         ];
