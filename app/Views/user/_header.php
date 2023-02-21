@@ -42,7 +42,7 @@ $index = ($Config->isRealOpen()) ? '/' : '/index_test';
         <!-- <?= ENVIRONMENT ?? '' ?> -->
         <?php
             if(!empty($environ) && $environ == 'local') echo '<p class="env"><b>ローカル環境</b></p>';
-            if(!empty($environ) && $environ == 'test') echo '<p class="env"><b>テスト環境</b></p>';
+            if(!empty($environ) && $environ == 'test') echo '<p class="env"><b style="color:#c00; background-color:#fff">テスト環境</b></p>';
         ?>
 
 <!--

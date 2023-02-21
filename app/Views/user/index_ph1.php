@@ -16,7 +16,11 @@ $rest_ondemand = $p_ondemand['max_order'] - $p_ondemand['ordered'];
 
 <head>
     <meta charset="UTF-8">
+
+<?php if(!empty($environ) && $environ != 'real'): ?>
     <meta name="ROBOTS" content="NOINDEX,NOFOLLOW,NOARCHIVE">
+<?php endif; ?>
+
     <meta name="viewport" content="width=device-width, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0">
     <title><?= $site['name'] ?></title>
     <meta name="description" content="<?= $site['name'] ?>のサイトです。簡単見積もり簡単入稿！イベント間際の極道入稿も大歓迎です！">
