@@ -217,7 +217,7 @@ class Point extends Model
                     $data[$key] = $param[$key];
 
             $this->save($data);
-            $id = $param['id'];
+            $id = (int)$param['id'];
 
         } else {
 
