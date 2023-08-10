@@ -646,7 +646,7 @@ $(function() {
 
 <dl>
 
-            <dt data-open_date="20230801"><h4>2023.8.1</h4></dt>
+            <dt data-open_date="20230801"><h4>2023.8.10</h4></dt>
             <dd data-open_date="20230801">
 
 <p>下記日程にて<a href="https://www.paygent.co.jp/" target="_blank">決済代行サービス ペイジェント様</a>でメンテナンス作業を実施する為、
